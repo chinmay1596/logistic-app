@@ -1,0 +1,744 @@
+[
+  {
+    "model": "warehouse.warehouse",
+    "pk": 1,
+    "fields": {
+      "created_at": "2020-09-22T16:13:17.273Z",
+      "modified_at": "2020-09-22T16:13:17.273Z",
+      "name": "newmew",
+      "description": "dasd",
+      "email": "alangurung@gmail.com",
+      "contact": "9845620776",
+      "address": "local",
+      "longitude": 55.274438,
+      "latitude": 25.197017,
+      "location_range_type": "Geo Radius",
+      "location_range": 5,
+      "aisle_map": "uploads/warehouse/ad47bdafd08f423abc6496ff9dff7100.png"
+    }
+  },
+  {
+    "model": "warehouse.warehouse",
+    "pk": 2,
+    "fields": {
+      "created_at": "2020-09-22T16:14:38.267Z",
+      "modified_at": "2020-09-22T16:14:38.267Z",
+      "name": "newmew2",
+      "description": "sdsad",
+      "email": "alangurung@gmail.com",
+      "contact": "9845620776",
+      "address": "local",
+      "longitude": 55.274438,
+      "latitude": 25.197017,
+      "location_range_type": "Geo Radius",
+      "location_range": 15,
+      "aisle_map": ""
+    }
+  },
+  {
+    "model": "warehouse.product",
+    "pk": 1,
+    "fields": {
+      "created_at": "2020-09-23T15:36:20.359Z",
+      "modified_at": "2020-09-26T12:19:07.809Z",
+      "slug": "dell-laptops",
+      "uuid": "d2c51d",
+      "title": "Dell Laptops",
+      "parent_product": null,
+      "description": "test",
+      "product_type": "laptops",
+      "is_discountable": true,
+      "is_active": true,
+      "price_was": 1500.0,
+      "offer_price": 1000.0,
+      "units": 99,
+      "max_quantity": 20,
+      "min_quantity": 1,
+      "packaging_instructions": "left from righ",
+      "image": "images/products/2020-09-23/51if47n2aPL._AC_SL1000_.jpg"
+    }
+  },
+  {
+    "model": "warehouse.product",
+    "pk": 2,
+    "fields": {
+      "created_at": "2020-09-23T15:36:58.017Z",
+      "modified_at": "2020-09-26T12:19:00.333Z",
+      "slug": "sun-glasses",
+      "uuid": "1f058b",
+      "title": "Sun Glasses",
+      "parent_product": null,
+      "description": "Sun glasses",
+      "product_type": "Accessories",
+      "is_discountable": true,
+      "is_active": true,
+      "price_was": 250.0,
+      "offer_price": 200.0,
+      "units": 100,
+      "max_quantity": 10,
+      "min_quantity": 1,
+      "packaging_instructions": "test",
+      "image": "images/products/2020-09-23/download.jpeg"
+    }
+  },
+  {
+    "model": "warehouse.product",
+    "pk": 3,
+    "fields": {
+      "created_at": "2020-09-27T17:13:57.240Z",
+      "modified_at": "2020-09-27T17:13:57.240Z",
+      "slug": "efl",
+      "uuid": "d2e27d",
+      "title": "EFL",
+      "parent_product": null,
+      "description": "test",
+      "product_type": "laptops",
+      "is_discountable": false,
+      "is_active": true,
+      "price_was": 100.0,
+      "offer_price": 100.0,
+      "units": 10,
+      "max_quantity": 10,
+      "min_quantity": 10,
+      "packaging_instructions": "0000",
+      "image": "images/products/2020-09-27/51if47n2aPL._AC_SL1000_.jpg"
+    }
+  },
+  {
+    "model": "warehouse.zone",
+    "pk": 1,
+    "fields": {
+      "created_at": "2020-09-23T15:34:01.028Z",
+      "modified_at": "2020-09-23T15:34:01.028Z",
+      "warehouse": 1,
+      "name": "ZoneA",
+      "abbreviation": "ZA"
+    }
+  },
+  {
+    "model": "warehouse.zone",
+    "pk": 2,
+    "fields": {
+      "created_at": "2020-09-23T15:34:08.780Z",
+      "modified_at": "2020-09-23T15:34:08.780Z",
+      "warehouse": 1,
+      "name": "ZONE B",
+      "abbreviation": "ZB"
+    }
+  },
+  {
+    "model": "warehouse.rack",
+    "pk": 1,
+    "fields": {
+      "created_at": "2020-09-23T15:34:27.605Z",
+      "modified_at": "2020-09-23T15:34:27.605Z",
+      "zone": 1,
+      "name": "Rack A",
+      "abbreviation": "RA"
+    }
+  },
+  {
+    "model": "warehouse.rack",
+    "pk": 2,
+    "fields": {
+      "created_at": "2020-09-23T15:34:35.033Z",
+      "modified_at": "2020-09-23T15:34:35.033Z",
+      "zone": 1,
+      "name": "Rack B",
+      "abbreviation": "RB"
+    }
+  },
+  {
+    "model": "warehouse.section",
+    "pk": 1,
+    "fields": {
+      "created_at": "2020-09-23T15:34:57.978Z",
+      "modified_at": "2020-09-23T15:34:57.978Z",
+      "rack": 1,
+      "name": "Section A",
+      "abbreviation": "SA"
+    }
+  },
+  {
+    "model": "warehouse.section",
+    "pk": 2,
+    "fields": {
+      "created_at": "2020-09-23T15:35:05.973Z",
+      "modified_at": "2020-09-23T15:35:05.973Z",
+      "rack": 1,
+      "name": "Section B",
+      "abbreviation": "SB"
+    }
+  },
+  {
+    "model": "warehouse.row",
+    "pk": 1,
+    "fields": {
+      "created_at": "2020-09-23T15:35:21.138Z",
+      "modified_at": "2020-09-23T15:35:21.138Z",
+      "section": 1,
+      "name": "Rows A",
+      "abbreviation": "RA"
+    }
+  },
+  {
+    "model": "warehouse.row",
+    "pk": 2,
+    "fields": {
+      "created_at": "2020-09-23T15:35:28.132Z",
+      "modified_at": "2020-09-23T15:35:28.132Z",
+      "section": 1,
+      "name": "Rows B",
+      "abbreviation": "RB"
+    }
+  },
+  {
+    "model": "warehouse.bin",
+    "pk": 1,
+    "fields": {
+      "created_at": "2020-09-23T15:37:47.949Z",
+      "modified_at": "2020-09-23T15:37:47.949Z",
+      "row": 1,
+      "name": "Bin A",
+      "abbreviation": "BA",
+      "priority": 10
+    }
+  },
+  {
+    "model": "warehouse.bin",
+    "pk": 2,
+    "fields": {
+      "created_at": "2020-09-23T15:38:23.318Z",
+      "modified_at": "2020-09-23T15:38:23.318Z",
+      "row": 1,
+      "name": "Bin B",
+      "abbreviation": "BB",
+      "priority": 20
+    }
+  },
+  {
+    "model": "warehouse.warehouseproduct",
+    "pk": 1,
+    "fields": {
+      "created_at": "2020-09-23T15:37:50.735Z",
+      "modified_at": "2020-09-23T15:37:50.735Z",
+      "warehouse": 1,
+      "product": 1,
+      "units": 50,
+      "location": 1
+    }
+  },
+  {
+    "model": "warehouse.warehouseproduct",
+    "pk": 2,
+    "fields": {
+      "created_at": "2020-09-23T15:37:58.905Z",
+      "modified_at": "2020-09-23T15:37:58.906Z",
+      "warehouse": 1,
+      "product": 2,
+      "units": 10,
+      "location": 1
+    }
+  },
+  {
+    "model": "warehouse.warehouseproduct",
+    "pk": 3,
+    "fields": {
+      "created_at": "2020-09-23T15:38:26.735Z",
+      "modified_at": "2020-09-23T15:38:26.735Z",
+      "warehouse": 1,
+      "product": 2,
+      "units": 18,
+      "location": 2
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 1,
+    "fields": {
+      "created_at": "2020-09-27T15:58:00.711Z",
+      "modified_at": "2020-09-27T15:58:00.741Z",
+      "warehouse": 1,
+      "merchant": 2,
+      "order_status": "Active",
+      "order_date": "2020-09-14",
+      "customer_name": 1,
+      "client_name": "",
+      "client_phone": "",
+      "address": "Al Quoz2",
+      "latitude": 25.168028,
+      "longitude": 55.261627,
+      "due_date": "2020-09-24",
+      "notes": "Nothing",
+      "payment_type": "Cash On Delivery",
+      "shipping_by": "DHL",
+      "amount": 1000.0,
+      "geo_radius": 10,
+      "category": "Pick Up",
+      "is_paid": false
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 2,
+    "fields": {
+      "created_at": "2020-09-27T15:58:00.711Z",
+      "modified_at": "2020-09-27T15:58:00.741Z",
+      "warehouse": 1,
+      "merchant": 2,
+      "order_status": "Active",
+      "order_date": "2020-09-14",
+      "customer_name": 1,
+      "client_name": "",
+      "client_phone": "",
+      "address": "AlQuoz3",
+      "latitude": 25.168028,
+      "longitude": 55.261627,
+      "due_date": "2020-09-18",
+      "notes": "test",
+      "payment_type": "Cash On Delivery",
+      "shipping_by": "DHL",
+      "amount": 500.0,
+      "geo_radius": 10,
+      "category": "Pick Up",
+      "is_paid": false
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 3,
+    "fields": {
+      "created_at": "2020-09-27T15:58:00.711Z",
+      "modified_at": "2020-09-27T15:58:00.741Z",
+      "warehouse": 1,
+      "merchant": 2,
+      "order_status": "Active",
+      "order_date": "2020-09-14",
+      "customer_name": 1,
+      "client_name": "",
+      "client_phone": "",
+      "address": "Alquoz Stables",
+      "latitude": 24.46,
+      "longitude": 54.33829,
+      "due_date": "2020-09-26",
+      "notes": "",
+      "payment_type": "Cash On Delivery",
+      "shipping_by": "DHL",
+      "amount": 2500.0,
+      "geo_radius": 10,
+      "category": "Pick Up",
+      "is_paid": false
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 4,
+    "fields": {
+      "created_at": "2020-09-27T15:58:00.711Z",
+      "modified_at": "2020-09-27T15:58:00.741Z",
+      "warehouse": 1,
+      "merchant": 2,
+      "order_status": "Active",
+      "order_date": "2020-09-14",
+      "customer_name": 1,
+      "client_name": "",
+      "client_phone": "",
+      "address": "Al Wasl",
+      "latitude": 25.1945,
+      "longitude": 55.254631,
+      "due_date": "2020-09-26",
+      "notes": "",
+      "payment_type": "Cash On Delivery",
+      "shipping_by": "DHL",
+      "amount": 25000.0,
+      "geo_radius": 10,
+      "category": "Pick Up",
+      "is_paid": false
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 5,
+    "fields": {
+      "created_at": "2020-09-27T15:58:00.711Z",
+      "modified_at": "2020-09-27T15:58:00.741Z",
+      "warehouse": 1,
+      "merchant": 2,
+      "order_status": "Active",
+      "order_date": "2020-09-14",
+      "customer_name": 1,
+      "client_name": "",
+      "client_phone": "",
+      "address": "A",
+      "latitude": 25.1994,
+      "longitude": 55.2525,
+      "due_date": "2020-09-19",
+      "notes": "test",
+      "payment_type": "Cash On Delivery",
+      "shipping_by": "DHL",
+      "amount": 20000.0,
+      "geo_radius": 10,
+      "category": "Pick Up",
+      "is_paid": false
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 7,
+    "fields": {
+      "created_at": "2020-09-27T15:58:00.711Z",
+      "modified_at": "2020-09-27T15:58:00.741Z",
+      "warehouse": 1,
+      "merchant": 2,
+      "order_status": "Cancelled",
+      "order_date": "2020-09-24",
+      "customer_name": 1,
+      "client_name": "",
+      "client_phone": "",
+      "address": "",
+      "latitude": 25.1994,
+      "longitude": 55.2525,
+      "due_date": "2020-09-26",
+      "notes": "",
+      "payment_type": "Cash On Delivery",
+      "shipping_by": "DHL",
+      "amount": 1500.0,
+      "geo_radius": 10,
+      "category": "Pick Up",
+      "is_paid": false
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 8,
+    "fields": {
+      "created_at": "2020-09-27T15:58:00.711Z",
+      "modified_at": "2020-09-30T16:28:52.613Z",
+      "warehouse": 2,
+      "merchant": 2,
+      "order_status": "Cancelled",
+      "order_date": "2020-09-24",
+      "customer_name": 1,
+      "client_name": "",
+      "client_phone": "",
+      "address": "",
+      "latitude": 25.1994,
+      "longitude": 55.2525,
+      "due_date": "2020-09-26",
+      "notes": "",
+      "payment_type": "Cash On Delivery",
+      "shipping_by": "DHL",
+      "amount": 0.0,
+      "geo_radius": 10,
+      "category": "Pick Up",
+      "is_paid": false
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 9,
+    "fields": {
+      "created_at": "2020-09-28T14:00:31.673Z",
+      "modified_at": "2020-09-30T17:28:49.651Z",
+      "warehouse": 1,
+      "merchant": 2,
+      "order_status": "Active",
+      "order_date": "2020-09-28",
+      "customer_name": 1,
+      "client_name": "",
+      "client_phone": "",
+      "address": "",
+      "latitude": 25.1984,
+      "longitude": 55.2515,
+      "due_date": "2020-09-26",
+      "notes": "",
+      "payment_type": "Cash On Delivery",
+      "shipping_by": "DHL",
+      "amount": 0.0,
+      "geo_radius": 10,
+      "category": "Pick Up",
+      "is_paid": true
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 3,
+    "fields": {
+      "order": 5,
+      "product": 1,
+      "units": 12
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 4,
+    "fields": {
+      "order": 5,
+      "product": 2,
+      "units": 6
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 5,
+    "fields": {
+      "order": 5,
+      "product": 1,
+      "units": 3
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 6,
+    "fields": {
+      "order": 4,
+      "product": 2,
+      "units": 1
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 7,
+    "fields": {
+      "order": 2,
+      "product": 1,
+      "units": 3
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 8,
+    "fields": {
+      "order": 7,
+      "product": 1,
+      "units": 1
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 9,
+    "fields": {
+      "order": 9,
+      "product": 3,
+      "units": 10
+    }
+  },
+  {
+    "model": "orders.orderbundle",
+    "pk": 1,
+    "fields": {
+      "created_at": "2020-09-22T16:34:29.877Z",
+      "modified_at": "2020-09-30T17:28:49.648Z",
+      "bundle_id": "BUN0",
+      "driver": null,
+      "total_volume": null,
+      "estimated_time": null,
+      "category": "Pick Up",
+      "no_of_order": 5,
+      "bundle_payment": 46500.0,
+      "is_active": true,
+      "status": "Processing",
+      "order": [
+        1,
+        2,
+        4,
+        5,
+        9
+      ]
+    }
+  },
+  {
+    "model": "orders.orderbundle",
+    "pk": 2,
+    "fields": {
+      "created_at": "2020-09-22T16:34:29.890Z",
+      "modified_at": "2020-09-30T17:26:49.735Z",
+      "bundle_id": "BUN1",
+      "driver": null,
+      "total_volume": null,
+      "estimated_time": null,
+      "category": "Pick Up",
+      "no_of_order": 1,
+      "bundle_payment": 2500.0,
+      "is_active": true,
+      "status": "Processing",
+      "order": [
+        3
+      ]
+    }
+  },
+  {
+    "model": "orders.orderbundle",
+    "pk": 3,
+    "fields": {
+      "created_at": "2020-09-24T14:58:14.476Z",
+      "modified_at": "2020-09-30T17:25:36.848Z",
+      "bundle_id": "BUN2",
+      "driver": null,
+      "total_volume": null,
+      "estimated_time": null,
+      "category": "Pick Up",
+      "no_of_order": 1,
+      "bundle_payment": 1500.0,
+      "is_active": true,
+      "status": "Processing",
+      "order": [
+        7
+      ]
+    }
+  },
+  {
+    "model": "orders.orderbundle",
+    "pk": 5,
+    "fields": {
+      "created_at": "2020-09-24T15:36:07.682Z",
+      "modified_at": "2020-09-24T15:36:07.682Z",
+      "bundle_id": "BUN4",
+      "driver": null,
+      "total_volume": null,
+      "estimated_time": null,
+      "category": "Pick Up",
+      "no_of_order": 1,
+      "bundle_payment": 0.0,
+      "is_active": true,
+      "status": "Processing",
+      "order": [
+        8
+      ]
+    }
+  },
+  {
+    "model": "orders.orderremark",
+    "pk": 1,
+    "fields": {
+      "created_at": "2020-09-27T16:24:47.677Z",
+      "modified_at": "2020-09-27T16:24:47.677Z",
+      "order": 5,
+      "detail": "my new updates"
+    }
+  },
+  {
+    "model": "orders.orderremark",
+    "pk": 2,
+    "fields": {
+      "created_at": "2020-09-27T16:27:50.682Z",
+      "modified_at": "2020-09-27T16:27:50.682Z",
+      "order": 5,
+      "detail": "Your order has been cancelled"
+    }
+  },
+  {
+    "model": "orders.orderremark",
+    "pk": 3,
+    "fields": {
+      "created_at": "2020-09-27T16:28:10.461Z",
+      "modified_at": "2020-09-27T16:28:10.461Z",
+      "order": 5,
+      "detail": "Driver is on the way so please wait"
+    }
+  },
+  {
+    "model": "orders.orderremark",
+    "pk": 4,
+    "fields": {
+      "created_at": "2020-09-27T16:49:04.705Z",
+      "modified_at": "2020-09-27T16:49:04.705Z",
+      "order": 3,
+      "detail": "shopkeeper assigned already"
+    }
+  },
+  {
+    "model": "orders.orderremark",
+    "pk": 5,
+    "fields": {
+      "created_at": "2020-09-28T13:52:16.908Z",
+      "modified_at": "2020-09-28T13:52:16.908Z",
+      "order": 5,
+      "detail": "my new updates"
+    }
+  },
+  {
+    "model": "orders.orderremark",
+    "pk": 6,
+    "fields": {
+      "created_at": "2020-09-28T13:52:45.151Z",
+      "modified_at": "2020-09-28T13:52:45.151Z",
+      "order": 5,
+      "detail": "my new updates123"
+    }
+  },
+  {
+    "model": "orders.orderremark",
+    "pk": 7,
+    "fields": {
+      "created_at": "2020-09-28T16:16:47.150Z",
+      "modified_at": "2020-09-28T16:16:47.150Z",
+      "order": 9,
+      "detail": "On process"
+    }
+  },
+  {
+    "model": "orders.orderremark",
+    "pk": 8,
+    "fields": {
+      "created_at": "2020-09-29T10:56:09.181Z",
+      "modified_at": "2020-09-29T10:56:09.181Z",
+      "order": 9,
+      "detail": "everything is working"
+    }
+  },
+  {
+    "model": "account.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$216000$ls7Qfh2S7yMr$iDj6t7kgYqatbMU8uiFWa/fnxDq+0sL1Uycb8e+nRyw=",
+      "last_login": "2020-09-30T16:28:23.624Z",
+      "is_superuser": true,
+      "is_staff": true,
+      "date_joined": "2020-09-22T16:07:57.824Z",
+      "first_name": null,
+      "last_name": null,
+      "email": "admin@test.com",
+      "phone": null,
+      "user_type": "",
+      "gender": "",
+      "address": null,
+      "created_date": "2020-09-22T16:07:57.888Z",
+      "modified_date": "2020-09-22T16:07:57.898Z",
+      "driving_licence": null,
+      "is_verified": true,
+      "is_active": true,
+      "image": "",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "account.user",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$216000$AfRETp44jq1l$IzQ9DCztnrKge3BW1EuBX9S69vrQQtWyGMSxhCn3vB0=",
+      "last_login": "2020-09-30T17:34:48.241Z",
+      "is_superuser": false,
+      "is_staff": false,
+      "date_joined": "2020-09-22T16:10:16.655Z",
+      "first_name": "Aashish",
+      "last_name": "Gurung",
+      "email": "aashishgurung030@gmail.com",
+      "phone": null,
+      "user_type": "Merchant",
+      "gender": "",
+      "address": null,
+      "created_date": "2020-09-22T16:10:16.656Z",
+      "modified_date": "2020-09-22T16:10:44.858Z",
+      "driving_licence": null,
+      "is_verified": true,
+      "is_active": true,
+      "image": "",
+      "groups": [
+        1
+      ],
+      "user_permissions": []
+    }
+  }
+]

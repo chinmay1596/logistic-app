@@ -1,0 +1,91 @@
+{% extends 'comman/layout.html' %}
+{% load static %}
+
+{% block customcss %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/ram.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-table.min.css' %}">
+{% endblock %}
+{% block headertext %}All Warehouse{% endblock %}
+{% block headbutton %}
+    <a class="createBtn btn btn-primary" href="{% url 'warehouse:create' %}">
+        Add warehouse
+    </a>
+
+    <a class="createBtn btn btn-primary" href="{% url 'warehouse:export' %}">
+        Export
+    </a>
+{% endblock %}
+{% block maincontent %}
+    <div class="row">
+        <div class="col-md">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table table-borderless">
+                        <tr>
+                            <th>
+                                <small style="color:#6A707E">
+                                    Warehouse ID
+                                </small>
+                            </th>
+                            <th>
+                                <small style="color:#6A707E">
+                                    Warehouse Name
+                                </small>
+                            </th>
+                            <th>
+                                <small style="color:#6A707E">
+                                    Warehouse Longitude
+                                </small>
+                            </th>
+                            <th>
+                                <small style="color:#6A707E">
+                                    Warehouse Latitude
+                                </small>
+                            </th>
+                            <th>
+                                <small style="color:#6A707E">
+                                    Range Type
+                                </small>
+                            </th>
+                            <th>
+                                <small style="color: #6A707E">
+                                    Range
+                                </small>
+                            </th>
+                        </tr>
+
+                        {% for object in object_list %}
+                            <tr>
+                                <td>
+                                    <small>{{ object.id }}</small>
+                                </td>
+                                <td>
+                                    <small>
+                                        <a href="{% url 'warehouse:detail' object.id %}">
+                                            {{ object.name }}
+                                        </a>
+                                    </small>
+                                </td>
+                                <td>
+                                    <small>{{ object.longitude }}</small>
+                                </td>
+                                <td>
+                                    <small>{{ object.latitude }}</small>
+                                </td>
+                                <td>
+                                    <small>{{ object.location_range_type }}</small>
+                                </td>
+                                <td>
+                                    <small>{{ object.location_range }} KM</small>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block customscript %}
+    <script src="{% static 'js/ajax_form.js' %}"></script>
+{% endblock %}

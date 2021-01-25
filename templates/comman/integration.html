@@ -1,0 +1,116 @@
+{% extends 'comman/layout.html' %}
+{% load static %}
+{% block headertext %}
+
+Integration
+
+{% endblock %}
+{% block customcss %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/ram.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-table.min.css' %}">
+<link rel="stylesheet" href="{% static 'vendor/css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/common.css' %}">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+<link rel="stylesheet" href="{% static 'css/uiupdate/integration.css' %}" />
+{% endblock %}
+{% block headbutton %}
+
+
+{% endblock %}
+
+{% block maincontent %}
+<div class="screen-wrapper">
+   <div class="main-content-wrapper">
+      <div class="content-wrapper">
+         <div class="grid_row">
+            <div class="intregationTopareaSearch">
+               <div class="row">
+                  <div class="col-lg-12">
+                     <div class="leftSearch">
+                        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for API here">
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="integartionTableArea">
+               <table class="table table-borderless" id="myTable">
+                  <thead>
+                     <tr>
+                        <th style="padding-left: 30px">API Name</th>
+                        <th>API Description</th>
+                        <th></th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <td class="align-middle" style="padding-left: 30px">Login</td>
+                        <td class="align-middle">API for user login Authentication</td>
+                        <td><a href="/swagger/#/account">View</a></td>
+                     </tr>
+                     <tr>
+                        <td class="align-middle" style="padding-left: 30px">User Details</td>
+                        <td class="align-middle">API for user details of authenticated users (only authorized user can
+                           access)</td>
+                        <td><a href="/swagger/#!/employee/api_user_details_read">View</a></td>
+                     </tr>
+                     <tr>
+                        <td class="align-middle" style="padding-left: 30px">Orders CRUD</td>
+                        <td class="align-middle">API for creating Orders </td>
+                        <td><a href="{% url 'schema-swagger-ui' %}">View</a></td>
+                     </tr>
+                     <tr>
+                        <td class="align-middle" style="padding-left: 30px">Order Bundle</td>
+                        <td class="align-middle">API for list of total orders bundles assigned to a particular driver
+                           (only authorized user can access)</td>
+                        <td><a href="/swagger/#!/employee/api_order_bundle_read">View</a></td>
+                     </tr>
+                     <tr>
+                        <td class="align-middle" style="padding-left: 30px">Support</td>
+                        <td class="align-middle">API for support issues </td>
+                        <td><a href="/swagger/#/support">View</a></td>
+                     </tr>
+                     <tr>
+                        <td class="align-middle" style="padding-left: 30px">Product</td>
+                        <td class="align-middle">API for adding products </td>
+                        <td><a href="{% url 'schema-swagger-ui' %}">View</a></td>
+                     </tr>
+                     <tr>
+                        <td class="align-middle" style="padding-left: 30px">Customer</td>
+                        <td class="align-middle">API for adding customer </td>
+                        <td><a href="{% url 'schema-swagger-ui' %}">View</a></td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+{% endblock %}
+
+{% block customscript %}
+<script>
+   function myFunction() {
+      // Declare variables
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("myInput");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("myTable");
+      tr = table.getElementsByTagName("tr");
+
+      // Loop through all table rows, and hide those who don't match the search query
+      for (i = 0; i < tr.length; i++) {
+         td = tr[i].getElementsByTagName("td")[0];
+         if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+               tr[i].style.display = "";
+            } else {
+               tr[i].style.display = "none";
+            }
+         }
+      }
+   }
+</script>
+{% endblock %}

@@ -1,0 +1,71 @@
+.iti__country-list {
+    z-index: 9999999999999999;
+}
+[type=button]:not(:disabled), [type=reset]:not(:disabled), [type=submit]:not(:disabled), button:not(:disabled) {
+    cursor: pointer;
+}
+
+
+.addressFildContainer{}
+.addressFildContainer .adressFildtem{
+    margin-bottom: 20px;
+    display: flex;
+    
+}
+.addressFildContainer .adressFildtem .selectBoxAdress{}
+.addressFildContainer .adressFildtem .selectBoxAdress select{
+    border: 1px solid #ddd;
+    padding: 10px 13px;
+    font-size: 14px;
+    border-radius: 4px;
+}
+.addressFildContainer .adressFildtem .adressInput{
+    margin-left: 20px;
+    width: 100%;
+}
+.addressFildContainer .adressFildtem .adressInput input{
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 14px;
+    color: #6b7d8a;
+    border: 1px solid #a3b3bf;
+    border-radius: 5px;
+}
+
+.addAddressbutton{
+    margin-top: 16px;
+}
+
+.addAddressbutton button{
+    background: #3CD17F;
+    color: #fff;
+    font-weight: 500;
+    font-size: 14px;
+    border: none;
+    width: 168px;
+    padding: 10px 0px;
+    border-radius: 30px;
+    transition: 0.4s;
+    outline: none;
+    cursor: pointer;
+    z-index: 9999;
+    position: relative;
+}
+
+
+
+a.remove_field {
+    margin-top: 8px;
+    font-size: 14px;
+    z-index: 9999;
+    position: relative;
+    color: red;
+    position: absolute;
+    right: 20px;
+}
+
+.adressFildtemBox{
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+}

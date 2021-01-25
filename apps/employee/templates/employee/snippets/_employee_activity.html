@@ -1,0 +1,81 @@
+<h2>Activity of {{ employee_type|title }}</h2>
+{% if employee_type.lower == 'driver' %}
+    <div class="aod-status">
+        <div class="col">
+            <div class="tr">
+                <span>Status</span>
+                <div class="row {% if object.driver_status == 'Active' %}text-success{% else %}text-info{% endif %}">
+                    {{ object.driver_status }}
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="tr">
+                <span>Transportation</span>
+                <div class="row">{{ object.transportation }}</div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="tr">
+                <span>Driver Transportation</span>
+                <div class="trp-bar">
+                    <div class="trp-icons {% if object.vehicle_type == 'Motorbike' %}active{% endif %}">
+                        <i class="fas fa-biking"></i>
+                    </div>
+                    <div class="trp-icons {% if object.vehicle_type == 'Mini Truck' %}active{% endif %}">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <div class="trp-icons {% if object.vehicle_type == 'Truck' %}active{% endif %}">
+                        <i class="fas fa-truck-moving"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+
+<div class="pageNav">
+    <ul>
+        <li>
+            <a href="{% url 'employee:employee-activity' employee_type=employee_type pk=object.id activity_type='orders' %}"
+               {% if activity_type == 'orders' %}class="active"{% endif %}>
+                Orders
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'employee:employee-activity' employee_type=employee_type pk=object.id activity_type='shifts' %}"
+               {% if activity_type == 'shifts' %}class="active"{% endif %}>
+                Shifts
+            </a>
+        </li>
+    </ul>
+</div>
+
+<div class="grid_row">
+    <div class="filterRow">
+        <div class="selectBox">
+            <select class="dd" name="service_type">
+                <option value="">Filters</option>
+                <option value="">Filters</option>
+            </select>
+        </div>
+        <input type="txt" class="search_input" name="search" placeholder="Search anything"/>
+        <a href="">
+            <button class="exportBtn">
+                Export<i class="fa fa-download" aria-hidden="true"></i>
+            </button>
+        </a>
+    </div>
+    <div class="tableWrapper">
+        <table class="data-table">
+            {% if activity_type == 'orders' %}
+                {% include 'employee/snippets/_activity_order.html' %}
+            {% elif activity_type == 'shifts' %}
+                {% include 'employee/snippets/_activity_shift.html' %}
+            {% endif %}
+        </table>
+    </div>
+    {% include 'snippets/_pagination.html' %}
+</div>
+

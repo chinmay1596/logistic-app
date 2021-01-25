@@ -1,0 +1,111 @@
+{% extends 'common/password_reset_base.html' %}
+{% load static %}
+{% block customcss %}
+<link rel="stylesheet" href="{% static 'css/userprofile.css' %}">
+{#    <link rel="stylesheet" href="{% static 'css/fontawesome.css' %}">#}
+<link rel="stylesheet" href="{% static 'css/uiupdate/userprofileimage.css' %}">
+{% endblock %}
+{% block crossbutton %}
+<div class="col-lg-4">
+    <div class="rightClose text-right">
+        <a href="{% url 'dashboard:index' %}"><i class="fa fa-times"></i></a>
+    </div>
+</div>
+{% endblock %}
+{% block content %}
+<div class="content-wrapper">
+    {% include 'snippets/_message_alert.html' %}
+</div>
+<section id="userProfileMainPage">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="userProfilePageImage">
+                    <div class="userImageFild">
+                    </div>
+                    {% if request.user.image %}
+                    <img id="userPrevImage" src="{{ request.user.image.url }}" alt="">
+                    {% else %}
+                    <img class="img-fluid" src="{% static 'images/default.jpg' %}" alt=""
+                        style="height: 290px; border-radius: 50%; max-width: 54%">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="userProfilePageForm">
+                    <form action="#">
+                        <!-- start name fil -->
+                        <div class="inputBox">
+                            <p>Full Name</p>
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">
+                                        <i class="fa fa-user"></i>
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control" placeholder="Full Name"
+                                    value="{{ user_obj.get_full_name }}" disabled aria-label="Username"
+                                    aria-describedby="basic-addon1" style="background-color: white">
+                            </div>
+                        </div>
+                        <!-- start email fild -->
+                        <div class="inputBox">
+                            <p>Email ID</p>
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">
+                                        <i class="fa fa-envelope"></i>
+                                    </span>
+                                </div>
+                                <input type="email" class="form-control" placeholder="Email ID"
+                                    value="{{ user_obj.email }}" aria-label="Username" disabled
+                                    aria-describedby="basic-addon1" style="background-color: white">
+                            </div>
+                        </div>
+                        <!-- start phoe input fild -->
+                        <div class="inputBox">
+                            <p>Phone Number</p>
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">
+                                        <i class="fa fa-phone"></i>
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control" placeholder="Enter phone number here" disabled
+                                    value="{% if user_obj.phone %}{{ user_obj.phone }}{% endif %}" aria-label="Username"
+                                    style="background-color: white" aria-describedby="basic-addon1">
+                            </div>
+                        </div>
+                    </form>
+                    <div class="actionBntProfile">
+                        <ul>
+                            <li><a href="{% url 'account:profile_update' user_obj.id %}">Edit Profile</a></li>
+                            <li><a href="{% url 'account:change_password' %}">Change Password</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+{% block customscript %}
+<script src="{% static 'vendor/js/popper.min.js' %}"></script>
+<script src="{% static 'vendor/js/bootstrap.min.js' %}"></script>
+<script>
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#userPrevImage').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    $("#userFormImage").change(function () {
+        readURL(this);
+    });
+</script>
+{% endblock %}

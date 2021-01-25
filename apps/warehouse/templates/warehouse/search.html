@@ -1,0 +1,246 @@
+{% extends 'warehouse/layout.html' %}
+{% load static %}
+{% block customcss %} 
+    <link rel="stylesheet" type="text/css" href="{% static 'css/ram.css' %}" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/bootstrap-table.min.css' %}"
+    />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/detail.css' %}" />
+{% endblock %}
+{% block headertext %}{{object.name}} and {{object.id}}{% endblock %}
+{% block maincontent %}
+        <form method="POST">
+          {% csrf_token %}
+          <div class="order_action">
+            <button type="submit" value="Save" class="createPro plr active"><a href="{% url 'warehouse_detail' obj_id %}"></a>Save</button>
+            <button type="submit" class="createPro plr"><a href="{% url 'warehouse_delete' obj_id %}"></a>Delete</button>
+          </div>
+        <div class="content-wrapper warehouse">
+          <div class="ord_bnd_row">
+            <div class="leftCol">
+              <div class="fp_tr">
+                <div class="head">General Information</div>
+                <div class="body">
+                  <div class="form_tr">
+                    <label>Warehouse Name</label>
+                    <input  value="{{object.name}}" type="text" name="name" placeholder="Enter product name here" />
+                  </div>
+                  <div class="form_tr">
+                    <label>Warehouse Description</label>
+                    <textarea
+                      name="description"
+                      placeholder="Please describe your product here"
+                      rows="3"
+                    >{{object.description}}</textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="fp_tr">
+                <div class="head">
+                  Warehouse Aisle Map
+                  <button class="anFloor">
+                    <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;Add
+                    New Floor
+                  </button>
+                </div>
+                <div class="body">
+                  <div class="form_tr">
+                    <label>Floor Name</label
+                    ><button class="anFloor">Edit Aisle Map</button>
+                    <div class="floorImg">
+                      <img src="{% static 'img/floor.png' %}" alt="" />
+                    </div>
+                  </div>
+                  <div class="form_tr">
+                    <label>Floor Name</label
+                    ><button class="anFloor">Edit Aisle Map</button>
+                    <div class="floorImg">
+                      <img src="{% static 'img/floor.png' %}" alt="" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="rightCol">
+              <div class="cd_tr">
+                <div class="head">Warehouse Details</div>
+                <div class="body">
+                  <div class="tr">
+                    <span
+                      >Warehouse Email
+                      <button class="anFloor">Edit</button></span>
+                    
+                    <div class="row" contenteditable="True">{{object.email}}</div>
+                  </div>
+                </div>
+                <div class="body">
+                  <div class="tr">
+                    <span
+                      >Warehouse Address
+                      <button class="anFloor">Edit</button></span>
+                    
+                    <div class="row">
+                      {{object.address}}
+                    </div>
+                  </div>
+                </div>
+                <div class="body">
+                  <div class="tr">
+                    <span
+                      >Location Map <button class="anFloor">Edit</button></span
+                    >
+                    <div class="row">
+                      <div class="locMap">
+                        <img src="{% static 'img/location-map.png' %}" alt="" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+          <div class="grid_row">
+            <div class="head">
+              Inhouse Delivery Area <span>Allot area for in-house delivery</span
+              ><button class="createBtn">Update</button>
+            </div>
+            <div class="wh_fltr_row">
+              <div class="selectBox">
+                <select class="dd" name="service_type">
+                  <option value="">Geo Radius</option>
+                  <option value="">Mapping</option>
+                  <option value="">Time Radius</option>
+                </select>
+              </div>
+              <input
+                type="txt"
+                class="search_input"
+                name="search"
+                placeholder="Enter Data"
+              />
+              <button class="check">Check</button>
+            </div>
+            <div class="wh_map">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m22!1m8!1m3!1d3506.0656882133844!2d77.24862146468581!3d28.507671332467222!3m2!1i1024!2i768!4f13.1!4m11!3e0!4m3!3m2!1d28.5071975!2d77.2520837!4m5!1s0x390ce10dae65e38b%3A0xdd958c79d1809753!2sG10%2C%2068%2C%20Ratiya%20Marg%2C%20Block%20D%2C%20Sangam%20Vihar%2C%20New%20Delhi%2C%20Delhi%20110044!3m2!1d28.508218!2d77.24954029999999!5e0!3m2!1sen!2sin!4v1597552660956!5m2!1sen!2sin"
+                frameborder="0"
+                style="border: 0;"
+                allowfullscreen=""
+                aria-hidden="false"
+                tabindex="0"
+              ></iframe>
+            </div>
+          </div>
+          <div class="bg-modal">
+            <div class="modal-content">
+              <h1>Add Product</h1>
+              <form action="" method="">
+                {% csrf_token %}
+                <input type="text" placeholder="Product Name">
+                <input type="text" placeholder="Product ID">
+                <input type="number" placeholder="Available Quantity">
+                <input type="text" placeholder="Item Description">
+                <input type="text" placeholder="Location in Aisle Map">
+                <input type="text" placeholder="Packing">
+                <a href="" class="cancel">Cancel</a>&nbsp;&nbsp;&nbsp;
+                <a href="" class="button">Add Product</a>
+              </form>
+            </div>
+          </div>
+          <div class="grid_row">
+            <div class="head">
+              Products
+              <button class="createPro">Upload Updated Stock List</button>
+              <button id="newproduct" class="createPro">
+              <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;Add New Product
+              </button>
+            </div>
+            <div class="wh_fltr_row">
+              <button class="filtersBtn">Filters</button>
+              <form method="GET" action="{% url 'search_products' obj_id %}">
+              <input
+                type="txt"
+                class="search_pro"
+                name="search"
+                id="searchField"
+                placeholder="Search a product here"
+              />
+              <button class="actionBtn">Search</button>
+              </form>
+            </div>
+          </form>
+          <!--code for original table-->
+            <div class="tableWrapper">
+              <table class="data-table">
+                <tbody>
+                  <tr>
+                    <th>&nbsp;</th>
+                    <th>SL No</th>
+                    <th>Product Code</th>
+                    <th>Item Name</th>
+                    <th>Available Quantity</th>
+                    <th>Item Description / DImension</th>
+                    <th>Location in Aisia Map</th>
+                    <th>Packaging Instruction</th>
+                  </tr>
+
+                  {% for product in page_obj %}
+
+                  <tr>
+                    <td>
+                      <div class="product_radio">
+                        <input
+                          type="radio"
+                          name="radio-group"
+                          id="test1"
+                          value=""
+                        /><label for="test1"></label>
+                      </div>
+                    </td>
+                    <td>{{product.id}}</td>
+                    <td>
+                      {{product.code}}<span class="proImg"
+                        ><img src="static/images/wh-1.png" alt=""
+                      /></span>
+                    </td>
+                    <td>{{product.name}}</td>
+                    <td>{{product.quantity}}</td>
+                    <td>{{product.description}}</td>
+                    <td>{{product.location_in_aislemap}}</td>
+                    <td>{{product.packaging_instruction}}</td>
+                  </tr>
+                  <tr>
+                    <td>
+                  {% endfor %}
+                
+                </tbody>
+              </table>
+            </div>
+          
+         
+            
+
+            <div class="pagination">
+              showing page {{page_obj.number}} of {{page_obj.paginator.num_pages}}
+                {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}">❮</a>
+                {% endif %}
+                {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">❯</a>
+                {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="static/vendor/js/jquery.min.js"></script>
+    {% block customscript%}
+    {% endblock %}
+  </body>
+</html>
+{% endblock %}
+
+ 

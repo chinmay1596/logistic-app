@@ -1,0 +1,88 @@
+{% load static %}
+{% load sorl_thumbnail %}
+
+<div class="content-wrapper">
+    <div class="grid_row">
+        <div class="filterRow">
+            <div class="selectBox">
+                <select class="dd" name="service_type">
+                    <option value="">Filters</option>
+                    <option value="">Filters</option>
+                </select>
+            </div>
+            <input type="txt" class="search_input" name="search" placeholder="Search anything"/>
+            <button class="exportBtn">
+                <a href="#">Export</a><i class="fa fa-download"
+                                         aria-hidden="true"></i>
+            </button>
+        </div>
+        <div class="tableWrapper">
+            <table class="data-table">
+                <tr>
+                    <th>&nbsp;</th>
+                    <th>Driver ID</th>
+                    <th>Name</th>
+                    <th>Phone Number</th>
+                    <th>Shift Status</th>
+                    <th>&nbsp;</th>
+                </tr>
+
+                {% for driver in object_list %}
+                    <tr>
+                        <td>
+                            <div class="radio_col">
+                                <input type="radio" name="radio-group" id="test1_{{ driver.user.id }}"
+                                       value="{{ driver.user.id }}"/>
+                                <label for="test1_{{ driver.user.id }}">
+                                    {% thumbnail driver.user.image "60x60" crop="center" as im %}
+                                        <figure>
+                                            <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+                                        </figure>
+                                    {% empty %}
+                                        <figure>
+                                            <img src="{% static 'images/user-img.png' %}" width="60" height="60"
+                                                 alt="">
+                                        </figure>
+                                    {% endthumbnail %}
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+
+                            {{ driver.id }}
+                        </td>
+                        <td>{{ driver.full_name }}</td>
+                        <td>{{ driver.user.phone }}</td>
+                        <td>
+                            <div id="shift-status" class="text-{{ driver.shift_status_color }}">
+                                {{ driver.shift_status }}
+                            </div>
+                        </td>
+                        <td class="taright">
+
+                            {% if bundle_id %}
+                                {% if driver.shift_status == 'Assigned' and not driver.active_bundle %}
+                                    <form action="{% url 'employee:assign_bundle' employee_type=employee_type %}" method="POST">
+                                        {% csrf_token %}
+                                        <input type="text" name="bundle_id" value="{{ bundle_id }}" hidden>
+                                        <input type="text" name="driver" value="{{ driver.id }}" hidden>
+                                        <button type="submit" class="es-btn active">Assign</button>
+                                    </form>
+                                {% else %}
+                                    <button type="button" class="es-btn inactive">Unavailable</button>
+                                {% endif %}
+                            {% else %}
+                                <button type="submit" class="es-btn {{ driver.shift_status_color }}"
+                                        id="editdriverbtn"
+                                        value="{% url 'api_v1:employee_api:assign-shift-list' employee_type=employee_type employee_id=driver.id shift_status=driver.shift_status_text %}">
+                                    {{ driver.shift_status_text|title }} Shift
+                                </button>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% include 'snippets/_pagination.html' %}
+    </div>
+</div>

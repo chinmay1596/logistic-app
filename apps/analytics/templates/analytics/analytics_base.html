@@ -1,0 +1,120 @@
+{% extends 'comman/layout.html' %}
+{% load static %}
+
+{% block headertext %}
+Analytics
+{% endblock %}
+
+{% block customcss %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/ram.css' %}">
+<link rel="stylesheet" href="{% static 'vendor/css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/common.css' %}">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+<link rel="stylesheet" href="https://www.jqueryscript.net/demo/Bootstrap-4-Tag-Input-Plugin-jQuery/tagsinput.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="{% static 'css/select2.min.css' %}">
+
+{% endblock %}
+
+{% block maincontent %}
+<div class="screen-wrapper">
+    <div class="main-content-wrapper">
+        <div class="content-wrapper analytics">
+            <div class="filter_row">
+                {% include 'snippets/_analytics_filter_form.html' %}
+            </div>
+            <div class="grid_row">
+                <div class="page-sub-header">
+                    <h3>
+                        {{ report_type_text}}
+                        <br>
+                        {% if start_date and end_date %}
+                        <div class="date_info">{{ start_date }} 00:00 am - {{ end_date }} 23:59 pm</div>
+                        {% endif %}
+                    </h3>
+                    <form  action="{% url 'analytics:common-analytics-export' report_type=report_type %}">
+                        {% if start_date %}
+                        <input type="text" name="start_date" value="{{start_date}}" hidden>
+                        {% endif %}
+                        {% if end_date %}
+                        <input type="text" name="end_date" value="{{end_date}}" hidden>
+                        {% endif %}
+                        {% if driver %}
+                        <input type="text" name="driver_list" value="{{driver}}" hidden>
+                        {% endif %}
+                        <button class="createBtn " type="submit">Export to CSV</button>
+                    </form>
+                    {% if report_type_text == 'Active Drivers' or report_type_text == 'Late Orders' or report_type_text == 'Cancelled Orders' or report_type_text == 'Delivered Orders' %}
+
+                    <div class="orders-done-tr"><span>{{ object_list.count }}</span> Total {{ report_type_text }}</div>
+                    {% endif %}
+                </div>
+
+                {% include analytics_html_pages %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block customscript %}
+<script src="{% static 'vendor/js/bootstrap-datepicker.min.js' %}"></script>
+<script src="{% static 'vendor/js/tagsinput.js' %}"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="{% static 'js/select2.min.js' %}"></script>
+
+<script>
+        $(".alert").delay(5000).slideUp(1000, function () {
+            $(this).alert('close');
+        });
+
+        $('.datepicker').datepicker({
+            dateFormat: 'yy-mm-dd',
+            maxDate: new Date, minDate: new Date(2007, 6, 12),
+        });
+
+        $('.end-datepicker').datepicker({
+            dateFormat: 'yy-mm-dd',
+            maxDate: new Date, minDate: new Date(2007, 6, 12),
+            // endDate: new Date(),
+        });
+
+        $(document).ready(function () {
+            $('.select').click(function () {
+                var txt = [];
+                $('.select').each(function () {
+                    txt.push($(this).val())
+                });
+                $('#select_url').val(txt);
+
+            });
+        });
+
+        function submitForm() {
+            var form_url = $("#report-filter").attr("action");
+            var selected_dept = $("#id_report_type").val();
+            $("#report-filter").attr("action", selected_dept);
+            $("#report-filter").submit();
+        }
+
+        $(function() {
+            var temp=$('#type').text;
+            $('#id_report_type').val(temp);
+        });
+
+        $(function() {
+            var temp="/analytics/{{report}}";
+            $("#id_report_type").val(temp);
+        });
+        $(function() {
+            var temp={{select_driver}};
+            $("#select_driver").val(temp);
+        });
+
+        $(document).ready(function() {
+            $('.js-example-basic-multiple').select2();
+        });
+</script>
+
+
+{% endblock %}

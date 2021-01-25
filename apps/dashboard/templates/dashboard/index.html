@@ -1,0 +1,209 @@
+{% extends 'comman/layout.html' %}
+{% load static %}
+{% block customcss %}
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/ram.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}"/>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+
+{% endblock %}
+{% block pagehead %}
+{% endblock %}
+
+{% block breadcrumb %}
+{% endblock %}
+
+{% block maincontent %}
+<div class="page-header no-border np">
+    {#        <h2 class="page-header-text"><span>Dashboard</span></h2>#}
+    {#        <div class="selectBox">#}
+    {#            <select class="dd" name="service_type">#}
+    {#                <option value="">Select Warehouse</option>#}
+    {#                <option value="">Select Warehouse</option>#}
+    {#                <option value="">Select Warehouse</option>#}
+    {#                <option value="">Select Warehouse</option>#}
+    {#            </select>#}
+    {#        </div>#}
+    {#        <div class="page-row">#}
+    {#            <div class="date_selectBox">#}
+    {#                <select class="dd slect_date">#}
+    {#                    <option value="">16/08/2020</option>#}
+    {#                    <option value="">16/08/2020</option>#}
+    {#                </select>#}
+    {#                <div class="or"></div>#}
+    {#                <select class="dd slect_date">#}
+    {#                    <option value="">16/08/2020</option>#}
+    {#                    <option value="">16/08/2020</option>#}
+    {#                </select>#}
+    {#            </div>#}
+    {#        </div>#}
+</div>
+<div class="db_info_row">
+    <div class="dbColA">
+        <div class="row">
+
+            <div class="col">
+                <a href="{% url 'orders:order' %}?order_status=Active">
+                    <div class="title">Active Orders</div>
+                    <div class="tr"><font>{{ active_orders }}</font><span><i class="fa fa-arrow-up"
+                                                                             aria-hidden="true"></i>{{ active_increase }}%</span>
+                    </div>
+                    <div class="info">Increased since yesterday</div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="{% url 'orders:bundles' %}">
+                    <div class="title">Active Bundles</div>
+                    <div class="tr"><font>{{ active_bundles }}</font><span><i class="fa fa-arrow-up"
+                                                                              aria-hidden="true"></i>{{ active_bundle_increase }}%</span>
+                    </div>
+                    <div class="info">Increased since yesterday</div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="{% url 'orders:order' %}?order_status=Unfulfilled">
+                    <div class="title">Unfulfilled Orders</div>
+                    <div class="tr"><font>{{ unfulfilled_orders }}</font><span><i class="fa fa-arrow-up"
+                                                                                  aria-hidden="true"></i> {{ unfulfilled_increase }}%</span>
+                    </div>
+                    <div class="info">Increased since yesterday</div>
+                </a>
+            </div>
+        </div>
+        <div class="alert_tr">
+            <div class="title">Low Stock Alert ({{ low_stocks.count }}) <span><i class="fa fa-exclamation-circle"
+                                                                                 aria-hidden="true"></i></span>
+            </div>
+            {% for order in low_stocks %}
+                <div class="page_row">
+                <div class="left"><i class="fa fa-angle-left" aria-hidden="true"></i>
+
+                    <span>#{{ order.id }} {{ order.product.title }} {{ order.units }}</span></div>
+            <div class="right"><span>Ignore <a href="#">Take Action</a></span> <i class="fa fa-angle-right"
+                                                                                  aria-hidden="true"></i></div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="dbColB">
+        <div class="title">Recent Orders <span><a href="{% url 'orders:order' %}"> <button
+                class="assign_btn">View All</button></a></span>
+        </div>
+        <table class="recent-activity">
+            <thead>
+            <tr>
+                <th>ORDER ID</th>
+                <th>DUE DATE</th>
+                <th>PAYMENT</th>
+                <th>ADDRESS</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for order in recent_orders %}
+                <tr>
+                    <td class="text-center">#{{ order.id }}</td>
+                    <td class="text-center">{{ order.due_date }}</td>
+                    <td>${{ order.amount }}</td>
+                    <td>{{ order.address }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="dbColC">
+        <div class="title">Updates</div>
+        <div class="page_row">
+            {% for update in updates %}
+                <div class="tr">Order #{{ update.id }} was placed <span>{{ update.get_date }}</span></div>
+            {% endfor %}
+
+        </div>
+    </div>
+</div>
+<div class="map-wrapper">
+    <section id="map_wrapper">
+        <div id="map_canvas" class="mapping" style="height: 500px;">&nbsp;</div>
+    </section>
+</div>
+{% endblock %}
+{% block customscript %}
+    <script>
+        $(document).ready(function ($) {
+            // Asynchronously Load the map API
+            var script = document.createElement('script');
+            script.src = "//maps.googleapis.com/maps/api/js?key=AIzaSyAl3bzTlhOjdjT3IpjhxRoKwqEalbWhFfQ&sensor=false&callback=initialize";
+            document.body.appendChild(script);
+        });
+
+        function initialize() {
+
+            var map;
+            var center = new google.maps.LatLng(27.7493, 85.3214);
+            var bounds = new google.maps.LatLngBounds();
+            var mapOptions = {
+                mapTypeId: 'roadmap',
+                {#center: new google.maps.LatLng(-33.92, 151.25),#}
+            };
+
+            // Display a map on the page
+            map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+            map.setTilt(45);
+
+            // Multiple Markers
+            {#console.log(typeof({{ orders_lat_long }}))#}
+            {#console.log({{ orders_lat_long }})#}
+            var markers = {{ orders_lat_long }};
+
+            // Info Window Content
+            // Display multiple markers on a map
+            var infoWindow = new google.maps.InfoWindow(), marker, i;
+            const image = {
+                url: "{% static 'assets/icons/Ellipse 442.svg' %}",
+                // This marker is 20 pixels wide by 32 pixels high.
+                {#size: new google.maps.Size(20, 25),#}
+                // The origin for this image is (0, 0).
+                {#origin: new google.maps.Point(0, 0),#}
+                {#// The anchor for this image is the base of the flagpole at (0, 32).#}
+                {#anchor: new google.maps.Point(0, 32)#}
+            };
+            // Shapes define the clickable region of the icon. The type defines an HTML
+            // <area> element 'poly' which traces out a polygon as a series of X,Y points.
+            // The final coordinate closes the poly by connecting to the first coordinate.
+            const shape = {
+                coords: [1, 1, 1, 20, 18, 20, 18, 1],
+                type: "poly"
+            };
+
+            // Loop through our array of markers & place each one on the map
+            for (i = 0; i < markers.length; i++) {
+                var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
+                bounds.extend(position);
+                marker = new google.maps.Marker({
+                    position: position,
+                    icon: image,
+                    shape: shape,
+                    map: map,
+                    title: markers[i][0]
+                });
+
+                // Allow each marker to have an info window
+                google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                    return function () {
+                        infoWindow.setContent(markers[i][0]);
+                        infoWindow.open(map, marker);
+                    }
+                })(marker, i));
+
+                // Automatically center the map fitting all markers on the screen
+                map.fitBounds(bounds);
+            }
+
+            // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
+            var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function (event) {
+                this.setZoom(9);
+                google.maps.event.removeListener(boundsListener);
+            });
+
+        }
+    </script>
+{% endblock %}

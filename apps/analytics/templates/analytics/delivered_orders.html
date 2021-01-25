@@ -1,0 +1,44 @@
+<div>
+  <table class="data-table">
+      <tr>
+          <th>Order ID</th>
+          <th>Driver Name</th>
+          <th>Customer</th>
+          <th>Address</th>
+          <th>Phone</th>
+          <th>Created Time</th>
+          <th>Scheduled Time</th>
+          <th>Start Time</th>
+          <th>Arrive Time</th>
+          <th>Left Time</th>
+          <th>Status</th>
+      </tr>
+      {% for info in object_list %}
+      <tr>
+          <td>{{ info.id }}</td>
+          <td>
+              {% for name in info.bundle.all %}
+                {{name.driver.user.get_full_name }}
+              {% empty %}
+                 Driver not assigned
+              {% endfor %}
+          </td>
+          <td>{{ info.client_name }}</td>
+          <td>{{ info.address }}</td>
+          <td>{{ info.client_phone }}</td>
+          <td>{{ info.order_date }}</td>
+          <td>{{ info.due_date }}</td>
+          <td>03:08 PM</td>
+          <td>03:08 PM</td>
+          <td>03:08 PM</td>
+          <td>Done</td>
+      </tr>
+      {% empty %}
+        <tr>
+            <td colspan="11">
+                <div class="text text-center">No data found.</div>
+            </td>
+        </tr>
+      {% endfor %}
+  </table>
+</div>

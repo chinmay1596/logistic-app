@@ -1,0 +1,129 @@
+#invoiceMainHeader{
+	padding: 25px 0px 15px 0px;
+	background: #fff;
+}
+#invoiceMainHeader .logoArea img{
+	height: 30px;
+}
+
+
+#invoiceMainHeader .middleLogo{}
+#invoiceMainHeader .middleLogo h3{
+	font-size: 30px;
+	color: #333;
+	font-weight: 600;
+}
+
+#invoiceMainHeader .rightInfo{
+	text-align: right;
+}
+#invoiceMainHeader .rightInfo h3{
+	margin: 0;
+	font-size: 15px;
+}
+#invoiceMainHeader .rightInfo h4{
+	margin: 0;
+	font-size: 16px;
+	margin-top: 7px;
+}
+
+
+#invoiceTopInfo{}
+#invoiceTopInfo .infoContent{}
+#invoiceTopInfo .infoContent p{
+	margin: 0;
+	font-weight: 600;
+	font-size: 15px;
+	color: #ccc;
+	margin-bottom: 6px;
+}
+#invoiceTopInfo .infoContent h3{
+	margin: 0;
+	font-size: 17px;
+	margin-bottom: 6px;
+	color: #333;
+}
+
+#invoiceTableArea{
+	margin-top: 50px;
+}
+ #invoiceTableArea table{}
+ #invoiceTableArea table thead{}
+ #invoiceTableArea table thead tr{}
+ #invoiceTableArea table thead tr th{
+    border-bottom: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    font-weight: 500;
+    font-size: 13px;
+    color: #ccc;
+ }
+ #invoiceTableArea table tbody{}
+ #invoiceTableArea table tbody tr{}
+ #invoiceTableArea table tbody tr td{
+ 	 border-top: 1px solid #ccc;
+ 	 border-bottom: 1px solid #ccc;
+ 	 font-weight: 500;
+ 	 font-size: 14px;
+ 	 color: #333;
+ }
+
+#invoiceTotalArea{}
+#invoiceTotalArea table{
+	margin: 0;
+}
+#invoiceTotalArea table tr {
+	background: #F8F8FA;
+	border-radius: 5px;
+}
+#invoiceTotalArea table tr td{
+	padding: 15px 20px;
+}
+#invoiceTotalArea table tr td.amountText{
+	font-weight: 600;
+	font-size: 15px;
+}
+#invoiceTotalArea table tr td.totalAmountNumber{
+	width: 150px;
+}
+
+#invoiceTotalArea table tr td.totalAmountNumber h3{
+	font-weight: 600;
+	font-size: 20px;
+	margin: 0;
+}
+
+
+
+
+.paymentStatus .paidBox{}
+.paymentStatus .paidBox h4{
+	margin: 0;
+	font-weight: 700;
+	font-size: 18px;
+	text-transform: capitalize;
+	color: #507C5C;
+}
+.paymentStatus .paidBox h4 img{
+	height: 25px;
+	margin-right: 5px;
+}
+
+
+
+.paymentStatus .unpaidBox{}
+.paymentStatus .unpaidBox h4{
+	margin: 0;
+	font-weight: 700;
+	font-size: 18px;
+	text-transform: capitalize;
+	color: #B3404A;
+}
+.paymentStatus .unpaidBox h4 img{
+	height: 25px;
+	margin-right: 5px;
+}
+
+
+
+
+

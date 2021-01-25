@@ -1,0 +1,234 @@
+{% extends 'comman/layout.html' %}
+{% load static %}
+{% block headertext %}
+
+Fleet
+
+{% endblock %}
+{% block customcss %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/ram.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-table.min.css' %}">
+<link rel="stylesheet" href="{% static 'vendor/css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/common.css' %}">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
+{% endblock %}
+{% block headbutton %}
+<button class="createBtn"
+        data-toggle="modal" data-target="#vehicle">Add New Vehicle</button>
+{% endblock %}
+
+{% block maincontent %}
+<div class="screen-wrapper">
+    <div class="main-content-wrapper">
+        <div class="pageNav">
+            <ul>
+                {% if status == 'Active' or status == 'Inactive' or status == 'Discontinued' %}
+                <li><a href="{% url 'fleet:vehicle' %}">All</a></li>
+                {% else %}
+                <li><a href="{% url 'fleet:vehicle' %}" style="color:#3cd17f; text-decoration: underline;">All</a></li>
+                {% endif %}
+
+
+                {% if status == active %}
+                <li><a href="{% url 'fleet:vehicle' %}?vehicle_status={{ active }}"
+                       style="color:#3cd17f; text-decoration: underline;">Active</a></li>
+                {% else %}
+                <li><a href="{% url 'fleet:vehicle' %}?vehicle_status={{ active }}">Active</a></li>
+                {% endif %}
+
+                {% if status == inactive %}
+                <li><a href="{% url 'fleet:vehicle' %}?vehicle_status={{ inactive }} "
+                       style="color:#3cd17f; text-decoration: underline;">Inactive</a></li>
+                {% else %}
+                <li><a href="{% url 'fleet:vehicle' %}?vehicle_status={{ inactive }}">Inactive</a></li>
+                {% endif %}
+
+                {% if status == discontinued %}
+                <li><a href="{% url 'fleet:vehicle' %}?vehicle_status={{ discontinued }}"
+                       style="color:#3cd17f; text-decoration: underline;">Discontinued</a></li>
+                {% else %}
+                <li><a href="{% url 'fleet:vehicle' %}?vehicle_status={{ discontinued }}">Discontinued</a></li>
+                {% endif %}
+            </ul>
+        </div>
+        {% for field in form %}
+        <div>
+            <span class="error"> {{ field.errors }}</span>
+        </div>
+        {% endfor %}
+
+        <div class="content-wrapper">
+            <div class="grid_row">
+                <div class="wh_fltr_row">
+                    <form method="get">
+                        <input type="txt" class="search_pro" name="search" placeholder="Search a product here">
+                    </form>
+                    <button class="actionBtn" onclick="openDD()">Action</button>
+                    <div class="action-dd" id="action-dd">
+                        <div class="head">
+                            <font>Action</font>
+                            <button class="close_btn" onclick="closeDD()"><i class="fa fa-times"
+                                                                             aria-hidden="true"></i>
+                            </button>
+                        </div>
+
+                        <div class="body">
+                            <form action="{% url 'fleet:discontinued' %}" method="POST"/>
+                            {% csrf_token %}
+                            <div class="tr">
+                                <input type="submit" class="cancel-btn" value="Discontinued" name="attendence"
+                                       style="background-color: white;">
+                                <input type="text" value="Process" name="attendence" id="attendenceallvalues"
+                                       hidden>
+                                <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="tableWrapper">
+                    <table class="data-table">
+                        <tr>
+                            <th>&nbsp;</th>
+                            <th>id</th>
+                            <th>Date Added</th>
+                            <th>License Plate</th>
+                            <th>Registration No.</th>
+                            <th>Current Driver</th>
+                            <th>Current Delivery ID</th>
+                            <th>Runtime</th>
+                        </tr>
+                        {% for info in object_list %}
+                        <tr>
+                            {% if info.vehicle_status == 'Active' or info.vehicle_status == 'Inactive' %}
+                            <td><input type="checkbox" name="orders" class="attendencecheckvalue"
+                                       value="{{ info.id }}">
+                            </td>
+                            {% else %}
+                            <td></td>
+                            {% endif %}
+                            <td><a href="{{ info.get_absolute_url }}">#{{ info.id }}</a></td>
+                            <td>{{ info.created_at }}</td>
+                            <td>{{ info.license_plate_number }}</td>
+                            <td>{{ info.registration_number }}</td>
+                            <td>{% if info.active_driver.driver.full_name %}
+                                {{ info.active_driver.driver.full_name }}
+                                {% else %}
+                                No driver assigned
+                                {% endif %}
+                            </td>
+                            <td>{% for order in info.active_driver.driver.bundle_driver.all %}
+                                {{ order }} &nbsp;
+                                {% empty %}
+                                Order not assigned.
+                            </td>
+                            {% endfor %}
+                            <td>{% for order in info.active_driver.driver.bundle_driver.all %}
+                                {{ order.estimated_time }} &nbsp;
+                                {% empty %}
+                                No runtime found.
+                            </td>
+                            {% endfor %}
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="7">
+                                <div class="text text-center">No data found.</div>
+                            </td>
+                        </tr>
+
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="pagination">
+                <span class="step-links">
+                    {% if page_obj.has_previous %}
+                        <a href="?page={{ page_obj.previous_page_number }}"><</a>
+                    {% endif %}
+
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">></a>
+                    {% endif %}
+                </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="vehicle" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content document">
+            <div class="modal-header">
+                <div class="icon"><span class="photo"><i class="fa fa-camera" aria-hidden="true"></i></span></div>
+                <h5 class="modal-title" id="exampleModalLongTitle">Add New Vehicle</h5>
+            </div>
+            <div class="modal-body">
+                <div class="form">
+                    <form method="POST" action="{% url 'fleet:add_vehicle' %}">
+                        {% csrf_token %}
+                        <div class="input_group">
+                            {% include 'snippets/_input_field.html' with field=form.model_number %}
+                        </div>
+
+                        <div class="input_group">
+                            {% include 'snippets/_input_field.html' with field=form.registration_number %}
+                        </div>
+
+                        <div class="input_group">
+                            {% include 'snippets/_input_field.html' with field=form.license_plate_number %}
+                        </div>
+
+                        <div class="selectBox" style="margin-left:0px;">
+                            {% include 'snippets/_input_field.html' with field=form.vehicle_type %}
+                        </div>
+
+                        <div class="modal-footer">
+                            <div class="btnWrapper">
+                                <button type="button" class="btn gray" data-dismiss="modal">Cancel</button>&nbsp;&nbsp;&nbsp;
+                                <button type="submit" class="btn green">Add Vehicle</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block customscript %}
+<script src="static/vendor/js/jquery.min.js"></script>
+<script src="static/vendor/js/bootstrap.min.js"></script>
+<script>
+        function openDD() {
+            var element = document.getElementById("action-dd");
+            element.classList.add("open");
+        }
+
+        function closeDD() {
+            var element = document.getElementById("action-dd");
+            element.classList.remove("open");
+        }
+
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+        $(document).ready(function () {
+
+            $('.attendencecheckvalue').click(function () {
+                $('.bbtn').removeAttr('disabled');
+                var txt = [];
+                $('.attendencecheckvalue:checked').each(function () {
+                    txt.push($(this).val())
+                });
+
+                $('#attendenceallvalues').val(txt);
+
+            });
+        });
+
+</script>
+{% endblock %}

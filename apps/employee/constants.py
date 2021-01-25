@@ -1,0 +1,58 @@
+DRIVER = 'Driver'
+STORE_KEEPER = 'Store Keeper'
+
+USER_TYPE_CHOICES = (
+    (DRIVER, DRIVER),
+    (STORE_KEEPER, STORE_KEEPER),
+
+)
+
+PENDING = 'Pending'
+DELIVERED = 'Delivered'
+
+DRIVER_ORDER_STATUS = (
+    (PENDING, PENDING),
+    (DELIVERED, DELIVERED),
+)
+
+ACTIVE = 'Active'
+ON_VACATION = 'On Vacation'
+
+DRIVER_STATUS = (
+    (ACTIVE, ACTIVE),
+    (ON_VACATION, ON_VACATION),
+)
+
+PRIVATE = 'Private'
+MERCHANT = 'Merchant'
+
+TRANSPORTATION_TYPE = (
+    (PRIVATE, PRIVATE),
+    (MERCHANT, MERCHANT),
+)
+
+MOTORBIKE = 'Motorbike'
+MINI_TRUCK = 'Mini Truck'
+TRUCK = 'Truck'
+
+VEHICLE_TYPE = (
+    (MOTORBIKE, MOTORBIKE),
+    (MINI_TRUCK, MINI_TRUCK),
+    (TRUCK, TRUCK),
+)
+
+COMPLETE = 'Complete'
+OFF_DUTY = 'Off Duty'
+ASSIGNED = 'Assigned'
+
+SHIFT_STATUS = (
+    (COMPLETE, COMPLETE),
+    (OFF_DUTY, OFF_DUTY),
+    (ASSIGNED, ASSIGNED),
+)
+
+STORE_KEEPER_SHIFT_STATUS = (
+    (COMPLETE, COMPLETE),
+    (OFF_DUTY, OFF_DUTY),
+    (ASSIGNED, ASSIGNED),
+)

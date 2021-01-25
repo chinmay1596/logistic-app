@@ -1,0 +1,214 @@
+.notifications{
+    width: 310px;
+    border: 1px solid #acacac6e;
+    border-radius: 7px;
+    max-height: 600px;
+    overflow-y: scroll;
+    padding: 0px !important;
+}
+.notifications::-webkit-scrollbar{
+    display: none;
+}
+.notifications::-moz-scrollbar{
+    display: none;
+}
+.notifications::-o-scrollbar{
+    display: none;
+}
+.notifications::-ms-scrollbar{
+    display: none;
+}
+.notifications::scrollbar{
+    display: none;
+}
+.notificationItem {
+    padding: 20px 20px;
+    border-bottom: 1px solid #acacac6e;
+    position: relative;
+    padding-bottom: 5px;
+}
+.notificationItem .toptitle{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.notificationItem .toptitle .image{}
+.notificationItem .toptitle .image img {
+    height: 45px;
+}
+.notificationItem .toptitle .content{
+    margin-left: 20px;
+}
+.notificationItem .toptitle .content h4{
+    margin: 0;
+    font-size: 14px;
+    color: #333333;
+}
+.notificationItem .toptitle .content p{
+    margin: 0;
+    font-size: 13px;
+    color: #3CD17F;
+    margin-top: 4px;
+
+}
+.notificationItem .mainContent{
+    margin-top: 10px;
+
+}
+.notificationItem .mainContent p{
+    font-size: 14px;
+    margin-bottom: 0px !important;
+}
+
+:root {
+    --color: #3cd17f;
+    --disabled: #959495;
+  }
+
+  *,
+  *:before,
+  *:after {
+    box-sizing: border-box;
+  }
+  .notifications-checkbox {
+    position: relative;
+    right: 0;
+    bottom: 0px;
+    z-index: 9999999;
+    cursor: pointer;
+    text-align: right;
+}
+  .checkboxCustom {
+    font-size: 25px;
+    color: var(--color);
+    cursor: pointer;
+    padding: 0px;
+  }
+  .checkbox--disabled {
+    color: var(--disabled);
+  }
+
+  .checkbox__control {
+    display: inline-grid;
+    width: 1em;
+    height: 1em;
+    border-radius: 4px;
+    border: 2px solid currentColor;
+  }
+  .checkbox__control svg{
+    height: 16px;
+    position: relative;
+    left: 3px;
+    top: 2px;
+  }
+  .checkbox__control svg {
+    -webkit-transition: -webkit-transform 0.1s ease-in 25ms;
+    transition: -webkit-transform 0.1s ease-in 25ms;
+    transition: transform 0.1s ease-in 25ms;
+    transition: transform 0.1s ease-in 25ms, -webkit-transform 0.1s ease-in 25ms;
+    -webkit-transform: scale(0);
+            transform: scale(0);
+    -webkit-transform-origin: bottom left;
+            transform-origin: bottom left;
+  }
+
+  .checkbox__input {
+    display: grid;
+    grid-template-areas: "checkbox";
+  }
+  .checkbox__input > * {
+    grid-area: checkbox;
+  }
+  .checkbox__input input {
+    opacity: 0;
+    width: 1em;
+    height: 1em;
+  }
+  .checkbox__input input:focus + .checkbox__control {
+    box-shadow:none;
+  }
+  .checkbox__input input:checked + .checkbox__control{
+    background: var(--color);
+  }
+  .checkbox__input input:checked + .checkbox__control svg {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+
+  }
+  .checkbox__input input:checked + .checkbox__control svg path{
+      stroke: #fff;
+  }
+
+  .notifications-main-toggle-btn{
+    position: relative;
+  }
+
+  .notification-count{
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    background: #6C757D;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 19px;
+    top: -8px;
+    right: -7px;
+  }
+  .notification-count p{
+    font-size: 9px;
+    color: #fff;
+    font-weight: 700;
+  }
+
+ /* -- notifaction items hover --*/
+ .notificationItem:hover {
+    background-color: #e3e3e37a;
+}
+span.radio__label {
+    font-size: 15px;
+    position: absolute;
+    top: -1px;
+    right: 34px;
+    opacity: 0;
+}
+.checkboxCustom:hover span.radio__label{
+    opacity: 1;
+}
+
+.checkbox__input input:checked ~ .radio__label{
+    opacity: 0;
+}
+.checkbox__input input:checked ~ .notificationItem{
+    background-color: #e3e3e37a;
+}
+.nonotification_content{
+   padding-bottom: 19px;
+}
+.nonotification_content svg{
+    height: 30px;
+}
+
+.nonotification_content h4{
+    font-weight: 600;
+    font-size: 18px;
+    margin-top: 6px;
+}
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

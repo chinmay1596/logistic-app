@@ -1,0 +1,109 @@
+{% extends 'comman/layout.html' %}
+{% load static %}
+{% block headertext %}
+    Order Bundles
+{% endblock %}
+{% block customcss %}
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no'/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/ram.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-table.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/css/bootstrap.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/common.css' %}"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <script src="{% static 'vendor/js/jquery.min.js' %}"></script>
+    <style>
+        #map {
+            height: 500px;
+        }
+    </style>
+{% endblock %}
+{% block maincontent %}
+    <div class="screen-wrapper">
+        <div class="main-content-wrapper">
+            <div id="map-wrapper">
+                {% include 'orders/process_order_map.html' %}
+            </div>
+            <div class="content-wrapper">
+                <div class="page-sub-header">
+                    <h3> Processed Order Bundles: {{ order_bundle.count }}
+                        <span>These order bundles contain total {{ order_count }} orders</span></h3>
+                    <button type="button" class="delete_btn">Get Route</button>
+                </div>
+                <div>
+                    <table class="data-table">
+                        <tr>
+                            <th></th>
+                            <th>Bundle ID</th>
+                            <th>No of Orders</th>
+                            {#                            <th>Total Volume & Weight</th>#}
+                            <th>Status</th>
+                            <th>Category</th>
+                            <th>Cash to be collected</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+
+                        {% for info in object_list %}
+
+                            <tr>
+                                <td>
+                                    <input type="radio" name="orders" class="bundle_box" value="{{ info.get_orders }}">
+                                <td>
+                                    {#                                    <div class="badge-danger">&nbsp;</div>#}
+                                    <a href="{% url 'orders:bundle-detail' pk=info.id %}">
+                                        <span>{{ info.bundle_id }}</span></a>
+                                </td>
+                                <td>{{ info.order.all.count }}</td>
+                                {#                                <td>{{ info.total_volume }} Kgs</td>#}
+                                <td>{{ info.status }}</td>
+                                <td>{{ info.category }}</td>
+                                <td>$ {{ info.bundle_payment }}</td>
+
+                                <td class="taright">
+<!--                                    <a href="{% url 'employee:employee-shift' 'driver' 'shift' %}">-->
+<!--                                        <button class="ml btn btn-outline-secondary">Assign Driver</button>-->
+<!--                                    </a>-->
+                                    <button class="btn generate-btn">Generate Packing List</button>
+
+                                </td>
+                                </form>
+
+                            </tr>
+                        {% endfor %}
+
+                        </form>
+                    </table>
+                    <div class="pagination">
+                <span class="step-links">
+                    {% if page_obj.has_previous %}
+                        <a href="?page={{ page_obj.previous_page_number }}">❮</a>
+                    {% endif %}
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">❯</a>
+                    {% endif %}
+                </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block customscript %}
+    <script>
+        var coordinates
+        $(document).ready(function () {
+            $(".delete_btn").click(function () {
+                var favorite = [];
+                $.each($("input[name='orders']:checked"), function () {
+                    favorite.push($(this).val());
+                });
+                coordinates = favorite.join(", ")
+                calcRoute(coordinates);
+            });
+        });
+    </script>
+{% endblock %}
+
+
+
+

@@ -1,0 +1,149 @@
+
+#headerTopArea {
+    overflow-x: hidden;
+    padding: 10px 0px 15px 0px;
+    border-bottom: 1px solid #ddd;
+    background: #fff;
+}
+
+#headerTopArea .logoarea {}
+
+#headerTopArea .logoarea a {}
+
+#headerTopArea .logoarea a img {
+    height: 25px;
+}
+
+
+#headerTopArea .middle {}
+
+#headerTopArea .middle h4 {
+    font-weight: 600;
+    font-size: 27px;
+    margin: 0;
+}
+
+#headerTopArea .rightClose {}
+#headerTopArea .rightClose a{}
+#headerTopArea .rightClose a i{
+    height: 30px;
+    width: 30px;
+    background: #333333;
+    color: #fff;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 50%;
+    font-size: 11px;
+    transition: 0.4s;
+}
+
+#headerTopArea .rightClose a i:hover{
+    background: #3CD17F;
+}
+
+#headerTopArea .rightDot ul {
+    margin: 0;
+}
+
+#headerTopArea .rightDot ul li {
+    display: inline-block;
+    list-style: none;
+}
+
+#headerTopArea .rightDot ul li i {
+    font-size: 12px;
+}
+
+#headerTopArea .rightDot ul li.closeIcons i{
+    font-size: 30px;
+}
+
+
+/*-- start user profile main page --*/
+#userProfileMainPage{
+    padding: 140px 0px;
+    background: #fff;
+}
+#userProfileMainPage .userProfilePageImage{}
+#userProfileMainPage .userProfilePageImage img{}
+#userProfileMainPage .userProfilePageForm{
+    padding-left:30px;
+}
+#userProfileMainPage .userProfilePageForm .inputBox{}
+#userProfileMainPage .userProfilePageForm .inputBox p{
+    font-weight: 400;
+    font-size: 20px;
+    margin: 0;
+}
+#userProfileMainPage .userProfilePageForm .inputBox .input-group{
+    margin-top: 10px;
+}
+
+#userProfileMainPage .userProfilePageForm .inputBox .input-group .input-group-text{
+    background: transparent;
+    font-size: 14px;
+}
+#userProfileMainPage .userProfilePageForm .inputBox .input-group input{
+    outline: none;
+    height: 43px !important;
+    font-size: 16px;
+    font-weight: 400;
+    color: #232323;
+    transition: 0.4s;
+}
+#userProfileMainPage .userProfilePageForm .inputBox .input-group input:focus{
+    box-shadow: none;
+    border-color: #ced4da;
+    background: #F4FCF7;
+}
+
+#userProfileMainPage .userProfilePageForm .actionBntProfile{
+    margin-top: 30px;
+}
+#userProfileMainPage .userProfilePageForm .actionBntProfile ul{
+    margin: 0;
+}
+#userProfileMainPage .userProfilePageForm .actionBntProfile ul li {
+    display: inline-block;
+    list-style: none;
+}
+#userProfileMainPage .userProfilePageForm .actionBntProfile ul li a{
+    background: #676767;
+    color: #fff;
+    font-weight: 400;
+    font-size: 14px;
+    display: inline-block;
+    padding: 10px 40px;
+    margin-right: 10px;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: 0.4s;
+}
+#userProfileMainPage .userProfilePageForm .actionBntProfile ul li a:hover{
+    background: #3CD17F;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

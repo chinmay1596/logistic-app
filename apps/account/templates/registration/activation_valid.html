@@ -1,0 +1,9 @@
+<p>Success! Thank you for your email confirmation. Now you can login your account. After 5 seconds you will be
+    redirected to the login page. If you are not redirected automatically please <a href="{% url 'account:login' %}">click
+        here</a>
+</p>
+<script>
+    window.setTimeout(function () {
+        window.location.href = "{% url 'account:login' %}";
+    }, 5000);
+</script>

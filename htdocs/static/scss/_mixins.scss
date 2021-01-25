@@ -1,0 +1,145 @@
+@import './variables';
+
+@mixin btnBoxShadow {
+  box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.2);
+}
+
+@mixin flex($align, $justify, $direction) {
+  display: flex;
+  align-items: $align;
+  justify-content: $justify;
+  flex-direction: $direction;
+}
+
+@mixin button {
+  padding-left: 20px;
+  padding-right: 20px;
+  height: 40px;
+  border-radius: 5px;
+  box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.2);
+  background-color: $primary;
+  color: $white;
+  // &:hover{
+  //     @include removeHover;
+  // }
+}
+
+@mixin outlineBtn {
+  padding-left: 20px;
+  padding-right: 20px;
+  height: 40px;
+  border-radius: 5px;
+  border: solid 1px $primary;
+  background-color: $white;
+  color: $primary;
+  box-shadow: none;
+}
+
+@mixin removeHover {
+  box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.2);
+  background-color: $primary;
+}
+
+@mixin custumScroller {
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+    background-color: $lightPrimary;
+    border-radius: 0.5rem;
+  }
+  &::-webkit-scrollbar-thumb {
+    height: 5px;
+    background-color: $textPrimary;
+    border-radius: 0.5rem;
+  }
+}
+
+@mixin heading($heading) {
+  font-size: $heading;
+  font-weight: 300;
+  color: $primary;
+  //line-height: 0.6;
+}
+
+@mixin subHeading {
+  font-size: $subheadingText;
+  color: $textPrimary;
+}
+
+@mixin text($size) {
+  font-size: $size;
+}
+
+@mixin disableScroll {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+}
+
+@mixin textSizeColor($size, $color, $weight) {
+  font-size: $size;
+  color: $color;
+  font-weight: $weight;
+}
+
+@mixin fixedCardHeader {
+  top: 4rem;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  overflow-x: auto;
+}
+
+@mixin dashboardCard {
+  background: $white 0% 0% no-repeat padding-box;
+  box-shadow: 0px 0px 20px #d7dee365;
+  border-radius: 0.5rem;
+  max-height: 22rem;
+  overflow: scroll;
+  @include disableScroll;
+}
+
+@mixin headText {
+  font-size: 1.4rem;
+  font-weight: 200;
+}
+
+@mixin cardTile {
+  padding: 1rem;
+  margin: 0;
+  border-bottom: 1px solid $lighterPrimary;
+  @include flex(center, space-between, row);
+  &:last-child {
+    margin-bottom: 1rem;
+    border-bottom: none;
+  }
+}
+
+@mixin paperCard {
+  background: $white;
+  box-shadow: 0px 0px 1.6rem $paperCardShadow;
+  border-radius: 0.3rem;
+}
+
+@mixin cardHeading {
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: $greyDarkest;
+}
+
+@mixin cardPadding {
+  padding: 1rem 1.5rem;
+}
+
+@mixin cardLabelTitle {
+  color: $textPrimary;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+@mixin adminCardSadhow {
+  box-shadow: 0.2rem 0.3rem 0.8rem #7777771a;
+  border-radius: 0.3rem;
+}

@@ -1,0 +1,31 @@
+{% load static %}
+<div>
+  <table class="data-table">
+    <tr>
+      <th>ID</th>
+      <th>Profile Image</th>
+      <th>Name</th>
+      <th>Number of shift</th>
+    </tr>
+    {% for driver in object_list %}
+    <tr>
+      <td>{{driver.id}}</td>
+
+        {% if driver.user.image %}
+        <td><img src="{{ driver.user.image.url }}" style="height:40px;width:42px;border-radius: 8%;" ></td>
+        {% else %}
+        <td><img src="{% static 'images/default.png' %}" style="height:40px;width:42px;border-radius: 8%;"></td>
+        {% endif %}
+
+        <td>{{ driver.user.get_full_name }}</td>
+      <td>1</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="4">
+            <div class="text text-center">No data found.</div>
+        </td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>

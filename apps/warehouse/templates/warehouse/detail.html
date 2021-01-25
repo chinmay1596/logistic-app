@@ -1,0 +1,470 @@
+{% extends 'comman/layout.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block customcss %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/ram.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-table.min.css' %}">
+<link href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="{% static 'css/uiupdate/producttable.css' %}">
+
+{% endblock %}
+
+{% block headertext %}
+{{ object.name }} ({{ object.id }})
+{% endblock %}
+
+{% block breadcrumb_url %}
+{% url 'warehouse:list' %}
+{% endblock %}
+
+{% block breadcrumb_text %}
+Warehouse Management
+{% endblock %}
+
+{% block headbutton %}
+<div class="float-right">
+    <a href="{% url 'warehouse:delete' pk=object.id %}"
+        class="btn btn-outline-primary mr-3 px-5"><small><strong>Delete</strong></small></a>
+    <a href="javascript:void(0)" onclick="submitForm()"
+        class="btn btn-primary px-5"><small><strong>Save</strong></small></a>
+</div>
+{% endblock %}
+
+{% block maincontent-class %}
+warehouse
+{% endblock %}
+
+{% block maincontent %}
+<form class="warehouse-form" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="ord_bnd_row">
+        <div class="leftCol">
+            <div class="fp_tr">
+                <div class="head">General Information</div>
+                <div class="body">
+                    <div class="form_tr">
+                        {% include 'snippets/_input_field.html' with field=form.name %}
+                    </div>
+                    <div class="form_tr">
+                        {% include 'snippets/_input_field.html' with field=form.description %}
+                    </div>
+                </div>
+            </div>
+            <div class="fp_tr">
+                <div class="head">Aisle Map
+                    <label for="id_aisle_map" class="createBtn">
+                        Add Aisle Map
+                    </label>
+                    {{ form.aisle_map }}
+                </div>
+                <div class="aisleMap">
+                    <div class="text text-center">
+                        {% if object.aisle_map %}
+                        <a href="{{ object.aisle_map.url }}" target="_blank">
+                            <img src="{{ object.aisle_map.url }}" class="aisleMap-image"
+                                style="width: 100%; height: -webkit-fill-available;">
+                        </a>
+                        {% else %}
+                        <br><br>
+                        <br><br>
+                        <br>
+                        <h5><i class="fas fa-file"></i>File Preview</h5>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="rightCol">
+            <div class="cd_tr">
+                <div class="head">Warehouse Details</div>
+                <div class="body">
+                    <div class="tr">
+                        <span>
+                            Warehouse Email
+                            <button class="anFloor" type="button" onclick="updateEmail()">
+                                Edit
+                            </button>
+                        </span>
+                        <div class="row" id="edit-email">
+                            {% if form.email.value %}
+                            {{ form.email.value }}
+                            {% else %}
+                            None
+                            {% endif %}
+                        </div>
+                        <div class="row update form_tr" id="update-email">
+                            {% include 'snippets/_input_field.html' with field=form.email %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="body">
+                    <div class="tr">
+                        <span>
+                            Warehouse Contact
+                            <button class="anFloor" type="button" onclick="updateContact()">
+                                Edit
+                            </button>
+                        </span>
+                        <div class="row" id="edit-contact">
+                            {% if form.contact.value %}
+                            {{ form.contact.value }}
+                            {% else %}
+                            None
+                            {% endif %}
+                        </div>
+                        <div class="row update form_tr" id="update-contact">
+                            {% include 'snippets/_input_field.html' with field=form.contact %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="body">
+                    <div class="tr">
+                        <span>
+                            Warehouse Address
+                            <button class="anFloor" type="button" onclick="updateAddress()">
+                                Edit
+                            </button>
+                        </span>
+                        <div class="row" id="edit-address">
+                            {% if form.address.value %}
+                            {{ form.address.value }}
+                            {% else %}
+                            None
+                            {% endif %}
+                        </div>
+                        <div class="row update form_tr" id="update-address">
+                            {% include 'snippets/_input_field.html' with field=form.address %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="grid_row">
+        <div class="head">
+            Inhouse Delivery Area
+            <span>Allot area for in-house delivery</span>
+        </div>
+        <div class="wh_fltr_row">
+            <div class="selectBox">
+                {% include 'snippets/_input_field.html' with field=form.location_range_type %}
+            </div>
+            {% include 'snippets/_input_field.html' with field=form.location_range %}
+            <button class="check" type="button" onclick="drawCircle()">Update</button>
+            {{ form.latitude }}
+            {{ form.longitude }}
+
+        </div>
+        <div class="wh_map" id="myMap">
+
+        </div>
+    </div>
+</form>
+<div class="grid_row">
+
+    <div class="modal fade" id="ajax-form-modal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog  modal-xl">
+            <div class="modal-content">
+                <form action="{% url 'warehouse:product-create' warehouse_id=object.pk %}" class="ajax-form"
+                    method="post">
+                    {% csrf_token %}
+                    <div class="modal-header">
+                        <h4>Add Product </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="leftCol">
+                            <div class="fp_tr">
+                                <div class="body">
+                                    {% for field in product_form %}
+                                    <div class="form-group row form_tr">
+                                        <label class="col-sm-2 col-form-label">{{ field.label }}</label>
+                                        <div class="col-sm-10">
+                                            {% include 'snippets/_input_field.html' with field=field %}
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="createBtn">Submit</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="head">All Products
+        <button class="createPro">Upload Updated Stock List</button>
+        <!--        <button class="createPro" data-toggle="modal" data-target="#ajax-form-modal">-->
+        <!--            <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;Add New Product-->
+        <!--        </button>-->
+    </div>
+    <div class="wh_fltr_row">
+        <input type="txt" class="search_pro" name="search" placeholder="Search a product here" style="">
+    </div>
+    <div class="tableWrapper">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Product Code</th>
+                    <th>Item Name</th>
+                    <th>Available Quantity</th>
+                    <th>Location in Aisle Map</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for warehouse in object.products.all %}
+                <tr>
+                    <td>{{ warehouse.product.uuid }}</td>
+                    <td>{{ warehouse.product.title }}</td>
+                    <td class="productQuantty"><span id="quantity">{{ warehouse.units }}</span>
+                        <button data-toggle="modal" value="{{ warehouse.product.id }}" id="{{ warehouse.units }}"
+                            data-target=".productQuantityModal" onclick="mybutton(this.value,this.id)"
+                            type="button">Update
+                        </button>
+                    </td>
+                    <td class="locationInaisleMap">
+                        {% if warehouse.location %}
+                        {{ warehouse.location }}
+                        {% else %}
+                        N/A
+                        {% endif %}
+                        <button type="button" data-toggle="modal" value="{{ warehouse.product.id }}"
+                            data-target=".updateAisleMapLocation" onclick="locationbutton(this.value)">Update
+                        </button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+    <!--    &lt;!&ndash; product quabtity modal &ndash;&gt;-->
+    <!--    <div class="modal fade productQuantityModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"-->
+    <!--        aria-hidden="true">-->
+    <!--        <div class="modal-dialog modal-sm modal-dialog-centered">-->
+    <!--            <div class="modal-content">-->
+    <!--                <div class="quantityModalContent text-center">-->
+    <!--                    <h3>Update product quantity</h3>-->
+    <!--                    <form method="post" action="{% url 'warehouse:quantity-update'%}">-->
+    <!--                        {% csrf_token %}-->
+    <!--                        <div class="quantityInputBox">-->
+    <!--                            <button id="decreaseInput" type="button">-</button>-->
+    <!--                            <input type="text" name="quantity" value="20" id="productValue">-->
+    <!--                            <input type="text" value="" name="product_id" id="product-id" hidden>-->
+    <!--                            <button id="increaseValue" type="button">+</button>-->
+    <!--                        </div>-->
+    <!--                        <button class="saveInfoButton" type="submit">Save</button>-->
+    <!--                    </form>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </div>-->
+    <!--    &lt;!&ndash; product quabtity modal &ndash;&gt;-->
+    <!-- product quabtity modal -->
+    <div class="modal fade productQuantityModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                <div class="quantityModalContent text-center">
+                    <h3>Update product quantity</h3>
+                    <form method="post" action="{% url 'warehouse:quantity-update' %}">
+                        {% csrf_token %}
+                        <div class="quantityInputBox">
+                            <button id="decreaseInput" type="button">-</button>
+                            <input type="text" name="quantity" value="20" id="productValue">
+                            <input type="text" value="" name="product_id" id="product-id" hidden>
+                            <button id="increaseValue" type="button">+</button>
+                        </div>
+                        <button class="saveInfoButton" type="submit">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- product quabtity modal -->
+
+
+    <!--    &lt;!&ndash; product quabtity modal &ndash;&gt;-->
+    <!--    <div class="modal fade updateAisleMapLocation" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"-->
+    <!--        aria-hidden="true">-->
+    <!--        <div class="modal-dialog modal-md modal-dialog-centered">-->
+    <!--            <div class="modal-content">-->
+    <!--                <div class="updateAisleMapLocation">-->
+    <!--                    <h3>Update Location</h3>-->
+    <!--                    <form method="post" action="{% url 'warehouse:location-update'%}">-->
+    <!--                        {% csrf_token %}-->
+    <!--                        <div class="inputboxAsisleMap">-->
+    <!--                            <label>Updte location input label</label>-->
+    <!--                            <input type="text" name="bay" placeholder="Update Bay">-->
+    <!--                            <input type="text" name="shelf" placeholder="Update shelf">-->
+    <!--                            <input type="text" value="" name="product_id" id="map_location" hidden>-->
+    <!--                        </div>-->
+    <!--                        <button class="saveInfoButton" type="submit">Save</button>-->
+    <!--                    </form>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </div>-->
+    <!--    &lt;!&ndash; product quabtity modal &ndash;&gt;-->
+
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}">
+                << /a>
+                    {% endif %}
+
+                    {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">></a>
+                    {% endif %}
+        </span>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block customscript %}
+<script>
+
+    $(".alert").delay(5000).slideUp(1000, function () {
+        $(this).alert('close');
+    });
+
+    function updateEmail() {
+        var element = document.getElementById("update-email");
+        element.classList.add("open");
+        var element = document.getElementById("edit-email");
+        element.classList.add("close");
+    }
+
+    function updateAddress() {
+        var element = document.getElementById("update-address");
+        element.classList.add("open");
+        var element = document.getElementById("edit-address");
+        element.classList.add("close");
+    }
+
+    function updateContact() {
+        var element = document.getElementById("update-contact");
+        element.classList.add("open");
+        var element = document.getElementById("edit-contact");
+        element.classList.add("close");
+    }
+
+    function submitForm() {
+        $('.warehouse-form').submit()
+    }
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('.aisleMap').empty();
+                $('.aisleMap').html('<img src="" class="aisleMap-image" style="width: 100%; height: -webkit-fill-available;">');
+                $('.aisleMap-image').attr('src', e.target.result);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAl3bzTlhOjdjT3IpjhxRoKwqEalbWhFfQ">
+</script>
+<script src="{% static 'js/googleMap.js' %}"></script>
+
+<script>
+    function successFormSubmit(response) {
+        $(".data-table tbody").append(
+            `<tr>
+                <td>
+                    <div class="product_radio">
+                        <input type="radio" name="radio-group" id="test2" value="${response['product']['id']}">
+                        <label for="test2"></label>
+                    </div>
+                </td>
+                <td>${response['product']["product_code"] || ""}</td>
+                <td>${response['product']['title'] || ""}</td>
+                <td>${response['product']['units'] || ""}</td>
+                <td>${response['location'] || "N/A"}</td>
+                </tr>`
+        )
+    }
+
+    function getDataForProductTable(url) {
+        $.get(
+            url,
+            function (response) {
+
+                $(".data-table tbody").empty();
+                response.results.forEach(function (datum) {
+                    successFormSubmit(datum);
+                })
+                if (response.previous_page != null) {
+                    $('#paginate-previous').attr('href', response.previous_page);
+                    $('#paginate-previous').removeAttr('disabled');
+                } else {
+                    $('#paginate-previous').attr('href', '#');
+                    $('#paginate-previous').attr('disabled', true);
+                }
+                if (response.next_page != null) {
+                    $('#paginate-next').attr('href', response.next_page);
+                    $('#paginate-next').removeAttr('disabled');
+
+                } else {
+                    $('#paginate-next').attr('href', '#');
+                    $('#paginate-next').attr('disabled', true);
+                }
+            }
+        )
+    }
+
+    getDataForProductTable("{% url 'warehouse:product-list' warehouse_id=object.id %}");
+
+    $('#paginate-previous, #paginate-next').on('click', function (e) {
+        e.preventDefault()
+        let query_params = $(this).attr('href');
+        if (query_params !== '#') {
+            getDataForProductTable("{% url 'warehouse:product-list' warehouse_id=object.id %}" + query_params)
+        }
+    });
+
+    $('#increaseValue').on('click', function () {
+        var counter = parseInt($("#productValue").val());
+        counter++;
+        $("#productValue").val(counter);
+    })
+    $('#decreaseInput').on('click', function () {
+        var counter = parseInt($("#productValue").val());
+        counter--;
+        $("#productValue").val(counter);
+    })
+
+
+    function mybutton(clicked_id, quantity) {
+        document.getElementById('product-id').value = clicked_id;
+        document.getElementById('productValue').value = quantity
+    }
+
+    function locationbutton(clicked_id) {
+        document.getElementById('map_location').value = clicked_id;
+    }
+
+
+</script>
+<script src="{% static 'js/ajax_form.js' %}"></script>
+
+{% endblock %}

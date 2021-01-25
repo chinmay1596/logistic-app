@@ -1,0 +1,306 @@
+{% extends 'comman/layout.html' %}
+{% load static %}
+{% block customcss %}
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no'/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/ram.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}"/>
+{% endblock %}
+{% block headertext %}
+    <h2 class="page-header-text">Order ID : {{ object.uuid }}</h2>
+    <div class="priority">
+        <button class="level"><i class="fa fa-flag" aria-hidden="true"></i></button>
+        <font>Priority Level</font>
+    </div>
+    <div class="order_action">
+        {% if not object.get_distance %}
+            <font>Delivery Location outside inhouse Delivery Area</font>
+            <button class="map_btn"><i class="fa fa-map" aria-hidden="true"></i></button>
+            <button class="createBtn" onclick="javascript:location.href='delivery-Partners.html'">Assign Delivery
+                Partner
+            </button>
+        {% else %}
+            <font>Delivery Location inside inhouse Delivery Area</font>
+            <button class="createBtn" onclick="javascript:location.href='delivery-Partners.html'" disabled>Assign
+                Delivery Partner
+            </button>
+        {% endif %}
+        {% if object.order_status == 'Unfulfilled' %}
+            <button class="createBtn" data-toggle="modal" data-target="#myModal">Add to an Existing Order
+                Bundle
+            </button>
+        {% else %}
+
+            {#            <button class="createBtn" onclick="javascript:location.href='order-bundle-id.html'" disabled>#}
+            {#            </button>#}
+        {% endif %}
+    </div>
+{% endblock %}
+{% block maincontent %}
+    <!-- The Modal -->
+    <div class="modal" id="myModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Select the Order Bundle</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="tableWrapper">
+                        <table class="data-table">
+                            <tbody>
+                            <tr>
+                                <th>&nbsp;</th>
+                                <th>Bundle ID</th>
+                                <th>No. of Orders</th>
+                                <th>Cash to be collected</th>
+                                <th>Status</th>
+                            </tr>
+                            {% for bundle in bundles %}
+                                <tr>
+                                    <td><input type="radio" name="orders" class="attendencecheckvalue"
+                                               value="{{ bundle.id }}">
+                                    </td>
+                                    <td>{{ bundle.bundle_id }}</td>
+                                    <td>{{ bundle.order.all.count }}</td>
+                                    <td>{{ bundle.bundle_payment }}</td>
+                                    <td>{{ bundle.status }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <form action="{% url 'orders:add_to_bundle' pk=object.id %}" method="POST"/>
+                    {% csrf_token %}
+                    <div class="tr">
+                        <button type="submit" class="createBtn" name="attendence" disabled>Add</button>
+                        <input type="text" value="Process" name="attendence" id="attendenceallvalues2" hidden>
+                    </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    </div>
+
+    <div class="pageNav">
+        <ul>
+            <li>Ordered On: {{ object.order_date }}</li>
+            <li>Order Due Date: {{ object.due_date }}</li>
+            {% if order_bundle %}
+                <li>Order Bundle: {{ order_bundle.bundle_id }}</li>
+            {% else %}
+                <li>Bundle not assigned</li>
+            {% endif %}
+        </ul>
+    </div>
+    <div class="content-wrapper">
+        <div class="grid_row">
+            <div class="filterRow">
+                <a href="{% url 'orders:export_order_item' pk=object.id %}">
+                    <button class="exportBtn">Export<i class="fa fa-download" aria-hidden="true"></i></button>
+                </a>
+            </div>
+            <div class="tableWrapper">
+                <table class="data-table">
+                    <tbody>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th>Product Id</th>
+                        <th>Product Code</th>
+                        <th>Item Name</th>
+                        <th>Quantity</th>
+                        <th>Item Description / DImension</th>
+                        <th>Location in Aisia Map</th>
+                        <th>Packaging Instruction</th>
+                    </tr>
+                    {% for item in object_list %}
+                        <tr>
+                            <td>
+                                <img src="{{ item.product.image.url }}" alt=""
+                                     style="height: 50px;width: 50px;">
+                            </td>
+                            <td>{{ item.product.id }}</td>
+                            <td>{{ item.product.location }}</td>
+                            <td>{{ item.product.title }}</td>
+                            <td>{{ item.units }}</td>
+                            <td>{{ item.product.description }}</td>
+                            <td>{{ item.product.location }}</td>
+                            <td>{{ item.product.packaging_instructions }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <div class="pagination">
+                <span class="step-links">
+                    {% if page_obj.has_previous %}
+                        <a href="?page={{ page_obj.previous_page_number }}">❮</a>
+                    {% endif %}
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">❯</a>
+                    {% endif %}
+                </span>
+                </div>
+            </div>
+            {#        <div class="pagination"><a href="#">❮</a><a href="#">❯</a></div>#}
+        </div>
+    </div>
+    <div class="ord_bnd_row">
+        <div class="leftCol">
+            <div class="fp_tr">
+                {% if object.is_paid %}
+                    <div class="head">Fully Paid</div>
+                {% else %}
+                    <div class="head">Payment Pending</div>
+                {% endif %}
+                <div class="body">
+                    <div class="tr">
+                        <div class="td">Subtotal</div>
+                        <div class="td">{{ object.items.all.count }} Items</div>
+                        <div class="td">{{ object.amount }}</div>
+                    </div>
+                    <div class="tr">
+                        <div class="td">Taxes</div>
+                        <div class="td">Does not apply</div>
+                        <div class="td">$0</div>
+                    </div>
+                    <div class="tr">
+                        <div class="td">Shipping</div>
+                        {% if object.get_distance %}
+                            <div class="td">{{ object.warehouse.name }}</div>
+                            <div class="td">-</div>
+                        {% else %}
+                            <div class="td">{{ object.shipping_by }}</div>
+                            <div class="td">$4.5</div>
+                        {% endif %}
+                    </div>
+                    <div class="tr">
+                        <div class="td">Total</div>
+                        <div class="td"></div>
+                        <div class="td">{{ object.amount }}</div>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="tr">
+                        <div class="td">Outstanding Balance</div>
+                        <div class="td">{{ object.amount }}</div>
+                    </div>
+                </div>
+                {% if order.is_paid %}
+                    <div class="footer"><a href="#"
+                                           style="color:#3cd17f ">Payment Captured</a></div>
+                {% else %}
+                    {% if order.order_status != 'Unfulfilled' %}
+                        <div class="footer"><a href="{% url 'orders:order-capture' object.pk %}"
+                                               style="color:#3cd17f ">Capture</a></div>
+                    {% else %}
+                        <div class="footer"><a href="#"
+                                               style="color:#3cd17f ">Capture</a></div>
+                    {% endif %}
+                {% endif %}
+            </div>
+            <div class="os">
+                <div class="head">Order Status: {{ object.order_status }}</div>
+                <div class="body">
+                    <div class="update_order">
+                        <div class="icon"><i class="fa fa-user-o" aria-hidden="true"></i></div>
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="input_box">
+                                <input type="txt" name="detail" id="id_detail"
+                                       placeholder="Enter your updates.">
+                                <button class="update" type="submit">Update</button>
+                            </div>
+                        </form>
+
+                    </div>
+                    <div class="order_status">
+                        {% if object.order_status == 'Cancelled' %}
+                            <div class="status cancel">
+                                <span></span><font>Order was cancelled.</font><font>Updated
+                                at {{ object.modified_at }} ago</font>
+                            </div>
+                        {% endif %}
+                        {% if order_bundle %}
+                            <div class="status confirm">
+                                <span></span><font>Order bundled and confirmation send to customer.</font><font>Updated
+                                at {{ order_bundle.created_at }}</font>
+                            </div>
+                        {% endif %}
+                        {% for remark in remarks %}
+                            <div class="status confirm">
+                                <span></span><font>{{ remark.detail }}</font><font>Updated
+                                at {{ remark.created_at }}</font>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="rightCol">
+            <div class="cd_tr">
+                <div class="head">Customer Details</div>
+                <div class="body">
+                    <div class="tr">
+                        <span>Email</span>
+                        <div class="row">{{ object.customer.email }}</div>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="tr">
+                        <span>Shipping Address</span>
+                        <div class="row">
+                            {{ object.address }},<br>
+                        </div>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="tr">
+                        <span>Billing Address</span>
+                        <div class="row">
+                                                        {{ object.address }},<br>
+                            {#                            {{ object.customer_name.locality_name }},<br>#}
+                            {#                            {{ object.customer_name.state }}, {{ object.customer_name.country_name }}<br>#}
+{#                            {{ object.customer.phone }}#}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="cd_tr">
+                <div class="head">Notes</div>
+                <div class="body">
+                    <div class="tr">
+
+                        <div class="row">{% if object.notes %}{{ object.notes }}{% else %} No any Notes {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block customscript %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.attendencecheckvalue').click(function () {
+                $('.createBtn').removeAttr('disabled');
+                var txt;
+                $('.attendencecheckvalue:checked').each(function () {
+                    txt = $(this).val()
+                    console.log(txt)
+                });
+                $('#attendenceallvalues2').val(txt);
+
+            });
+        });
+    </script>
+{% endblock %}

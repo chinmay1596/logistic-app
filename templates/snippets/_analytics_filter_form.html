@@ -1,0 +1,36 @@
+<div class="selectBox">
+    <label>Select Report Type</label>
+    {{ form.report_type }}
+</div>
+
+<form method="get" id="report-filter">
+    <div class="select_driver2">
+        <label class="driverrLabel">Select Driver</label>
+        <select class="js-example-basic-multiple" name="driver" multiple="multiple" id="select_driver">
+            {% for driver in driver_full_name %}
+            <option value="{{driver.id}}">{{ driver.user.get_full_name}}</option>
+            {%endfor%}
+        </select>
+    </div>
+
+    <div class="time_range">
+        <label>Choose Time Range</label>
+        {% if start_date %}
+        <input type="text" name="start_date" value="{{start_date}}" class="datepicker" autocomplete="off" placeholder={{start_date}}>
+        {% else %}
+        <input type="text" name="start_date" class="datepicker" autocomplete="off" placeholder="YYYY-MM-DD">
+        {% endif %}
+
+        <span class="between">to</span>
+
+        {% if end_date %}
+        <input type="text" name="end_date" value="{{end_date}}" class="datepicker" autocomplete="off" placeholder={{end_date}}>
+        {% else %}
+        <input type="text" name="end_date" class="datepicker" autocomplete="off" placeholder="YYYY-MM-DD">
+        {% endif %}
+
+
+        <button type="submit" onclick="submitForm()" class="createBtn" value="Submit Form">Generate Report
+        </button>
+    </div>
+</form>

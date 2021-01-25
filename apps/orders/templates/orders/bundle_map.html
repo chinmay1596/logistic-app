@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<style>
+    #map_canvas {
+        height: 500px;
+
+    }
+
+</style>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>GeoLocation</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body onload="initialize()">
+<div class="">
+</div>
+<br>
+<div id="map_canvas">
+</div>
+<script type="text/javascript" scr="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAl3bzTlhOjdjT3IpjhxRoKwqEalbWhFfQ"></script>
+</body>
+</html>
+<script>
+    var directionDisplay;
+    var directionsService = new google.maps.DirectionsService();
+    var map;
+    var start = document.getElementById('start').value;
+    var end = document.getElementById('end').value;
+    var submit = document.getElementById('submit');
+    function route() {
+        console.log(end);
+        console.log(start);
+    }
+    function initialize() {
+        directionDisplay = new google.maps.DirectionsRenderer();
+        var wellington = new google.maps.LatLng(27.7493, 85.3214);
+        var myOptions = {
+            zoom: 2,
+            mapTypeId: "roadmap",
+            center: wellington
+        }
+        map = new google.maps.Map(document.getElementById('map_canvas'), myOptions);
+        directionDisplay.setMap(map);
+        calcRoute();
+    }
+    function calcRoute() {
+        var obj ={{ object.get_orders }};
+        var last_point = obj.slice(-1);
+        var waypts = [];
+        for (var i = 0; i < obj.length - 1; i++) {
+            waypts.push(
+                {
+                    location: new google.maps.LatLng({{ object.get_orders }}[i][0], {{ object.get_orders }}[i][1]),
+                    stopover: true
+                }
+            )
+        }
+        console.log(last_point[0][0],last_point[0][1])
+        start = new google.maps.LatLng({{ warehouse_location }}[0], {{ warehouse_location }}[1]);
+        end = new google.maps.LatLng(last_point[0][0],last_point[0][1]);
+        var request = {
+            origin: start,
+            destination: end,
+            waypoints: waypts,
+            optimizeWaypoints: true,
+            travelMode: google.maps.DirectionsTravelMode.DRIVING
+        };
+        directionsService.route(request, function (response, status) {
+            if (status == google.maps.DirectionsStatus.OK) {
+                directionDisplay.setDirections(response);
+                var route = response.routes[0];
+            }
+        })
+    }
+
+</script>

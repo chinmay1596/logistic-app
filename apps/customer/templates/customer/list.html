@@ -1,0 +1,87 @@
+{% extends 'comman/layout.html' %}
+{% load static %}
+{% block headertext %}
+Customers
+{% endblock %}
+{% block headbutton %}
+<a href="{% url 'customer:create' %}">
+    <button class="createBtn">Add new Customer</button>
+</a>
+{% endblock %}
+
+{% block customcss %}
+<link rel="stylesheet" href="{% static 'css/customer.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/ram.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-table.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/fontawsome.css"/>
+{% endblock %}
+
+{% block maincontent %}
+<div class=" screen-wrapper">
+<div class="main-content-wrapper">
+    <div class="content-wrapper">
+        <div class="grid_row">
+            <div class="filterRow">
+                <form name="myform" method="GET">
+                    <input type="text" class="search_input" name="search" placeholder="Search a Customer here"
+                        style="width:87%">
+
+                </form>
+                <a href="{% url 'customer:customer_export' %}"><button class="exportBtn">Export<i
+                            class="fa fa-download"></i></button></a>
+            </div>
+        </div>
+        <div class="tableWrapper">
+            <table class="data-table">
+                <tr>
+                    <th>Customer ID</th>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Phone Number</th>
+                    <th>Orders</th>
+                </tr>
+                {% for object in object_list %}
+                <tr>
+                    <td>#{{ object.id }}</td>
+                    <td>{{ object.first_name }}</td>
+                    <td>{{ object.address.first }}</td>
+                    <td>{{ object.phone}}</td>
+                    <td>
+                        {% for order in object.customer_order.all %}
+                        <button class="btn orders-btn">
+
+                            <a href="{% url 'orders:order-detail' pk=order.id %}">Orders</a>
+
+                        </button>
+                        {% empty %}
+                        No order assigned
+                        {% endfor %}
+
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5">
+                        <div class="text text-center">No data found.</div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}">
+                    << /a>
+                        {% endif %}
+
+                        {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">></a>
+                        {% endif %}
+            </span>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+{% endblock %}

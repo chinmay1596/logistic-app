@@ -1,0 +1,37 @@
+<div>
+    <table class="data-table">
+        <tr>
+            <th>Order ID</th>
+            <th>Driver Name</th>
+            <th>Destination</th>
+            <th>Start Time</th>
+            <th>Delivery Time</th>
+            <th>Late Time</th>
+            <th>Path Time by Google API</th>
+        </tr>
+        {% for order in object_list %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>
+                    {% for name in order.bundle.all %}
+                        {{ name.driver.user.get_full_name }}
+                    {% empty %}
+                        Bundle not created
+                    {% endfor %}
+                </td>
+                <td>{{ order.address }}</td>
+                <td>03:05 PM</td>
+                <td>03:05 PM</td>
+                <td>13 Minutes</td>
+                <td>45 Minutes</td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="7">
+                    <div class="text text-center">No data found.</div>
+                </td>
+            </tr>
+        {% endfor %}
+
+    </table>
+</div>

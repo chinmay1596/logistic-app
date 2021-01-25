@@ -1,0 +1,50 @@
+<html>
+<body>
+<h1>Halo Logistics</h1>
+<p>
+    Invoice no: {{ transaction.transaction_id }}<br>
+    <span class="secondary">
+{{ transaction.created_at }}
+</span>
+</p>
+<h3>Bill to</h3>
+<p>
+    {{ transaction.order.customer_name.get_full_name }} <br>
+    {{ transaction.order.customer_name.email }}<br>
+    {{ transaction.order.customer_name.address }}<br>
+</p>
+<h3>Items bought</h3>
+<table>
+    <thead>
+    <tr>
+        <th>Product Code</th>
+        <th>Item Name</th>
+        <th>Quantity</th>
+        <th>Item Description / DImension</th>
+        <th>Location in Aisia Map</th>
+        <th>Packaging Instruction</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in transaction.order.items.all %}
+        <tr class="row{% cycle "1" "2" %}">
+            <td>{{ item.product.location }}</td>
+            <td>{{ item.product.product.title }}</td>
+            <td>{{ item.units }}</td>
+            <td>{{ item.product.product.description }}</td>
+            <td>{{ item.product.location }}</td>
+            <td>{{ item.product.product.packaging_instructions }}</td>
+        </tr>
+    {% endfor %}
+    <br><br>
+    <tr class="total">
+        <td colspan="3">Total</td>
+        <td class="num">${{ transaction.order.amount }}</td>
+    </tr>
+    </tbody>
+</table>
+<span class="{% if transaction.is_paid %}paid{% else %}pending{% endif %}">
+{% if transaction.is_paid %}Paid{% else %}Pending payment{% endif %}
+</span>
+</body>
+</html>

@@ -1,0 +1,62 @@
+{% extends 'comman/layout.html' %}
+{% load static %}
+
+{% block headertext %}
+
+
+Order Bundles
+
+
+{% endblock %}
+ {% block customcss %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/ram.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-table.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/common.css' %}" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <script src="{% static 'vendor/js/jquery.min.js' %}"></script>
+ {% endblock %}
+ {% block maincontent %}
+    <div class="screen-wrapper">
+
+      <div class="main-content-wrapper">
+
+        <div class="map-wrapper"><iframe src="https://www.google.com/maps/embed?pb=!1m22!1m8!1m3!1d3506.0656882133844!2d77.24862146468581!3d28.507671332467222!3m2!1i1024!2i768!4f13.1!4m11!3e0!4m3!3m2!1d28.5071975!2d77.2520837!4m5!1s0x390ce10dae65e38b%3A0xdd958c79d1809753!2sG10%2C%2068%2C%20Ratiya%20Marg%2C%20Block%20D%2C%20Sangam%20Vihar%2C%20New%20Delhi%2C%20Delhi%20110044!3m2!1d28.508218!2d77.24954029999999!5e0!3m2!1sen!2sin!4v1597552660956!5m2!1sen!2sin" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe></div>
+        <div class="content-wrapper">
+          <div class="page-sub-header">
+            <h3> Processed Order Bundles (6) <span>These order bundles contain total 126 orders</span></h3>
+            <button class="delete_btn">Delete</button>
+          </div>
+          <div>
+            <table class="data-table">
+              <tr>
+                <th>Bundle ID</th>
+                <th>No of Orders</th>
+                <th>Total Volume & Weight</th>
+                <th>Estimated Time</th>
+                <th>Category</th>
+                <th>Cash to be collected</th>
+                <th></th>
+              </tr>
+              <tr>
+                <td>
+                  <div class="badge-danger">&nbsp;</div>
+                  <span>Bun231</span>
+                </td>
+                <td>14</td>
+                <td>14 Kgs</td>
+                <td>9 hrs</td>
+                <td>Pick Up</td>
+                <td>$ 87</td>
+<!--                <td class="taright"><button class="ml btn btn-outline-secondary">Assign Driver</button>-->
+                  <button class="btn generate-btn">Select This Bundle </button>
+                </td>
+              </tr>
+
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% endblock %}

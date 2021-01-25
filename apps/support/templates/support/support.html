@@ -1,0 +1,67 @@
+{% extends 'comman/layout.html' %}
+{% load static %}
+
+{% block customcss %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/ram.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-table.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/line-icons/line-icons.min.css' %}" />
+{% endblock %}
+<script src=" https://kit.fontawesome.com/b04a32fda1.js" crossorigin="anonymous">
+</script>
+{% block headertext %}
+Support
+{% endblock %}
+{% block maincontent %}
+<div class="content-wrapper support">
+  <div class="sr_row" style="background-color: #f7f7f7; display:none;">
+    <div class="action">
+    </div>
+  </div>
+  {% for ticket in object_list %}
+  <div class="sr_msg_row">
+    <div class="head">
+      <div class="user">
+        <figure><img src="{% static 'assets/user.png' %}" alt="user"></figure>
+        <font>{{ticket.customer.get_full_name}}</font>
+      </div>
+      <div class="action">
+        <a href="{% url  'support:support-reply' ticket.id %}">
+          <button class="reply"><i class="fas fa-reply"></i></button>
+        </a>
+      </div>
+    </div>
+    <div class="body">
+      <div class="titleRow">
+        <h1></h1>
+        <div class="action">
+          <button class="status"><i class="fa fa-flag" aria-hidden="true"></i></button>
+          <button class="payment_issue">{{ticket.type_of_issue}}</button>
+        </div>
+      </div>
+      <div class="bodyRow">
+        {{ticket.description}}
+        </p>
+      </div>
+    </div>
+    <div class="footer">
+      {% if ticket.documents %}
+      {% for file in ticket.documents.all %}
+      <div class="col">
+        <div class="atms"><i class="fa fa-file" aria-hidden="true"></i></div>
+        <div class="file_info">
+          <a href="{{file.files.url}}" download>
+            <div class="name">{{file}}</div>
+            <div class="size">{{file.filesize}}</div>
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
+{% block customscript %}
+<script src="https://kit.fontawesome.com/b04a32fda1.js" crossorigin="anonymous"></script>
+{% endblock %}

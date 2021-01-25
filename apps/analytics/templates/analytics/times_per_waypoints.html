@@ -1,0 +1,69 @@
+<div>
+    <table class="data-table odd-even anamlytisManTableOddCss">
+        <thead>
+           <tr>
+                <th>Bundle ID</th>
+                <th>Bundle Created Time</th>
+                <th>Driver ID</th>
+                <th>Driver Name</th>
+                <th>Status</th>
+                <th>Time Taken</th>
+            </tr>
+        </thead>
+        <tbody class="panel-group" id="accordion-tableanalytics">
+        {% for bundle in object_list %}
+           <tr class="accordion-toggle analyticsTableItemRow collapsed bg-odd1" data-toggle="collapse" data-target="#tableAnalytics1" aria-expanded="false">
+                <td>{{ bundle.id }}</td>
+                <td>{{ bundle.created_at }}</td>
+                <td>
+                    {% if bundle.driver.user.id%}
+                        {{ bundle.driver.user.id }}
+                    {% else %}
+                        Driver not assigned
+                    {% endif %}
+                </td>
+                <td>{% if bundle.driver.user.get_full_name %}
+                    {{ bundle.driver.user.get_full_name }}
+                    {% else %}
+                    No driver assigned
+                    {% endif %}
+                </td>
+                <td>{{ bundle.status }}</td>
+                <td>{{ bundle.estimated_time }}</td>
+            </tr>
+              <tr class="subTableRow">
+                 <td colspan="10" style="padding: 0px; border: none;">
+                    <div id="tableAnalytics1" class="collapse" data-parent="#accordion-tableanalytics">
+                       <table style="width: 100%">
+                           <tr colspan="10" class="acordianSubTableThead">
+                               <th class="text-left">Order ID</th>
+                               <th class="text-center">WP Scheduled Time</th>
+                               <th class="text-center">WP Arrive Time</th>
+                               <th class="text-center">Deliver Time</th>
+                               <th class="text-center">WP1 Left Time</th>
+                               <th class="text-center">Time spend on Delevier</th>
+                           </tr>
+                           {% for order in bundle.order.all %}
+                           <tr class="text-center">
+                               <td class="text-left">{{ bundle.driver.user.get_full_name }}</td>
+                               <td>{{ order.due_date }}</td>
+                               <td>000:00</td>
+                               <td>000:00</td>
+                               <td>00:00</td>
+                               <td>12 Minutes</td>
+                           </tr>
+                           {% endfor %}
+                       </table>
+                    </div>
+                 </td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="6">
+                    <div class="text text-center">No data found.</div>
+                </td>
+              </tr>
+            {% endfor %}
+        </tbody>
+     </table>
+</div>

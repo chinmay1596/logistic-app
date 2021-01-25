@@ -1,0 +1,45 @@
+{% load static %}
+{% block headertext %}
+{% endblock %}
+{% block customcss %}
+    <!--     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Halo | Login & Join Halo</title> -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/ram.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-table.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/css/bootstrap.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/common.css' %}"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+{% endblock %}
+{% block maincontent %}
+    <div class="sign-up-wrapper">
+        <header>
+            <div class="logo"><img src="{% static 'assets/logo.svg' %}" alt="logo"/></div>
+            <div class="title">KMMRCE</div>
+            <div class="nav"><i class="fa fa-circle" aria-hidden="true"></i> <i class="fa fa-circle"
+                                                                                aria-hidden="true"></i> <i
+                    class="fa fa-circle" aria-hidden="true"></i></div>
+        </header>
+        <div class="sign-up">
+            <div class="sign-up-img"></div>
+            <div class="sign-up-form">
+                <h1>Login & Join Halo</h1>
+                <form action="{% url 'login' %}" method="POST">
+                    {% csrf_token %}
+
+                    <div class="row"><input id="email" type="text" name="email" placeholder="Email ID"></div>
+                    <div class="row"><input id="password" type="password" name="password" placeholder="Password"></div>
+                    <div class="row btnWrapper">
+                        <button class="joinBtn" type="submit">Login</button>
+                    </div>
+                </form>
+            </div>
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+
+
+

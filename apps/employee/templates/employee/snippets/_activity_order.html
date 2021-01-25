@@ -1,0 +1,74 @@
+{% if employee_type == 'driver' %}
+    <thead>
+    <tr>
+        <th>&nbsp;</th>
+        <th>Order ID</th>
+        <th>Order Date &amp; Time</th>
+        <th>Customer Name</th>
+        <th>Payment</th>
+        <th>Address</th>
+        <th>Status</th>
+        <th>Transportation</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for object in object_list %}
+        <tr>
+            <td>
+                <div class="product_radio">
+                    <input type="radio" name="radio-group" id="test1" value=""/><label
+                        for="test1"></label>
+                </div>
+            </td>
+            <td>{{ object.order.id }}</td>
+            <td>{{ object.order.order_date }}</td>
+            <td>{{ object.order.customer_name.get_full_name }}</td>
+            <td>{{ object.order.amount }}</td>
+            <td>
+                <a href="#">{{ object.order.address }}</a>
+            </td>
+            <td>{{ object.order.orderStatus }}</td>
+            <td>
+                <i class="fas fa-biking" aria-hidden="true"></i>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+{% else %}
+    <thead>
+    <tr>
+        <th>&nbsp;</th>
+        <th>Order ID</th>
+        <th>Order Date &amp; Time</th>
+        <th>Customer Name</th>
+        <th>Payment</th>
+        <th>Address</th>
+        <th>Status</th>
+        <th>Transportation</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    {% for object in object_list %}
+        <tr>
+            <td>
+                <div class="product_radio">
+                    <input type="radio" name="radio-group" id="test1" value=""/><label
+                        for="test1"></label>
+                </div>
+            </td>
+            <td>{{ object.order.id }}</td>
+            <td>{{ object.order.order_date }}</td>
+            <td>{{ object.order.customer_name.get_full_name }}</td>
+            <td>{{ object.order.amount }}</td>
+            <td>
+                <a href="#">{{ object.order.address }}</a>
+            </td>
+            <td>{{ object.order.orderStatus }}</td>
+            <td>
+                <i class="fas fa-biking" aria-hidden="true"></i>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+{% endif %}

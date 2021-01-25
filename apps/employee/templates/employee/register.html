@@ -1,0 +1,79 @@
+{% extends 'comman/layout.html' %}
+{% load static %}
+
+{% block page_title %}
+    Halo | Sign Up & Join Halo
+{% endblock %}
+
+{% block customcss %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/ram.css' %}"/>
+{% endblock %}
+
+{% block content %}
+    <div class="sign-up-wrapper">
+        <header>
+            <div class="logo">
+                <img src="{% static 'assets/logo.svg' %}" alt="logo"/>
+            </div>
+            <div class="title">KMMRCE</div>
+            <div class="nav">
+                <i class="fa fa-circle" aria-hidden="true"></i>
+                <i class="fa fa-circle" aria-hidden="true"></i>
+                <i class="fa fa-circle" aria-hidden="true"></i>
+            </div>
+        </header>
+        <div class="sign-up">
+            <div class="sign-up-img"></div>
+            <div class="sign-up-form">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="text-center alert alert-{{ message.tags }}">
+                            {{ message|safe }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                <h1>Welcome to KMMRCE</h1>
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row">
+                        {% include 'snippets/_input_field.html' with field=form.first_name %}
+                    </div>
+
+                    <div class="row">
+                        {% include 'snippets/_input_field.html' with field=form.last_name %}
+                    </div>
+
+                    <div class="row">
+                        {% include 'snippets/_input_field.html' with field=form.driving_licence %}
+                    </div>
+
+                    <div class="row">
+                        {% include 'snippets/_input_field.html' with field=form.email %}
+                    </div>
+
+                    <div class="row">
+                        {% include 'snippets/_input_field.html' with field=form.password %}
+                    </div>
+
+                    <div class="row">
+                        {% include 'snippets/_input_field.html' with field=form.phone %}
+                    </div>
+                    <div class="row">
+                        <div class="custom-file">
+                            {{ form.image }}
+                            <label class="custom-file-label" for="validatedCustomFile">Profile Image (Optional)
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row btnWrapper">
+                        <button class="joinBtn" type="submit">Join</button>
+                        <button class="loginBtn" onclick="javascript:location.href='login.html'">
+                            Already have an Account?
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

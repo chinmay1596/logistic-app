@@ -1,0 +1,71 @@
+{% extends 'comman/layout.html' %}
+{% load static %}
+
+{% block headertext %}
+
+        Delivery Partners
+
+{% endblock %}
+ {% block customcss %}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/ram.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-table.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/common.css' %}" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
+     <script src="{% static 'vendor/js/jquery.min.js' %}"></script>
+  {% endblock %}
+
+{% block headbutton %}
+
+
+{% endblock %}
+
+{% block maincontent %}
+     <div class="screen-wrapper">
+  
+      <div class="main-content-wrapper">
+        
+        <div class="content-wrapper">
+          <div class="Partners">
+            <div class="row">
+              <div class="ptrncard">
+                <div class="body"><img src="{% static 'images/delivery-partners/fedex-express.png' %}" alt="FedEx Express"/></div>
+                <div class="footer">              
+                  <div class="left">$239</div>
+                  <div class="right">Installed</div>
+                </div>
+              </div>
+              <div class="ptrncard">
+                <div class="body"><img src="{% static 'images/delivery-partners/dhl.png' %}" alt="DHL"/></div>
+                <div class="footer configure">
+                  <div class="left">$280</div>
+                  <div class="right">Configure</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="ptrncard">
+                <div class="body"><img src="{% static 'images/delivery-partners/dtdc.png' %}" alt="DTDC"/></div>
+
+                <div class="footer">
+                  <div class="left">$390</div>
+                  <div class="right">Installed</div>
+                </div>
+              </div>
+              <div class="ptrncard">
+                <div class="body"><img src="{% static 'images/delivery-partners/ups.png' %}" alt="UPS"/></div>
+                <div class="footer">
+                  <div class="left">$520</div>
+                  <div class="right">Installed</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% endblock %}
+

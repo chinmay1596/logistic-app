@@ -1,0 +1,68 @@
+.support{}
+.support .sr_row{float:left;width:100%;background-color:#fff;margin:10px 0 20px 0;padding:20px;border:1px solid #e5e6e9;border-radius:5px;}
+.support .sr_row input{float:left;width:92%;margin: 0 ;padding: 10px 15px; background-color: #fff;border: 1px solid #cdcdcd;border-radius: 5px;font-size:15px;color:#b0b0b0}
+.support .sr_row input::placeholder{color: #b0b0b0;}
+.support .sr_row .action{float:right;}
+.support .sr_row .action .attachment, .support .sr_row .action .send{float: left;width: 36px;margin:5px 0 0 0;height: 36px;	border: none;border-radius: 50%;font-size: 13px;font-weight: 600;display: flex;align-items: center;justify-content: center;}
+.support .sr_row .action .attachment{margin-right:10px;background-color: #e1e2e6;color: #151515;}
+.support .sr_row .action .send{background-color: #3cd17f;color: #f4fcf8;}
+.support .sr_row .action .attachment:hover{background-color: #c6c8d1;}
+.support .sr_row .action .send:hover{background-color: #2cb76a;}
+.support .sr_msg_row{float:left;width:100%;background-color:#fff;margin:0 0 20px 0;padding:0;border:1px solid #e5e6e9;border-radius:5px;}
+.support .sr_msg_row:last-child{margin:0 0 80px 0;}
+.support .sr_msg_row .head{float:left; width:100%; margin:0;padding:20px;border-bottom: 1px solid #e5e6e9;font-size: 18px; color:#333333}
+.support .sr_msg_row .head .user{float:left;}
+.support .sr_msg_row .head .user figure{float:left;width: 2rem;height: 2rem;margin:0 20px 0 0}
+.support .sr_msg_row .head .user figure img{width: inherit;height: inherit;border-radius: 50%;}
+.support .sr_msg_row .head .user font{float:left;font-size:20px;color:#333}
+.support .sr_msg_row .head .action{float:right;}
+.support .sr_msg_row .head .action .reply, .support .sr_msg_row .head .action .more{float: left;margin:5px 0 0 0;border: none;color:#acacac;background-color: transparent;align-items: center;justify-content: center;}
+.support .sr_msg_row .head .action .reply:hover, .support .sr_msg_row .head .action .more:hover{color:#000;}
+.support .sr_msg_row .head .action .reply{float:left;margin:8px 20px 0 0}
+.support .sr_msg_row .head .action .reply i{font-size:18px}
+.support .sr_msg_row .head .action .more i{font-size:6px}
+.support .sr_msg_row .body{float:left; width:100%; margin:0;padding:20px;font-size: 18px; color:#333333}
+.support .sr_msg_row .body .titleRow{float:left; width:100%; margin:0;padding:0;}
+.support .sr_msg_row .body .titleRow h1{float:left; width:85%; margin:2px 0 0 0;padding:0;font-size:20px;color:#333; font-weight: 400;}
+.support .sr_msg_row .body .titleRow .action{float:right;}
+.support .sr_msg_row .body .titleRow .action .status{float: left;width: 34px;height: 34px;margin:0;	border: none;border-radius: 50%;font-size: 13px;font-weight: 600;background-color: #e1e2e6;color: #333333;}
+.support .sr_msg_row .body .titleRow .action .payment_issue{float:right;font-size:14px;color:#333333;border-radius: 15px;background-color:#e1e2e6;border:none;margin:0 0 0 15px;padding: 6px 15px;}
+.support .sr_msg_row .body .titleRow .action .status:hover, .support .sr_msg_row .body .titleRow .action .payment_issue:hover{background-color:#c4c5c7}
+.support .sr_msg_row .body .bodyRow{float:left; width:70%;}
+.support .sr_msg_row .body .bodyRow p{float:left; width:100%;margin:0 0 30px 0;padding:0;color:#6d6d6d;font-size:15px;line-height:22px;}
+.support .sr_msg_row .body .bodyRow p:last-child{margin:0;}
+.support .sr_msg_row .footer{float:left; width:100%; margin:0;padding:20px;}
+.support .sr_msg_row .footer .col{float:left;width:auto;margin:0 20px 0 0;padding:0}
+.support .sr_msg_row .footer .col .atms{float: left;width: 34px;height: 34px;margin: 4px 20px  0 0;border: none;border-radius: 50%;font-size: 13px;font-weight: 600;background-color: #3cd17f;color: #f4fcf8;display: flex;align-items: center;justify-content: center;}
+.support .sr_msg_row .footer .col .file_info{float:left;}
+.support .sr_msg_row .footer .col .file_info .name{float:left;width:100%;margin:0 0 2px 0;color:#4c4c4c;font-size:13px}
+.support .sr_msg_row .footer .col .file_info .size{float:left;width:100%;;color:#b9b9b9;font-size:11px}
+.support .sr_trd_row{float:left;width:100%;background-color:#fff;margin:10px 0 20px 0;padding:0;border:1px solid #e5e6e9;border-radius:5px;}
+.support .sr_trd_row:last-child{margin:0 0 80px 0;}
+.support .sr_trd_row .head{float:left; width:100%; margin:0;padding:20px;font-size: 18px; color:#333333;border-bottom: 1px solid #e5e6e9;}
+.support .sr_trd_row .head .user{float:left;}
+.support .sr_trd_row .head .user figure{float:left;width: 2rem;height: 2rem;margin:0 20px 0 0}
+.support .sr_trd_row .head .user figure img{width: inherit;height: inherit;border-radius: 50%;}
+.support .sr_trd_row .head .user font{float:left;font-size:20px;color:#333}
+.support .sr_trd_row .head .action{float:right;}
+.support .sr_trd_row .head .action .reply, .support .sr_trd_row .head .action .more{float: left;margin:5px 0 0 0;border: none;color:#acacac;background-color: transparent;align-items: center;justify-content: center;}
+.support .sr_trd_row .head .action .reply:hover, .support .sr_trd_row .head .action .more:hover{color:#000;}
+.support .sr_trd_row .head .action .reply{float:left;margin:8px 20px 0 0}
+.support .sr_trd_row .head .action .reply i{font-size:18px}
+.support .sr_trd_row .head .action .more i{font-size:6px}
+.support .sr_trd_row .body{float:left; width:100%; margin:0;padding:20px 20px 0 20px;font-size: 18px; color:#333333}
+.support .sr_trd_row .body .titleRow{float:left; width:100%; margin:0 0 50px 0;padding:0;}
+.support .sr_trd_row .body .titleRow h1{float:left; width:85%; margin:2px 0 0 0;padding:0;font-size:20px;color:#333; font-weight: 400;}
+.support .sr_trd_row .body .titleRow h2{float:left; width:85%; margin:5px 0 0 0;padding:0;font-size:18px;color:#acacac; font-weight: 400;}
+.support .sr_trd_row .body .titleRow .action{float:right;}
+.support .sr_trd_row .body .titleRow .action .status{float: left;width: 34px;height: 34px;margin:0;	border: none;border-radius: 50%;font-size: 13px;font-weight: 600;background-color: #e1e2e6;color: #333333;}
+.support .sr_trd_row .body .titleRow .action .payment_issue{float:right;font-size:14px;color:#333333;border-radius: 15px;background-color:#e1e2e6;border:none;margin:0 0 0 15px;padding: 6px 15px;}
+.support .sr_trd_row .body .titleRow .action .status:hover, .support .sr_trd_row .body .titleRow .action .payment_issue:hover{background-color:#c4c5c7}
+.support .sr_trd_row .body .bodyRow{float:left; width:100%;}
+.support .sr_trd_row .body .bodyRow textarea{float: left;width: 100%;margin: 0;padding: 10px;font-size: 14px;color: #6b7d8a;border: 1px solid #cdcdcd;border-radius: 5px;resize: none;}
+.support .sr_trd_row .body .bodyRow textarea::placeholder{color: #b0b0b0;}
+.support .sr_trd_row .footer{float:left; width:100%; margin:0;padding:20px;}
+.support .sr_trd_row .footer .attach_file{float: left;font-size: 14px;color: #333333;border-radius: 15px;background-color: #e1e2e6;border: none;margin: 0;padding: 6px 15px;}
+.support .sr_trd_row .footer .send_msg{float: right;font-size: 14px;color: #f4fcf8;border-radius: 15px;background-color: #3cd17f;border: none;margin: 0;padding: 6px 15px;}
+.support .sr_trd_row .footer .attach_file:hover{background-color: #c6c8d1;}
+.support .sr_trd_row .footer .send_msg:hover{background-color: #2cb76a;}

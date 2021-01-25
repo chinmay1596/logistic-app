@@ -1,0 +1,14 @@
+.selectBox {
+    float: none;
+    width: 100%;
+    margin: 0 0 15px 0;
+}
+.selectBox select {
+    width: 100%;
+    margin: 0 0 10px 0;
+    padding: 1% 2%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: #7c7c7c;
+    font-size: 14px;
+}

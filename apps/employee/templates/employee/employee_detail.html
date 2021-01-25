@@ -1,0 +1,75 @@
+{% extends 'comman/layout.html' %}
+{% load static %}
+{% load sorl_thumbnail %}
+{% block customcss %}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/ram.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-table.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/datepicker.min.css' %}" type="text/css"/>
+{% endblock %}
+{% block customscript %}
+    <script src="https://kit.fontawesome.com/b04a32fda1.js" crossorigin="anonymous"></script>
+{% endblock %}
+{% block maincontent %}
+    <div class="aos">
+        <div class="aos-left-col">
+            <div class="employee-card">
+                <div class="head">
+                    {% thumbnail object.user.image "60x60" crop="center" as im %}
+                        <figure>
+                            <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}"
+                                 style="border-radius: 50%;">
+                        </figure>
+                    {% empty %}
+                        <figure>
+                            <img src="{% static 'images/user-img.png' %}" width="60" height="60" alt=""
+                                 style="border-radius: 50%;">
+                        </figure>
+                    {% endthumbnail %}
+                    <div class="name">{{ object.full_name }}</div>
+                    <div class="position">{{ object.user.user_invite.user_type }}</div>
+                </div>
+                <div class="body">
+                    <div class="tr">
+                        <span>Employe ID</span>
+                        <div class="row">{{ object.id }}</div>
+                    </div>
+                    <div class="tr">
+                        <span>Email</span>
+                        <div class="row">{{ object.user.email|truncatechars:'24' }}</div>
+                    </div>
+                    <div class="tr">
+                        <span>Mobile Number</span>
+                        <div class="row">{{ object.user.phone }}</div>
+                    </div>
+                    <div class="tr">
+                        <span>Address</span>
+                        <div class="row">
+                            {{ object.user.get_address|truncatechars:'24' }}
+                        </div>
+                    </div>
+                    {% if employee_type == 'driver' %}
+                        <div class="tr">
+                        <span>Rating</span>
+                        <div class="row">
+                            <i class="fas fa-star"></i> <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i> <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                    {% else %}
+                        <div class="tr">
+                        <span>Status</span>
+                        <div class="row text-{{ object.shift_status_color }}">
+                            {{ object.shift_status }}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="aos-right-col">
+             {% include 'employee/snippets/_employee_activity.html' %}
+        </div>
+    </div>
+{% endblock %}

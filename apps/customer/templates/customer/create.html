@@ -1,0 +1,105 @@
+{% extends 'comman/layout.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block customcss %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/ram.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-table.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/customer.css' %}" />
+<!-- international tel input css -->
+<link rel="stylesheet" href="{% static 'plugin/css/intlTelInput.min.css' %}">
+<!-- this is add customer form validation css filr  -->
+<link rel="stylesheet" href="{% static 'css/uiupdatecss/addcustomervalidation.css' %}">
+<link rel="stylesheet" href="{% static 'css/fontawsome.css"/>
+<link rel="stylesheet" href="{% static 'css/uiupdatecss/newuicustomeradd-fild.css' %}">
+
+{% endblock %}
+
+{% block headertext %}
+Add Customer
+{% endblock %}
+
+
+{% block maincontent %}
+{% for field in form %}
+<span class=" error" style="color:red"> {{ field.errors }}</span>
+{% endfor %}
+<div class="ord_bnd_row">
+    <form method="POST" name="contact-form" id="hello" autocomplete="off" onsubmit="return validateLocation()"
+        action="{% url 'customer:create' %}" enctype='multipart/form-data'>
+        {% csrf_token %}
+        <div class="leftCol">
+            <div class="fp_tr">
+
+                <div class="body">
+                    <div class="form_tr">
+                        {% include 'snippets/_input_field.html' with field=form.first_name %}
+                    </div>
+                    <div class="form_tr">
+                        {% include 'snippets/_input_field.html' with field=form.last_name %}
+                    </div>
+                    <div class="form_tr">
+                        {% include 'snippets/_input_field.html' with field=form.email %}
+                    </div>
+
+                    <div class="form_tr">
+
+                        <input type="tel" name="phone" id="phoneInput" placeholder="Enter your phone number" required>
+                        <input type="hidden" id="phoneValue" name="phoneValue">
+
+                        <span id="error-msg" class="hide"></span>
+                        <span id="valid-msg" class="checkIcon hide"><i class="far fa-check text-success"></i> Phone
+                            Number Valid</span>
+                    </div>
+
+                    {{address.management_form}}
+                    {% for form_data in address %}
+                    <div id="addform">
+                        <div class="addressFildContainer form_tr">
+                            <div class="adressFildtem">
+                                <div class="adressFildtemBox">
+                                    <div class="selectBoxAdress">
+                                        {{form_data.address_type}}
+                                    </div>
+                                    <div class="adressInput">
+                                        {{form_data.address}}
+                                    </div>
+                                </div>
+                                <a href="#" class="remove_field" style="display: none;"
+                                    onclick="removeform(event)">Remove</a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <div class="addAddressbutton">
+                            <button id="addAddressButton" type="button">Add address</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- <div>
+                <input type="text" autocomplete="off" placeholder="search location" id="map-search"
+                    class="controls form-control" name="address" required><br>
+                <input type="hidden" id="mapLocation" name="MapAddress" autocomplete="nope">
+                <input type="hidden" id="lat" name="latitude" value="">
+                <input type="hidden" id="long" name="longitude" value="">
+                <div id="map-canvas" class="col-md-12" style="height:400px;"></div>
+            </div> -->
+            <!-- <input type="hidden" id="adrFormat"> -->
+
+            <div class="head" style="margin-top:20px;">
+                <button id="addCustomerNewUiButton" class="createPro plr">Add Customer</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
+
+{% block customscript %}
+<script src="{% static 'plugin/js/intlTelInput.js' %}"></script>
+<script src="{% static 'plugin/js/configarion.js' %}"></script>
+<script src="{% static 'js/app/customer.js' %}"></script>
+
+{% endblock %}

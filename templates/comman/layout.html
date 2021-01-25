@@ -1,0 +1,202 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'vendor/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/common.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/dashboardDropdown.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/uiupdate/notification.css' %}" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    {% block customcss %} {% endblock %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <title>
+        {% block page_title %}
+        Halo | Dashboard
+        {% endblock %}
+    </title>
+</head>
+
+<body>
+    {% block content %}
+    <div class="screen-wrapper">
+        <div class="sidebar-wrapper" id="sidebar-panel">
+            <div class="brand">
+                <div class="logo">
+                    <img src="/static/assets/logo.svg" alt="logo" />
+                </div>
+            </div>
+            <p class="sidebar-head divider">Main</p>
+            <ul>
+                <a href="{% url 'dashboard:index' %}">
+                    <li class="sidebar-item">
+                        <i class="fa fa-list-alt icon"></i>Dashboard
+                    </li>
+                </a>
+                <a href="{% url 'orders:order' %}">
+                    <li class="sidebar-item">
+                        <img class="icon" src="/static/assets/icons/gift.svg" alt="" />
+                        Orders
+                    </li>
+                </a>
+                <a href="/analytics/times_per_waypoints">
+                    <li class="sidebar-item">
+                        <img class="icon" src="/static/assets/icons/trending.svg" alt="" />Analytics
+                    </li>
+                </a>
+                <a href="{% url 'payment:payment' %}">
+                    <li class="sidebar-item">
+                        <i class="fa fa-sitemap icon"></i>Payment
+                    </li>
+                </a>
+                <a href="{% url 'warehouse:list' %}">
+                    <li class="sidebar-item">
+                        <i class="fa fa-percent icon"></i>Warehouses
+                    </li>
+                </a>
+                <a href="{% url 'employee:list-employee' 'driver' %}">
+                    <li class="sidebar-item">
+                        <i class="fa fa-question-circle icon"></i>Employees
+                    </li>
+                </a>
+                <a href="{% url 'customer:list' %}">
+                    <li class="sidebar-item">
+                        <i class="fa fa-tags icon"></i>Customers
+                    </li>
+                </a>
+                <a href="{% url 'fleet:vehicle' %}">
+                    <li class="sidebar-item">
+                        <i class="fa fa-truck icon"></i>Fleet
+                    </li>
+                </a>
+                <a href="{% url 'support:support' %}">
+                    <li class="sidebar-item">
+                        <i class="fa fa-cog icon"></i>Support
+                    </li>
+                </a>
+                <a href="/integration">
+                    <li class="sidebar-item">
+                        <img class="icon" src="/static/assets/icons/trending.svg" alt="" />Integration
+                    </li>
+                </a>
+            </ul>
+            <p class="sidebar-head divider">Sales Channels</p>
+            <ul>
+                <a href="">
+                    <li class="sidebar-item">
+                        <i class="fa fa-percent icon"></i>Online Store
+                    </li>
+                </a>
+                <a href="/merchant/activity">
+                    <li class="sidebar-item">
+                        <img class="icon" src="../../static/assets/icons/mail.svg" alt="" />Marketing
+                    </li>
+                </a>
+                <a href="/merchant/setting">
+                    <li class="sidebar-item">
+                        <i class="fa fa-cog icon"></i>Configuration
+                    </li>
+                </a>
+            </ul>
+        </div>
+        <!-- <div id="sidebar-overlay" onclick="toogleSidebar('hide')"></div> -->
+        <div class="main-content-wrapper">
+            <nav class="justify-content-md-between">
+                <div class="d-none d-sm-block float-left back-btn" id="">
+                </div>
+                <ul class="nav-items">
+                    <li class="nav-item">
+                        <a class="notifications-main-toggle-btn" href="#" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            <i class="fa fa-bell icon"></i>
+                            <div class="notification-count">
+                                <p id="notification_count"></p>
+                            </div>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right notifications">
+                            <div class="notificationContainer" id="records_table" url="{{request.user.id}}"
+                                content="{{ csrf_token }}">
+
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <p class="user-name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                            style="cursor: pointer;">
+                            {{ request.user.get_full_name }}
+                            <i class="fa fa-angle-down"></i>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <ul>
+                                <li><a href="{% url 'account:profile' request.user.id %}"><i class="fa fa-user"></i>
+                                        Profile</a></li>
+                                <li><a href="{% url 'account:change_password' %}"><i class="fa fa-lock"></i> Change
+                                        Password</a></li>
+                                <li><a href="{% url 'account:logout' %}"><i class="fa fa-power-off"></i> Logout</a></li>
+                            </ul>
+                        </div>
+                        </p>
+                        <div class="user-icon">
+                            {% if request.user.image %}
+                            <img src="{{ request.user.image.url }}" alt="user profile image" />
+                            {% else %}
+                            <img src="{% static 'images/default.jpg' %}" alt="user profile image" />
+                            {% endif %}
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+
+            <div style="color: #6c757d!important; text-decoration: none;">
+                {% block breadcrumb %}
+                <a href="{% block breadcrumb_url %}{% url 'dashboard:index' %} {% endblock %}" style="color: #6c757d;">
+                    <i class="fa fa-arrow-left mr-2"></i>
+                    {% block breadcrumb_text %}Dashboard {% endblock %}
+                </a>
+                {% endblock %}
+            </div>
+
+            {% block pagehead %}
+            <div class="page-header action">
+                <div class="page-header-text">
+                    {% block headertext %}{% endblock %}
+                </div>
+                {% block headbutton %} {% endblock %}
+            </div>
+            {% endblock %}
+
+            <div class="content-wrapper {% block maincontent-class %} {% endblock %}">
+                {% include 'snippets/_message_alert.html' %}
+                {% block maincontent %} {% endblock %}
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+
+
+    <script src="{% static 'vendor/js/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/js/popper.min.js' %}"></script>
+    <script src="{% static 'vendor/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/app/notification.js' %}"></script>
+    <script>
+        $(".alert").delay(5000).slideUp(1000, function () {
+            $(this).alert('close');
+        });
+        $(document).ready(function () {
+            $(".alert").delay(5000).slideUp(1000, function () {
+                $(this).alert('close');
+            });
+            $('.dropdown-menu.notifications').on('click', function (event) {
+                event.stopPropagation();
+            })
+        })
+
+    </script>
+    {% block customscript %}
+    {% endblock %}
+</body>
+
+</html>

@@ -1,0 +1,121 @@
+.productQuantty{
+    
+}
+.productQuantty button{
+    display: block;
+    float: right;
+    background: #3cd17f;
+    border: none;
+    color: #fff;
+    padding: 6px 18px;
+    font-size: 13px;
+    border-radius: 30px;
+    outline: none;
+    position: relative;
+    right: 70px;
+}
+.productQuantty button:hover{
+    background-color: #1ea65b;
+}
+.locationInaisleMap{
+    width: 30%;
+}
+.locationInaisleMap span{
+    width: 70%;
+    display: inline-block;
+}
+.locationInaisleMap button{
+    display: block;
+    float: right;
+    display: block;
+    float: right;
+    background: #3cd17f;
+    border: none;
+    color: #fff;
+    padding: 6px 18px;
+    font-size: 13px;
+    border-radius: 30px;
+    outline: none;
+}
+
+
+.productQuantityModal .modal-dialog .modal-content{
+    padding: 20px 0px;
+}
+.quantityModalContent{}
+.quantityModalContent h3{
+    font-size: 15px;
+}
+.quantityInputBox{
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.quantityInputBox button{
+    height: 30px;
+    width: 30px;
+    background: #ddd;
+    border: none;
+    font-weight: 700;
+    border-radius: 3px;
+}
+.quantityInputBox input{
+    text-align: center;
+    border: 1px solid #ddd;
+    padding: 5px 0px;
+    width: 50%;
+    border-radius: 3px;
+    font-weight: 600;
+    font-size: 14px;
+}
+.saveInfoButton{
+    background: #3cd17f;
+    border: none;
+    color: #fff;
+    padding: 8px 0px;
+    font-size: 13px;
+    border-radius: 30px;
+    outline: none;
+    display: block;
+    width: 60%;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+.saveInfoButton:hover{
+    background-color: #1ea65b;
+}
+
+
+.updateAisleMapLocation{}
+.updateAisleMapLocation h3{
+    font-size: 15px;
+    text-align: center;
+}
+
+
+.updateAisleMapLocation .modal-dialog .modal-content{
+    padding: 20px 40px;
+}
+.inputboxAsisleMap{
+    margin-top: 20px;
+}
+.inputboxAsisleMap label{
+    display: block;
+    margin: 0;
+    font-size: 12px;
+}
+.inputboxAsisleMap input{
+    width: 100%;
+    border: 1px solid #ddd;
+    padding: 7px 15px;
+    border-radius: 4px;
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+
+
+
+
+

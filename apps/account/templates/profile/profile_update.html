@@ -1,0 +1,127 @@
+{% extends 'common/password_reset_base.html' %}
+{% load static %}
+{% block customcss %}
+<link rel="stylesheet" href="{% static 'css/userprofile.css' %}">
+<style>
+    #id_email {
+        background-color: white;
+    }
+</style>
+{#    <link rel="stylesheet" href="{% static 'css/fontawesome.css' %}">#}
+<link rel="stylesheet" href="{% static 'css/uiupdate/userprofileimage.css' %}">
+<link rel="stylesheet" href="{% static 'css/fontawsome.css' %}" />
+{% endblock %}
+{% block crossbutton %}
+<div class="col-lg-4">
+    <div class="rightClose text-right">
+        <a href="{% url 'dashboard:index' %}"><i class="fa fa-times"></i></a>
+    </div>
+</div>
+{% endblock %}
+{% block content %}
+{#    <form method="post">#}
+{#    {% csrf_token %}#}
+{#    {{ form.as_p }}#}
+{#    <input type="submit" value="Save">#}
+{#</form>#}
+<section id="userProfileMainPage">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="userProfilePageImage">
+                    <div class="userImageFild">
+                        <form method="post" enctype="multipart/form-data" id="form-id">
+                            {% csrf_token %}
+                            <input type="file" id="userFormImage" name="image">
+
+                            <label for="userFormImage">
+                                <i class="fal fa-camera-alt"></i>
+                            </label>
+                    </div>
+                    {% if request.user.image %}
+                    <img id="userPrevImage" src="{{ request.user.image.url }}" alt="">
+                    {% else %}
+                    <img class="img-fluid" src="{% static 'images/default.jpg' %}" alt=""
+                        style="height: 290px; border-radius: 50%; max-width: 54%">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="userProfilePageForm">
+                    <!-- start name fil -->
+                    <div class="inputBox">
+                        <p>First Name</p>
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <i class="fa fa-user"></i>
+                                </span>
+                            </div>
+                            {% include 'snippets/_input_field.html' with field=form.first_name %}
+                        </div>
+                    </div>
+                    <div class="inputBox">
+                        <p>Last Name</p>
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <i class="fa fa-user"></i>
+                                </span>
+                            </div>
+                            {% include 'snippets/_input_field.html' with field=form.last_name %}
+                        </div>
+                    </div>
+                    <!-- start email fild -->
+                    <div class="inputBox">
+                        <p>Email ID</p>
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <i class="fa fa-envelope"></i>
+                                </span>
+                            </div>
+                            {% include 'snippets/_input_field.html' with field=form.email %}
+                        </div>
+                    </div>
+                    <div class="inputBox">
+                        <p>Phone Number</p>
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <i class="fa fa-phone"></i>
+                                </span>
+                            </div>
+                            {% include 'snippets/_input_field.html' with field=form.phone %}
+                        </div>
+                    </div>
+                    <div class="actionBntProfile">
+                        <ul>
+                            <li><a href="#" onclick="document.forms['form-id'].submit()" ;>Update</a></li>
+                        </ul>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block customscript %}
+<script>
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#userPrevImage').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    $("#userFormImage").change(function () {
+        readURL(this);
+    });
+</script>
+{% endblock %}

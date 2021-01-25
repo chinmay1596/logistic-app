@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halo Invoice template</title>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap"
+            rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            outline: 0;
+        }
+
+        body {
+            font-family: 'Nunito Sans', sans-serif;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Nunito Sans', sans-serif;
+        }
+
+        p {
+            font-family: 'Nunito Sans', sans-serif;
+        }
+
+        .text-center {
+            text-align: center !important;
+        }
+
+        .invoiceContainer {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .inoiceHeaderTop {
+            padding-top: 10px;
+        }
+
+        .inoiceHeaderTop .logoArea {
+        }
+
+        .inoiceHeaderTop .logoArea img {
+            height: 30px;
+        }
+
+        .inoiceHeaderTop .middleLogo {
+        }
+
+        .inoiceHeaderTop .middleLogo h3 {
+            font-size: 25px;
+            color: #333;
+            font-weight: 700;
+        }
+
+        .inoiceHeaderTop .rightInfo {
+        }
+
+        .inoiceHeaderTop .rightInfo h3 {
+            margin: 0;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .inoiceHeaderTop .rightInfo h4 {
+            margin: 0;
+            font-size: 12px;
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        .invoiceHeader2 {
+            padding-top: 15px;
+        }
+
+        .header2left {
+        }
+
+        .header2left p {
+            margin: 0;
+            font-weight: 600;
+            font-size: 15px;
+            color: #ccc;
+            margin-bottom: 6px;
+        }
+
+        .header2left h3 {
+            margin: 0;
+            font-size: 15px;
+            margin-bottom: 2px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .paymentStatus {
+        }
+
+        .paymentStatus .paid {
+        }
+
+        .paymentStatus .paid h4 {
+            margin: 0;
+            font-weight: 700;
+            font-size: 18px;
+            text-transform: capitalize;
+            color: #507C5C;
+        }
+
+        .paymentStatus .paid h4 img {
+            height: 25px;
+            margin-right: 3px;
+            position: relative;
+            top: 5px;
+        }
+
+        .paymentStatus .unpaid h4 {
+            margin: 0;
+            font-weight: 700;
+            font-size: 18px;
+            text-transform: capitalize;
+            color: #B3404A;
+        }
+
+        .paymentStatus .unpaid h4 img {
+            height: 25px;
+            margin-right: 3px;
+            position: relative;
+            top: 5px;
+        }
+
+        .invoiceTablearea {
+            margin-top: 30px;
+            border: 1px solid #ddd;
+        }
+
+        .invoiceTablearea table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .invoiceTablearea thead {
+            border-bottom: 1px solid #ddd;
+        }
+
+        .invoiceTablearea thead tr th {
+            padding: 10px 10px;
+            font-size: 13px;
+            text-align: center;
+            margin: -1px;
+        }
+
+        .invoiceTablearea tbody {
+            position: relative;
+        }
+
+        .invoiceTablearea tbody::before {
+            height: 10px;
+            width: 100%;
+            content: "";
+            display: block;
+        }
+
+        .invoiceTablearea tbody::after {
+            height: 15px;
+            width: 100%;
+            content: "";
+            display: block;
+        }
+
+        .invoiceTablearea tbody tr td {
+            padding: 7px 10px;
+            font-size: 12px;
+            text-align: center;
+            margin: -1px;
+            font-weight: 600;
+        }
+
+        .totalAmount {
+            margin-top: 20px;
+        }
+
+        .totalAmountContent h3 {
+            font-weight: 700;
+            font-size: 17px;
+        }
+
+        .totalAmountContent h3 span {
+            font-weight: 600;
+            margin-right: 40px;
+        }
+    </style>
+</head>
+
+<body>
+<!-- start invoice main box area -->
+<div class="invoiceContainer">
+    <div class="inoiceHeaderTop">
+        <table align="center" border="0" cellpadding="20" cellspacing="0" width="100%">
+            <tbody>
+            <tr align="left" style="display: flex; justify-content: space-between; align-items: center;">
+                <td align="left" class="logoArea">
+                    <img src="http://drive.google.com/uc?export=view&id=1_TQP2Yg-gT6f029DK6LflJET4Dv32FWg" alt="">
+                </td>
+                <td align="center" class="middleLogo">
+                    <h3>KMMRCE</h3>
+                </td>
+                <td align="right" class="rightInfo">
+                    <h3>Invoice no: {{ transaction.transaction_id }}</h3>
+                    <h3>Order Id: {{ transaction.order.uuid }}</h3>
+                    <h4>Date: {{ transaction.created_at }}</h4>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="invoiceHeader2">
+        <table align="center" border="0" cellpadding="20" cellspacing="0" width="100%">
+            <tbody>
+            <tr align="left" style="display: flex; justify-content: space-between; align-items: center;">
+                <td align="left" class="header2left">
+                    <p>Bill To</p>
+                    <h3>{{ transaction.order.customer.get_full_name }}</h3>
+                    <h3>{{ transaction.order.customer.email }}</h3>
+                    <h3>{{ transaction.order.address }}</h3>
+                </td>
+                <td align="right" class="header2right">
+                    <div class="paymentStatus">
+                        <div class="paid">
+                            <h4><img src="http://drive.google.com/uc?export=view&id=1XLS0nBpkhhJ6CFCqRgDg1YQh71CZFp0l"
+                                     alt=""> Paid</h4>
+                        </div>
+                        <!-- <div class="unpaid">
+                            <h4><img src="http://drive.google.com/uc?export=view&id=15Cfn-D9-DDEprwMFkT39jpdcqzwKvboD" alt=""> Paid</h4>
+                        </div> -->
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="invoiceTablearea">
+        <table>
+            <thead>
+            <tr class="text-center">
+                <th>SL No</th>
+                <th>Product Code</th>
+                <th>Item Name</th>
+                <th>Qty</th>
+                <th>Location </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in transaction.order.items.all %}
+                <tr class="text-center">
+                <td>{{ forloop.counter }}</td>
+                    <td>{{ item.product.location }}</td>
+                    <td>{{ item.product.title }}</td>
+                    <td>{{ item.units }}</td>
+                    <td>{{ item.product.location }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="totalAmount">
+        <table align="center" border="0" cellpadding="20" cellspacing="0" width="100%">
+            <tbody>
+            <tr align="right">
+                <td align="right" class="totalAmountContent">
+                    <h3><span>Total Amount</span> ${{ transaction.order.amount }}</h3>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- end invoice main box area -->
+</body>
+</html>

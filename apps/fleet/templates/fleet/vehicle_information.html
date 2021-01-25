@@ -1,0 +1,206 @@
+{% extends 'comman/layout.html' %}
+{% load static %}
+{% block headertext %}
+
+    Vehicle Information
+
+{% endblock %}
+
+{% block customcss %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/ram.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-table.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/common.css' %}">
+{% endblock %}
+
+{% block headbutton %}
+                {{ context }}
+                {% if vehicle_info.active_driver.driver.full_name %}
+                  <button class="createBtn" data-toggle="modal" data-target="#ajax-form-modal">Change Driver</button>
+
+                {% else %}
+                    <button class="createBtn" data-toggle="modal" data-target="#ajax-form-modal">Add Driver</button>
+
+                {% endif %}
+{% endblock %}
+
+{% block maincontent %}
+    <div class="modal fade" id="ajax-form-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content document">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Change Drivers</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="form">
+                        <form method="post" class="ajax-form" action="{% url 'fleet:change_driver' vehicle_info.id %}">
+                            {% csrf_token %}
+                            <div class="selectBox "
+                                 style="float: none!important; width: 50%!important; margin: 0 0 10px 16px!important;">
+                                {{ form.drivers }}
+                            </div>
+                            <div class="modal-footer">
+<!--                                <div class="card ">-->
+<!--                                    <div class="card-body">-->
+<!--                                        <div class="add-information">-->
+<!--                                            <div class="text text-center text-info">-->
+<!--                                                <h6> No data found.</h6>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+
+                                <div class="btnWrapper">
+                                    <button type="button" class="btn gray" data-dismiss="modal">Cancel</button>&nbsp;&nbsp;&nbsp;
+                                    {% if vehicle_info.active_driver.driver.full_name %}
+                                    <button type="submit" class="btn green">Change Driver</button>
+                                    {% else %}
+                                    <button type="submit" class="btn green">Add Driver</button>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="screen-wrapper">{{ context }}
+        <div class="main-content-wrapper">
+            <div class="ord_bnd_row vehicle-info">
+
+                <div class="leftCol">
+                    <div class="fp_tr">
+                        <div class="head">Vehicle Details</div>
+
+                        <div class="body">
+                            <div class="tr">
+                                <div class="td">
+                                    <span>Model Number</span>
+                                    <div class="row">{{ vehicle_info.model_number }}</div>
+                                </div>
+                                <div class="td">
+                                    <span>Type</span>
+                                    <div class="row">{{ vehicle_info.vehicle_type }}</div>
+                                </div>
+                            </div>
+                            <div class="tr">
+                                <div class="td">
+                                    <span>{{ vehicle_info.license_plate_number }}</span>
+                                    <div class="row">{{ vehicle_info.license_plate_number }}</div>
+                                </div>
+                            </div>
+                            <div class="tr">
+                                <div class="td">
+                                    <span>Registration Number</span>
+                                    <div class="row">{{ vehicle_info.license_plate_number }}</div>
+                                </div>
+                                <div class="td">
+                                    <span>Date Added</span>
+                                    <div class="row">{{ vehicle_info.created_at|date:"Y-m-d" }}</div>
+                                </div>
+                            </div>
+                            <div class="tr">
+                                <div class="td">
+                                    <span>Current Driver</span>
+                                    {% if vehicle_info.active_driver.driver.full_name %}
+                                    <div class="row" id="driver-name">{{ vehicle_info.active_driver.driver.full_name }}</div>
+                                    {% else %}
+                                    <div class="row" >No driver assigned</div>
+                                    {% endif %}
+                                </div>
+                                <div class="td">
+                                    <span>Last Driver Change</span>
+                                    {% if vehicle_info.active_driver.from_date|date:"Y-m-d" %}
+                                    <div class="row"
+                                         id="from-date">{{ vehicle_info.active_driver.from_date|date:"Y-m-d" }}</div>
+                                    {% else %}
+                                    <div class="row">No data available</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="titel">Delivery History</div>
+
+                    <div class="grid_row">
+                        <div class="wh_fltr_row">
+                            <form method="get">
+                                <input type="txt" class="search_pro" name="search" placeholder="Search a product here" style="width:94%">
+                            </form>
+                        </div>
+                        <div class="tableWrapper">
+                            <table class="data-table">
+                                <tbody>
+                                <tr>
+                                    <th>Delivery Date</th>
+                                    <th>Driver</th>
+                                    <th>Bundle Number</th>
+                                    <th>Weight</th>
+                                    <th>Delivery Time</th>
+                                </tr>
+                                {% for info in object_list %}
+                                <tr>
+                                    {% if info.bundle %}
+                                    <td>{{ info.bundle.created_at|date:"Y-m-d" }}</td>
+                                    <td>{{ info.driver.full_name }}</td>
+                                    <td>{{ info.bundle }}</td>
+                                    <td>{{ info.bundle.total_volume }}</td>
+                                    <td>{{ info.bundle.created_at|time }}</td>
+
+                                    {% else %}
+                                    <td>No data found.</td>
+                                    <td>{{ info.driver.full_name }}</td>
+                                    <td>No bundle assigned.</td>
+                                    <td>No data found.</td>
+                                    <td>No data found.</td>
+                                    {% endif %}
+
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="5">
+                                        <div class="text text-center">No Delivery History found.</div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="pagination">
+                            <span class="step-links">
+                                {% if page_obj.has_previous %}
+                                    <a href="?page={{ page_obj.previous_page_number }}"><</a>
+                                {% endif %}
+
+                                {% if page_obj.has_next %}
+                                    <a href="?page={{ page_obj.next_page_number }}">></a>
+                                {% endif %}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="rightCol">
+                    <div class="cd_tr">
+                        <div class="head">Previous Drivers</div>
+                        <div class="body" id="previous-driver"
+                             url="{% url 'fleet:driver-history' vehicle_id=vehicle_info.id %}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block customscript %}
+    {#    <script src="{% static 'vendor/js/jquery.min.js' %}"></script>#}
+    <script src="{% static 'js/app/fleet.js' %}"></script>
+    <script src="{% static 'js/ajax_form.js' %}"></script>
+{% endblock %}

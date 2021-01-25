@@ -1,0 +1,15 @@
+{% load widget_tweaks %}
+
+{% if field.errors %}
+    {{ field|add_class:'invalid' }}
+    <div class="invalid-feedback">
+        {% for error in field.errors %}
+            {{ error }}
+        {% endfor %}
+    </div>
+{% else %}
+    {{ field }}
+    {#    {% if field.help_text %}#}
+    {#        {{ field.help_text|safe }}#}
+    {#    {% endif %}#}
+{% endif %}

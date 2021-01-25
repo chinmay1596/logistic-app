@@ -1,0 +1,83 @@
+    {% extends 'comman/layout.html' %}
+{% load static %}
+{% block headertext %}
+
+        Fleet
+
+{% endblock %}
+ {% block customcss %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/ram.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-table.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/common.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+{% endblock %}
+{% block headbutton %}
+        <button class="createBtn" data-toggle="modal" data-target="#vehicle">Add New Vehicle</button>
+{% endblock %}
+
+{% block maincontent %}
+    <div class="screen-wrapper">
+      <div class="main-content-wrapper">
+        <div class="pageNav">
+          <ul>
+            <li>Active</li>
+            <li>Inactive</li>
+            <li>Discontinued</li>
+          </ul>
+        </div>
+        <div class="content-wrapper">
+          <div class="grid_row">
+            <div class="wh_fltr_row">
+              <button class="filtersBtn">Filters</button>
+              <input type="txt" class="search_pro" name="search" placeholder="Search a product here">
+              <button class="actionBtn">Action</button>
+            </div>
+            <div class="tableWrapper">
+              <table class="data-table">
+                <tr>
+                  <th>Date Added</th>
+                  <th>License Plate</th>
+                  <th>Registration No.</th>
+                  <th>Current Driver</th>
+                  <th>Current Delivery ID</th>
+                  <th>Runtime</th>
+                </tr>
+              </table>
+            </div>
+            <div class="pagination"><a href="#">❮</a><a href="#">❯</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="vehicle" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content document">
+          <div class="modal-header">
+            <div class="icon"><span class="photo"><i class="fa fa-camera" aria-hidden="true"></i></span></div>
+            <h5 class="modal-title" id="exampleModalLongTitle">Add New Vehicle</h5>
+          </div>
+          <div class="modal-body">
+            <div class="form">
+			<input type="text" name="" placeholder="Vehicle Model Number">
+			<input type="text" name="" placeholder="Vehicle Type">
+			<input type="text" name="" placeholder="Registration Number">
+			<input type="text" name="" placeholder="License Plate Number">
+			</div>
+          </div>
+          <div class="modal-footer">
+            <div class="btnWrapper">
+              <button type="button" class="btn gray" data-dismiss="modal">Cancel</button>&nbsp;&nbsp;&nbsp;
+              <button type="button" class="btn green">Add Vehicle</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endblock %}
+
+    {% block customscript %}
+    <script src="static/vendor/js/jquery.min.js"></script>
+    <script src="static/vendor/js/bootstrap.min.js"></script>
+    {% endblock %}

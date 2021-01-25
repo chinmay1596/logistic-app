@@ -1,0 +1,97 @@
+{% extends 'comman/layout.html' %}
+{% load static %}
+
+{% block customcss %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/ram.css' %}" xmlns="http://www.w3.org/1999/html">
+<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-table.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/line-icons/line-icons.min.css' %}" />
+{% endblock %}
+
+{% block headertext %}
+Support
+{% endblock %}
+
+{% block maincontent %}
+<div class="content-wrapper support">
+    <div class="sr_trd_row">
+        <div class="head">
+            <div class="user">
+                <figure><img src="{% static 'assets/user.png' %}" alt="user"></figure>
+                <font>{{request.user}}</font>
+            </div>
+            <div class="action">
+            </div>
+        </div>
+        <form action="{% url 'support:support-reply' pk %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="body">
+                <div class="titleRow">
+                    <h1>Tell us about your issue</h1>
+                    <h2>{{ticket.description}}</h2>
+                    <div class="action">
+                        <button type="button" class="status"><i class="fa fa-flag" aria-hidden="true"></i></button>
+                        <button type="button" class="payment_issue">{{ticket.type_of_issue}}</button>
+                    </div>
+                </div>
+                <div class="bodyRow">
+                    {{form.message}}
+                </div>
+            </div>
+            <div class="footer">
+                <button type="button" class="attach_file">{{form.file_upload}} <i class="fas fa-paperclip"
+                        aria-hidden="true"></i></button>
+                <button class="send_msg">Send <i class="fas fa-paper-plane" aria-hidden="true"></i></button>
+            </div>
+        </form>
+    </div>
+
+    {% for message in support_chat %}
+    <div class="sr_msg_row">
+        <div class="head">
+            <div class="user">
+                <figure><img src="{% static 'assets/user.png' %}" alt="user profile image"></figure>
+                <font>
+                    {% if message.sender %}
+                    {{message.sender}}
+                    {% elif message.receiver %}
+                    {{message.receiver}}
+                    {% endif %}
+                </font>
+            </div>
+            <div class="action">
+            </div>
+        </div>
+        <div class="body">
+            <div class="titleRow">
+                <h1></h1>
+                <div class="action">
+                    <button class="status"><i class="fa fa-flag" aria-hidden="true"></i></button>
+                    <button class="payment_issue">{{message.ticket.type_of_issue}}</button>
+                </div>
+            </div>
+            <div class="bodyRow">
+                {{message.message}}
+            </div>
+        </div>
+
+        {% if message.file_upload %}
+        <div class="footer">
+            <div class="col">
+                <div class="atms"><i class="fa fa-file" aria-hidden="true"></i></div>
+                <div class="file_info">
+                    <a href="{{message.file_upload.url}}" download>
+                        <div class="name">{{message.file_upload}}</div>
+                        <div class="size">{{message.filesize}}</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    {% endfor %}
+
+    {% endblock %}
+
+    {% block customscript %}
+    <script src="https://kit.fontawesome.com/b04a32fda1.js" crossorigin="anonymous"></script>
+    {% endblock %}

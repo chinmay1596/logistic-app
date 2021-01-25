@@ -1,0 +1,58 @@
+{% load static %}
+{% load sorl_thumbnail %}
+
+
+<div class="pageRow">
+    <div class="pageTr">Invite {{ employee_type_text }} <span>Click here to know more about all team roles <i
+                class="fa fa-info-circle" aria-hidden="true"></i></span></div>
+    <form action="{% url 'employee:send_invitation' employee_type='driver' %}" method="POST" class="skform">
+        {% csrf_token %}
+        <div class="input_group">
+            <span class="input-group-addon"><i class="fa fa-user-o" aria-hidden="true"></i></span>
+            {{ form.email }}
+        </div>
+        <div class="selectBox">
+            {{ form.user_type }}
+        </div>
+        <div class="actionBtnRow">
+            <button type="button" class="addBtn"><i class="fa fa-plus" aria-hidden="true"></i></button>
+            <button class="btn generate-btn">Invite</button>
+            <button class="btn generate-btn">Login with QR</button>
+        </div>
+    </form>
+</div>
+
+<div class="pageRow">
+    <div class="pageTr">{{ employee_type_text }}</div>
+    <div class="StoreRow">
+        {% for object in object_list %}
+        <div class="StoreCol">
+            {% thumbnail object.user.image "60x60" crop="center" as im %}
+            <figure>
+                <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" style="border-radius: 50%;">
+            </figure>
+            {% empty %}
+            <figure>
+                <img src="{% static 'images/user-img.png' %}" width="60" height="60" alt="" style="border-radius: 50%;">
+            </figure>
+            {% endthumbnail %}
+            <div class="info">
+                <div class="title">
+                    <a
+                        href="{% url 'employee:employee-activity' employee_type=employee_type pk=object.id activity_type='orders' %}">{{ object.full_name }}</a>
+                </div>
+                <p>{{ object.user.email }}</p>
+                <p>{{ object.user.phone }}</p>
+            </div>
+        </div>
+        {% empty %}
+        <div class="StoreCol">
+            <div class="info">
+                <div class="title">
+                    <h5>No Data Found.</h5>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>

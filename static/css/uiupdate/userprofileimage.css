@@ -1,0 +1,31 @@
+.userProfilePageImage{
+    border: 1px solid #3CD17F;
+    text-align: center;
+    padding: 120px 0px;
+    border-radius: 50%;
+    position: relative;
+}
+.userImageFild{}
+.userImageFild input[type='file']{
+    display: none;
+}
+.userImageFild label{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 50px;
+    width: 50px;
+    background: #3CD17F;
+    line-height: 47px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.4s;
+}
+.userImageFild label:hover{
+    background: #ddd;
+}
+#userPrevImage{
+    height: 290px;
+    border-radius: 50%;
+    max-width: 54%;
+}

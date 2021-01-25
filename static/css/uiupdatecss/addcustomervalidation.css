@@ -1,0 +1,74 @@
+#addCustomerNewUiButton{
+    background: #3CD17F;
+    color: #fff;
+    font-weight: 500;
+    font-size: 14px;
+    border: none;
+    width: 168px;
+    padding: 10px 0px;
+    border-radius: 30px;
+    transition: 0.4s;
+    outline: none;
+}
+#addCustomerNewUiButton:hover{
+    background: #1fa25a;
+}
+
+
+
+.iti{
+    display: flex;
+    justify-content: flex-start;
+}
+.iti__flag-container {
+    position: relative;
+}
+
+
+#phoneInput{
+    padding-left: 10px !important;
+    margin-left: 10px !important;
+}
+.iti__selected-flag {
+    width: 111px;
+    background: #fff !important;
+    border: 1px solid #a3b3bf;
+    border-radius: 4px;
+}
+.iti__selected-flag {
+    font-weight: 500;
+    font-size: 13px;
+}
+.iti__country-list {
+    max-height: 240px;
+    width: 415px;
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: 4px;
+}
+
+
+.form_tr{
+    position: relative;
+}
+.hide {
+    display: none;
+}
+#valid-msg {
+    color: #00C900;
+    font-weight: 500;
+    font-size: 12px;
+    font-style: italic;
+}
+#error-msg {
+    color: red;
+    font-weight: 500;
+    font-size: 12px;
+    font-style: italic;
+}
+input#phoneInput.error {
+    border-color: red;
+}
+input#phoneInput.validNumber {
+    border-color: #00C900;
+}

@@ -1,0 +1,310 @@
+{% extends 'comman/layout.html' %}
+{% load static %}
+{% block headertext %}
+
+  <h2 class="page-header-text">Order ID : {% for info in order %}{{info.order_id}}{% endfor %}</h2>
+  <div class="priority">
+
+    <button class="level"><i class="fa fa-flag" aria-hidden="true"></i></button>
+    <font>Priority Leavel</font>
+  </div>
+
+
+{% endblock %}
+{% block customcss %}
+
+ <link rel="stylesheet" href="{% static 'css/ram.css' %}">
+ <link rel="stylesheet" href="{% static 'css/add.css' %}">
+<style >
+ .fileContainer {
+    overflow: hidden;
+    position: relative;
+   float:right; background-color: #fff;border:none;border-radius: 3px;color: #6cdc9f;border: none;padding: 6px 10px;
+width: 10%;
+}
+
+.fileContainer [type=file] {
+    color: #fff;
+    cursor: inherit;
+    display: block;
+    font-size: 999px;
+    filter: alpha(opacity=0);
+    min-height: 100%;
+    min-width: 100%;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+
+
+}
+.fileContainer [type=submit] {
+    color: #fff;
+    cursor: inherit;
+    display: block;
+    font-size: 999px;
+    filter: alpha(opacity=0);
+    min-height: 100%;
+    min-width: 100%;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    text-align: right;
+    margin-top: 10px;
+}
+</style>
+
+{% endblock %}
+{% block headbutton %}
+
+
+
+{% for info in order %}
+
+  <div class="order_action">
+  	{% if info.inside_delivere_location %}
+    <font>Delivery Location outside inhouse Delivery Area</font>
+
+    <button class="map_btn"><i class="fa fa-map" aria-hidden="true"></i></button>
+    {% endif %}
+    <a href="{% url 'orders:delivery_partner' %}"><button class="createBtn">Assign Delivery Partner</button></a>
+    <a href="{% url 'orders:assign_order_bundle' %}"><button class="createBtn" id="attendenceallvalues" >Add to an Existing Order Bundle</button></a>
+  </div>
+ {% endfor %}
+{% endblock %}
+
+
+{% block maincontent %}
+<div class="pageNav">
+	{% for info in order %}
+  <ul>
+    <li>Ordered On: {{info.order_date}}</li>
+    <li>Ordered Due Date: {{info.due_date}}</li>
+  </ul>
+    {% endfor %}
+  <button class="view_loc"><i class="fa fa-compass" aria-hidden="true"></i></button>
+</div>
+<div class="content-wrapper">
+  <div class="grid_row">
+    <div class="filterRow">
+      <div class="selectBox">
+        <select class="dd" name="service_type">
+          <option value="">Filters</option>
+          <option value="">Filters</option>
+        </select>
+      </div>
+      <input type="txt" class="search_input" name="search" placeholder="Search anything">
+    {% for info in order %}
+    <form action="{{info.get_simple_upload}}" enctype="multipart/form-data" method="POST">
+
+        {% csrf_token %}
+
+        <label class="fileContainer">
+
+          Export<i class="fa fa-download" aria-hidden="true"></i>
+          <input type="file" id="myfile" name="myfile">
+
+        </label>
+      <input id='myfile' type="submit" name="submit">
+
+    </form>
+
+    {% endfor %}
+
+{% for message in messages %}
+
+    <label style="float: right;margin-bottom: 10px;">{{message}}</label>
+{% endfor %}
+      <label>Export<i class="fa fa-download" aria-hidden="true"></i></label>
+    </div>
+    <div class="tableWrapper">
+      <table class="data-table">
+        <tbody>
+          <tr>
+            <th>&nbsp;</th>
+            <th>SL No</th>
+            <th>Product Code</th>
+            <th>Item Name</th>
+            <th>Quantity</th>
+            <th>Item Description / DImension</th>
+            <th>Location in Aisia Map</th>
+            <th>Packaging Instruction</th>
+          </tr>
+          {% for info in object_list %}
+          <tr>
+            <td><input type="checkbox" class="attendencecheckvalue" value="mohit"></td>
+            <td class="personid"></td>
+            <td>{{info.product_code}}</td>
+            <td>{{info.item_name}}</td>
+            <td>{{info.quantity}}</td>
+            <td>{{info.item_description}}</td>
+            <td>{{info.location}}</td>
+            <td>{{info.packing_instruction}}</td>
+          </tr>
+          {% endfor %}
+
+
+        </tbody>
+      </table>
+    </div>
+    {% if is_paginated %}
+    <div class="pagination">
+    	<a href="?page={{ page_obj.previous_page_number }}">❮</a><a href="?page={{ page_obj.next_page_number }}">❯</a></div>
+    {% endif %}
+  </div>
+
+    {% if object_list.has_other_pages %}
+      <ul class="pagination">
+        {% if object_list.has_previous %}
+          <a href="?page={{ object_list.previous_page_number }}"> <</a>
+        {% endif %}
+
+        {% if object_list.has_next %}
+          <a href="?page={{ object_list.next_page_number }}"> ></a>
+
+        {% endif %}
+      </ul>
+    {% endif %}
+
+</div>
+<div class="ord_bnd_row">
+  <div class="leftCol">
+  	{% for info in object_list %}
+    <div class="fp_tr">
+      <div class="head">Fully Paid</div>
+      <div class="body">
+        <div class="tr">
+          <div class="td">Subtotal</div>
+          <div class="td">2 Items</div>
+          <div class="td">${{ info.get_amount }}</div>
+        </div>
+        <div class="tr">
+          <div class="td">Taxes</div>
+          <div class="td">apply</div>
+          <div class="td">${{info.taxes}}</div>
+        </div>
+        <div class="tr">
+          <div class="td">Shiping</div>
+          <div class="td">{{info.shipping_by }}</div>
+          <div class="td">${{info.shipping }}</div>
+        </div>
+        <div class="tr">
+          <div class="td">Total</div>
+          <div class="td"></div>
+          <div class="td">${{info.get_total_item_price}}</div>
+        </div>
+      </div>
+      <div class="body">
+        <div class="tr">
+          <div class="td">Preauthorised</div>
+          <div class="td">${{info.pre_authorized }}</div>
+        </div>
+        <div class="tr">
+          <div class="td">Captured Amount</div>
+          <div class="td">${{info.captured_amount}}</div>
+        </div>
+        <div class="tr">
+          <div class="td">Outstanding Balance</div>
+          <div class="td">${{info.get_outstanding_balance}}</div>
+        </div>
+      </div>
+      <div class="footer">Capture</div>
+    </div>
+    {% endfor %}
+
+    <div class="os">
+      <div class="head">Order Status</div>
+      <div class="body">
+        <div class="update_order">
+          <div class="icon"><i class="fa fa-user-o" aria-hidden="true"></i></div>
+          <div class="input_box"><input type="txt" name="update-order-status" placeholder="Update Order Status Here"><button class="update">Update</button></div>
+        </div>
+        <div class="order_status">
+          <div class="status confirm">
+            <span></span><font>Order confirm was send to customer</font><font>Updated 7 hours ago</font>
+          </div>
+          <div class="status cancel">
+            <span></span><font>Order cancel was send to customer</font><font>Updated 15 hours ago</font>
+          </div>
+          <div class="status confirm">
+            <span></span><font>Order confirm was send to customer</font><font>Updated 20 hours ago</font>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rightCol">
+
+    <div class="cd_tr">
+
+    {% for info in order %}
+
+      <div class="head">Customer Details</div>
+      <div class="body">
+        <div class="tr">
+          <span>Address</span>
+          <div class="row">{{info.user.email}}</div>
+        </div>
+      </div>
+      <div class="body">
+        <div class="tr">
+          <span>Shipping Address</span>
+          <div class="row">
+            {{info.user.address.street_lock_tower}}<br>
+            {{info.user.address.state_city_name}}<br>
+            {{info.user.address.state_city_name}}<br>
+            {{info.user.address.postal_code}}<br>
+            {{info.user.address.mobile}}
+          </div>
+        </div>
+      </div>
+      <div class="body">
+        <div class="tr">
+          <span>Billing Address</span>
+          <div class="row">
+            {{info.user.address.street_lock_tower}}<br>
+            {{info.user.address.state_city_name}}<br>
+            {{info.user.address.state_city_name}}<br>
+            {{info.user.address.postal_code}}<br>
+            {{info.user.address.mobile}}
+          </div>
+        </div>
+      </div>
+
+  {% endfor %}
+    </div>
+    {% for info in order %}
+    <div class="cd_tr">
+      <div class="head">Notes</div>
+      <div class="body">
+        <div class="tr">
+          <div class="row">{{info.notes}}</div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}
+{% block customscript %}
+<script>
+var list = document.getElementsByClassName("personid");
+for (var i = 1; i <= list.length; i++) {
+    list[i].innerHTML = i;
+}
+</script>
+
+<script >
+  $(document).ready(function(){
+  $('.attendencecheckvalue').click(function(){
+    var txt="";
+    $('.attendencecheckvalue:checked').each(function(){
+      txt+=$(this).val()+","
+    });
+    $('#attendenceallvalues').val(txt);
+
+  });
+});
+</script>
+{% endblock %}

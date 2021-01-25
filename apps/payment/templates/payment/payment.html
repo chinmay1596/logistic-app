@@ -1,0 +1,196 @@
+{% extends 'comman/layout.html' %}
+{% load static %}
+{% block breadcrumb %}
+{% endblock %}
+{% block customcss %}
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/ram.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-table.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}"/>
+{% endblock %}
+{% block pagehead %}
+    <div class="page-header">
+        <h2 class="page-header-text">Payment Details</h2>
+    </div>
+    <div class="payment-details">
+        <div class="payment-col">
+            <div class="row bp">
+                <div class="payment-info">
+                    <div class="title">Balance to be Paid</div>
+                    <div class="sub-title">${{ outstanding_balance }}</div>
+                </div>
+                <figure><img src="static/images/balance-paid.jpg" alt=""></figure>
+            </div>
+        </div>
+        <div class="payment-col">
+            <div class="row cc">
+                <div class="payment-info">
+                    <div class="title">Cash Collected</div>
+                    <div class="sub-title">${{ collected_cash }}</div>
+                </div>
+                <figure><img src="static/images/cash-collected.jpg" alt=""></figure>
+            </div>
+        </div>
+        {#        <div class="payment-col">#}
+        {#            <div class="row cs">#}
+        {#                <div class="payment-info">#}
+        {#                    <div class="title">Cash Sent</div>#}
+        {#                    <div class="sub-title">$2,267</div>#}
+        {#                </div>#}
+        {#                <figure><img src="static/images/cash-sent.jpg" alt=""></figure>#}
+        {#            </div>#}
+        {#        </div>#}
+        <div class="payment-col">
+            <div class="row me">
+                <div class="payment-info">
+                    <div class="title">Monthly Earning</div>
+                    <div class="sub-title">${{ monthly_earning }}</div>
+                </div>
+                <figure><img src="static/images/monthly-earning.jpg" alt=""></figure>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block maincontent %}
+    <div class="content-wrapper">
+        <div class="grid_row">
+            <div class="filterRow">
+                <div class="selectBox">
+                    <select class="dd" name="service_type" onChange="window.location.href=this.value">
+                        <option value="{% url 'payment:payment' %}">All</option>
+                        {% if qs == "True" %}
+                            <option value="{% url 'payment:payment' %}?search=True" selected="selected">Completed
+                            </option>
+                        {% else %}
+                            <option value="{% url 'payment:payment' %}?search=True">Completed
+                        {% endif %}
+                        {% if qs == "False" %}
+                            <option value="{% url 'payment:payment' %}?search=False" selected="selected">Pending
+                            </option>
+                        {% else %}
+                            <option value="{% url 'payment:payment' %}?search=False">Pending
+                            </option>
+                        {% endif %}
+                    </select>
+                </div>
+                <form name="myform" method="GET">
+                    <input type="text" class="search_input" name="search" placeholder="Search an order here...">
+                </form>
+                <a href="{% url 'payment:export_payment' %}">
+                    <button class="exportBtn">Export<i class="fa fa-download" aria-hidden="true"></i></button>
+                </a>
+            </div>
+            <div class="tableWrapper">
+                <table class="data-table">
+                    <thead>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th>Order ID</th>
+                        <th>Order Date</th>
+                        <th>Customer Name</th>
+                        <th>Address</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Payment</th>
+                    </tr>
+                    </thead>
+                    <tbody class="panel-group" id="accordion-home">
+                    <!-- table collaspe item -->
+                    {% for order in object_list %}
+                        <tr class="accordion-toggle tableOrderDetailsToggle" data-toggle="collapse"
+                            data-target="#table{{ order.id }}"
+                            aria-expanded="false">
+                            <td>
+                                <ul class="circleLst">
+                                    <li>
+                                        <div class="circleBox"></div>
+                                    </li>
+                                </ul>
+                            </td>
+                            <td>{{ order.uuid }}</td>
+                            <td>{{ order.order_date }}</td>
+                            <td>{{ order.customer.get_full_name }}</td>
+                            <td>{{ order.address }}</td>
+                            <td>${{ order.amount }}</td>
+                            <td>{{ order.order_status }}</td>
+                            {% if order.is_paid %}
+                                <td>Completed</td>
+                            {% else %}
+                                <td>Pending</td>
+                            {% endif %}
+                            {% if order.is_paid %}
+                                <tr class="subTableRow">
+                                    <td colspan="10" style="padding: 0px; border: none;">
+                                        <div id="table{{ order.id }}" class="collapse" data-parent="#accordion-home">
+                                            {% for transaction in order.transaction_order.all %}
+                                                <div class="orderDetailsCollaspeBody">
+                                                    <div class="row">
+                                                        <div class="col-lg-4">
+                                                            <div class="orderDetailsCollaspeBodyItem">
+                                                                <ul>
+
+                                                                    <li>Transaction ID:{{ transaction.transaction_id }}
+                                                                    <li>Email ID:
+                                                                        <span>{{ transaction.order.customer_name.get_full_name }}</span>
+                                                                    </li>
+                                                                    <li>Contact Number:
+                                                                        <span>{{ transaction.order.customer_name.phone }}</span>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <div class="orderDetailsCollaspeBodyItem">
+                                                                <ul>
+                                                                    <li>Payment Method:
+                                                                        <span>{{ transaction.payment_method }}</span>
+                                                                    </li>
+                                                                    <li>Settlement:
+                                                                        <span>{{ transaction.created_at }}</span>
+                                                                    </li>
+                                                                    <li>Address:
+                                                                        <span>{{ transaction.order.customer_name.address }}</span>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <div class="orderDetailsCollaspeBodyItem">
+                                                                <ul>
+                                                                    <li>Amount: <span>{{ transaction.amount }}</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="{% url 'payment:transaction_pdf' transaction.id %}"
+                                                                           download>Download
+                                                                            Slip</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tr>
+                            {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="pagination">
+                <span class="step-links">
+                    {% if page_obj.has_previous %}
+                        <a href="?page={{ page_obj.previous_page_number }}">❮</a>
+                    {% endif %}
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">❯</a>
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block customscript %}
+
+{% endblock %}

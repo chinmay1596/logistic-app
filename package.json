@@ -1,0 +1,33 @@
+{
+  "name": "logistic-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gulpfile.js",
+  "scripts": {
+    "gulp": "gulp",
+    "jshint": "jshint",
+    "start": "gulp watch",
+    "production": "gulp --production"
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antinolabs/logistic-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/antinolabs/logistic-backend/issues"
+  },
+  "homepage": "https://github.com/antinolabs/logistic-backend#readme",
+  "devDependencies": {
+    "autoprefixer": "^9.8.6",
+    "browser-sync": "^2.26.12",
+    "cssnano": "^4.1.10",
+    "gulp": "^4.0.2",
+    "gulp-postcss": "^8.0.0",
+    "gulp-sass": "^4.1.0",
+    "gulp-sourcemaps": "^2.6.5"
+  }
+}

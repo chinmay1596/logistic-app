@@ -1,0 +1,152 @@
+{% extends 'comman/layout.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block customcss %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/ram.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-table.min.css' %}">
+<!-- international tel input css -->
+<link rel="stylesheet" href="{% static 'plugin/css/intlTelInput.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/uiupdatecss/addcustomervalidation.css' %}">
+{% endblock %}
+
+{% block headertext %}
+Add New Warehouse
+{% endblock %}
+
+{% block maincontent-class %}
+warehouse
+{% endblock %}
+
+{% block headbutton %}
+
+{% endblock %}
+
+{% block breadcrumb_url %}
+{% url 'warehouse:list' %}
+{% endblock %}
+
+{% block breadcrumb_text %}
+Warehouse Management
+{% endblock %}
+
+{% block maincontent %}
+<div class="ord_bnd_row">
+    <form method="post" class="needs-validation was-validated" enctype="multipart/form-data" novalidate>
+        {% csrf_token %}
+        <div class="leftCol">
+            <div class="fp_tr">
+                <div class="head">General Information <span>Allot area for in-house delivery</span>
+                    <button class="createPro plr">Save</button>
+                </div>
+                <div class="body">
+                    <div class="form_tr">
+                        {% include 'snippets/_input_field.html' with field=form.name %}
+                    </div>
+                    <div class="form_tr">
+                        {% include 'snippets/_input_field.html' with field=form.description %}
+                    </div>
+                    <div class="form_tr">
+                        {% include 'snippets/_input_field.html' with field=form.email %}
+                    </div>
+                    <div class="form_tr">
+                        <input type="tel" name="contact" id="phoneInput" placeholder="Warehouse Contact Number">
+                        <input type="hidden" id="phoneValue" name="phoneValue">
+                        <span id="error-msg" class="hide"></span>
+                        <span id="valid-msg" class="checkIcon hide"> Phone Number Valid</span>
+                    </div>
+                    <div class="form_tr">
+                        {% include 'snippets/_input_field.html' with field=form.address %}
+                    </div>
+                </div>
+            </div>
+            <div class="grid_row">
+                <div class="head">Warehouse Location and Inhouse Delivery Area
+                    <span>Allot area for in-house delivery</span>
+                </div>
+                <div class="wh_fltr_row">
+                    <div class="selectBox">
+                        {% include 'snippets/_input_field.html' with field=form.location_range_type %}
+                    </div>
+                    {% include 'snippets/_input_field.html' with field=form.location_range %}
+                    <button class="check" type="button" onclick="drawCircle()">Update</button>
+                    {{ form.latitude }}
+                    {{ form.longitude }}
+
+                </div>
+                <div class="wh_map" id="myMap">
+                </div>
+            </div>
+
+            <div class="grid_row">
+                <div class="head">Aisle Map
+                    <label for="id_aisle_map" class="createBtn">
+                        Add Aisle Map
+                    </label>
+                    {{ form.aisle_map }}
+                </div>
+                <div class="aisleMap">
+                    <div class="text text-center">
+                        <br><br>
+                        <br><br>
+                        <br>
+                        <h5><i class="fas fa-file"></i>File Preview</h5>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </form>
+</div>
+
+{% endblock %}
+
+{% block customscript %}
+<script>
+        function updateEmail() {
+            var element = document.getElementById("update");
+            element.classList.add("open");
+            var element = document.getElementById("edit-email");
+            element.classList.add("close");
+        }
+
+        function updateAddress() {
+            var element = document.getElementById("update-address");
+            element.classList.add("open");
+            var element = document.getElementById("edit-address");
+            element.classList.add("close");
+        }
+
+        function updateLoaction() {
+            var element = document.getElementById("update-loaction");
+            element.classList.add("open");
+            var element = document.getElementById("edit-loaction");
+            element.classList.add("close");
+        }
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('.aisleMap').empty();
+                    $('.aisleMap').html('<img src="" class="aisleMap-image" style="width: 100%; height: -webkit-fill-available;">');
+                    $('.aisleMap-image').attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAl3bzTlhOjdjT3IpjhxRoKwqEalbWhFfQ">
+</script>
+<script src="{% static 'js/googleMap.js' %}"></script>
+<!-- international tel input script -->
+<script src="{% static 'plugin/js/intlTelInput.js' %}"></script>
+<script src="{% static 'plugin/js/configarion.js' %}"></script>
+
+
+{% endblock %}

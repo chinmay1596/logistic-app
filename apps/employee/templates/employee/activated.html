@@ -1,0 +1,42 @@
+{% extends 'comman/layout.html' %}
+{% load static %}
+
+{% block page_title %}
+    Halo | Sign Up & Join Halo
+{% endblock %}
+
+{% block customcss %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/ram.css' %}"/>
+{% endblock %}
+
+{% block content %}
+    <div class="sign-up-wrapper">
+        <header>
+            <div class="logo">
+                <img src="{% static 'assets/logo.svg' %}" alt="logo"/>
+            </div>
+            <div class="title">KMMRCE</div>
+            <div class="nav">
+                <i class="fa fa-circle" aria-hidden="true"></i>
+                <i class="fa fa-circle" aria-hidden="true"></i>
+                <i class="fa fa-circle" aria-hidden="true"></i>
+            </div>
+        </header>
+        <div class="sign-up">
+            <div class="sign-up-img"></div>
+            <div class="sign-up-form">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="text-center alert alert-{{ message.tags }}">
+                            {{ message|safe }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                <h1>Welcome to KMMRCE</h1>
+                <p>
+                    You have been registered successfully. You can use respective mobile apps for other activity.
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,919 @@
+body {
+    margin: 0;
+    padding: 0
+}
+.error{
+    color: red;
+}
+
+:focus {
+    outline: 0;
+}
+
+input[type="text"], input[type="password"], textarea, select {
+    outline: none;
+}
+
+button:focus {
+    outline: none !important;
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    -ms-transition: all 1s ease;
+    transition: all 1s ease;
+}
+
+button {
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    -ms-transition: all 1s ease;
+    transition: all 1s ease;
+    cursor: pointer
+}
+
+a.active {
+    color: #0d9c4d !important;
+    font-weight: 600;
+}
+
+.pull-left {
+    float: left !important;
+    text-align: left !important
+}
+
+.pull-right {
+    float: right !important;
+    text-align: right !important
+}
+
+.tac {
+    text-align: center !important;
+}
+
+.page-wrapper {
+    float: left;
+    width: 100%;
+}
+
+.page-wrapper header {
+    float: left;
+    width: 100%;
+    position: fixed;
+    z-index: 99999;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    margin: 0;
+    padding: 10px 20px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.page-wrapper header .logo {
+    float: left;
+    width: 5%;
+    margin: 8px 0 0 0;
+}
+
+.page-wrapper header .logo img {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.page-wrapper header .title {
+    float: left;
+    width: 90%;
+    font-size: 30px;
+    color: #333;
+    text-align: center;
+    font-weight: 600
+}
+
+.page-wrapper header .nav {
+    float: right;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 14px 0 0 0;
+}
+
+.page-wrapper header .nav i {
+    float: left;
+    margin: 0 2px;
+    font-size: 12px;
+    color: #333;
+}
+
+.page-wrapper .sign-up {
+    float: left;
+    width: 100%;
+    padding: 200px 10%;
+    box-sizing: border-box;
+}
+
+.page-wrapper .sign-up .sign-up-img {
+    float: left;
+    width: 50%;
+    min-height: 500px;
+    background-image: url(../images/sign-up-bg.jpg);
+    background-repeat: no-repeat;
+    background-position: center left
+}
+
+.page-wrapper .sign-up .sign-up-form {
+    float: right;
+    width: 40%;
+}
+
+.page-wrapper .sign-up .sign-up-form h1 {
+    float: right;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 34px;
+    color: #333;
+    text-align: left;
+    font-weight: 600
+}
+
+.page-wrapper .sign-up .sign-up-form p {
+    float: right;
+    width: 100%;
+    margin: 15px 0 25px 0;
+    padding: 0;
+    font-size: 14px;
+    color: #333;
+    text-align: left;
+    font-weight: 600
+}
+
+.page-wrapper .sign-up .sign-up-form .row {
+    float: left;
+    width: 100%;
+    margin: 0 0 15px 0;
+    padding: 0;
+    position: relative
+}
+
+.page-wrapper .sign-up .sign-up-form .row input {
+    float: left;
+    width: 100%;
+    padding: 6px 10px;
+    background-color: #fff;
+    border: 1px solid #dcdcdc;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #3b454c
+}
+
+.page-wrapper .sign-up .sign-up-form .row input::placeholder {
+    color: #acacac;
+}
+
+.page-wrapper .sign-up .sign-up-form .row .custom-file {
+    float: left;
+    width: 100%
+}
+
+.page-wrapper .sign-up .sign-up-form .row .custom-file label {
+    font-size: 14px;
+    color: #3b454c
+}
+
+.page-wrapper .sign-up .sign-up-form .row a {
+    float: left;
+    font-size: 14px;
+    color: #acacac;
+    margin: 5px 0 0 0;
+    text-decoration: underline;
+}
+
+.page-wrapper .sign-up .sign-up-form .row a:hover {
+    color: #333
+}
+
+.page-wrapper .sign-up .sign-up-form .row i {
+    position: absolute;
+    right: 15px;
+    top: 9px;
+}
+
+.page-wrapper .sign-up .sign-up-form .row.btnWrapper {
+    margin: 15px 0 0 0
+}
+
+.page-wrapper .sign-up .sign-up-form .row .joinBtn {
+    float: left;
+    font-size: 15px;
+    color: #edfbf3;
+    border-radius: 15px;
+    background-color: #3cd17f;
+    border: none;
+    margin: 0;
+    padding: 8px 25px;
+}
+
+.page-wrapper .sign-up .sign-up-form .row .joinBtn:hover {
+    background-color: #1ea65b;
+}
+
+.page-wrapper .sign-up .sign-up-form .row .loginBtn {
+    float: left;
+    font-size: 15px;
+    color: #333;
+    border-radius: 15px;
+    background-color: #f7f7f7;
+    border: none;
+    margin: 0 0 0 15px;
+    padding: 8px 25px;
+}
+
+.page-wrapper .sign-up .sign-up-form .row .loginBtn:hover {
+    background-color: #d9d9d9;
+    color: #000
+}
+
+.page-wrapper .sign-up .sign-up-form .row .glogin {
+    float: left;
+    font-size: 14px;
+    color: #acacac;
+    margin: 5px 35px 0 0;
+    text-decoration: underline;
+}
+
+.page-wrapper .sign-up .sign-up-form .row .glogin:before {
+    content: '';
+    background-image: url(../assets/images/login-with-google.png);
+    float: left;
+    width: 18px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.page-wrapper .sign-up .sign-up-form .row .fb-login {
+    float: left;
+    font-size: 14px;
+    color: #acacac;
+    margin: 5px 0 0 0;
+    text-decoration: underline;
+}
+
+.page-wrapper .sign-up .sign-up-form .row .fb-login:before {
+    content: '';
+    background-image: url(../assets/images/login-with-fb.png);
+    float: left;
+    width: 18px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.page-wrapper .body-content {
+    float: left;
+    width: 100%;
+}
+
+.page-wrapper .body-content section {
+    float: left;
+    width: 100%;
+    margin: 0;
+    padding: 100px 10%;
+    min-height: 500px
+}
+
+.page-wrapper .body-content section:first-child {
+    padding-top: 200px
+}
+
+.page-wrapper .body-content section figure {
+    width: 40%
+}
+
+.page-wrapper .body-content section .info-col {
+    width: 40%;
+    margin: 30px 0 0 0;
+}
+
+.page-wrapper .body-content section:nth-child(even) .info-col {
+    float: left;
+}
+
+.page-wrapper .body-content section:nth-child(even) figure {
+    float: right;
+    text-align: right
+}
+
+.page-wrapper .body-content section:nth-child(odd) .info-col {
+    float: right;
+}
+
+.page-wrapper .body-content section:nth-child(odd) figure {
+    float: left;
+    text-align: left;
+}
+
+.page-wrapper .body-content section .info-col h1 {
+    float: right;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 34px;
+    color: #333;
+    text-align: left;
+    font-weight: 600
+}
+
+.page-wrapper .body-content section .info-col p {
+    float: right;
+    width: 100%;
+    margin: 15px 0 40px 0;
+    padding: 0;
+    font-size: 16px;
+    color: #acacac;
+    text-align: left;
+}
+
+.page-wrapper .body-content section .info-col p a {
+    color: #acacac;
+    text-decoration: underline
+}
+
+.page-wrapper .body-content section .info-col .row {
+    float: left;
+    width: 100%;
+    margin: 0 0 15px 0;
+    padding: 0;
+    position: relative
+}
+
+.page-wrapper .body-content section .info-col .row .col {
+    float: left;
+    width: 50%;
+    padding: 0 15px 0 0;
+    margin: 0
+}
+
+.page-wrapper .body-content section .info-col .row font {
+    float: left;
+    width: 100%;
+    margin: 0;
+    padding: 6px 10px;
+    background-color: #fff;
+    border: 1px solid #dcdcdc;
+    border-radius: 5px;
+    font-size: 15px;
+    color: #333;
+    text-align: left;
+}
+
+.page-wrapper .body-content section .info-col .row input {
+    float: left;
+    width: 100%;
+    padding: 6px 10px;
+    background-color: #fff;
+    border: 1px solid #dcdcdc;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #333
+}
+
+.page-wrapper .body-content section .info-col .row input::placeholder {
+    color: #333;
+}
+
+.page-wrapper .body-content section .info-col .row label.file-drag-drop {
+    float: left;
+    width: 100%;
+    padding: 6px 10px;
+    background-color: #fff;
+    border: 1px dashed #d5d5d5;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #333;
+    text-align: left
+}
+
+.page-wrapper .body-content section .info-col .row input.file-drag-drop {
+    border: 1px dashed #d5d5d5;
+}
+
+.page-wrapper .body-content section .info-col .row input[type="file" i] {
+    width: 100%;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: 999;
+    cursor: pointer
+}
+
+.page-wrapper .body-content section .signed-copy .row input[type="file" i] {
+    width: 100%;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: 999;
+    cursor: pointer
+}
+
+.page-wrapper .body-content section .info-col .row .suggestions {
+    float: left;
+    width: 100%;
+    margin: 10px 0 0 0;
+    font-size: 13px;
+    color: #acacac;
+    line-height: 22px;
+    text-align: left
+}
+
+.page-wrapper .body-content section .info-col .row .suggestions a {
+    color: #3cd17f;
+    text-decoration: underline
+}
+
+.page-wrapper .body-content section .info-col .row.btnWrapper {
+    width: 100%;
+    margin: 15px 0 0 0
+}
+
+.page-wrapper .body-content section .info-col .row .joinBtn {
+    float: left;
+    font-size: 15px;
+    color: #edfbf3;
+    border-radius: 15px;
+    background-color: #3cd17f;
+    border: none;
+    margin: 0;
+    padding: 8px 25px;
+    cursor: pointer;
+}
+
+.page-wrapper .body-content section .info-col .row .joinBtn:hover {
+    background-color: #1ea65b;
+}
+
+.page-wrapper .body-content section .info-col .row .input-group {
+    float: left;
+    width: 100%;
+    margin: 0 0 20px 0;
+}
+
+.page-wrapper .body-content section .info-col .row .input-group input {
+    float: left;
+    width: 76%;
+}
+
+.page-wrapper .body-content section .info-col .row .input-group input::placeholder {
+    color: #acacac;
+}
+
+.page-wrapper .body-content section .info-col .row .input-group .input-group-append {
+    margin-left: -4px;
+    background-color: #fff;
+    width: 24%;
+}
+
+.page-wrapper .body-content section .info-col .row .input-group .input-group-append button {
+    width: 100%;
+    border: 1px solid #dcdcdc;
+    font-size: 14px;
+    color: #8e8e8e;
+    text-align: left;
+    border-radius: 0px 5px 5px 0px;
+    padding: 0 10px;
+    cursor: pointer
+}
+
+.page-wrapper .body-content section .info-col .row .input-group .input-group-append .dropdown-toggle::after {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 0;
+    vertical-align: middle;
+    content: "";
+    border-top: .3em solid;
+    border-right: .3em solid transparent;
+    border-bottom: 0;
+    border-left: .3em solid transparent;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+}
+
+.page-wrapper .body-content section .info-col .row .add-new {
+    color: #333;
+    font-size: 12px;
+    text-decoration: none
+}
+
+.page-wrapper .body-content section .info-col .row .add-new:hover {
+    color: #3cd17f
+}
+
+.page-wrapper .body-content section .info-col .row .add-new i {
+    margin: 0 5px 0 0
+}
+
+.checkbox-group {
+    float: left;
+    width: 100%;
+    margin: 0 0 15px 0;
+    padding: 0;
+    position: relative
+}
+
+.checkbox-group:last-child {
+    margin: 0
+}
+
+.checkbox-group input {
+    float: left;
+    width: 100%;
+    padding: 6px 10px;
+    background-color: #fff;
+    border: 1px solid #dcdcdc;
+    border-radius: 20px;
+    font-size: 14px;
+    color: #333
+}
+
+.checkbox-group .checkbox {
+    float: left;
+    position: absolute;
+    right: 0;
+}
+
+.checkbox-group .checkbox [type="checkbox"]:checked, .checkbox-group .checkbox [type="checkbox"]:not(:checked) {
+    position: absolute;
+    left: -9999px;
+}
+
+.checkbox-group .checkbox [type="checkbox"]:checked + label,
+.checkbox-group .checkbox [type="checkbox"]:not(:checked) + label {
+    position: absolute;
+    top: 7px;
+    right: 0;
+    padding-left: 32px;
+    cursor: pointer;
+    line-height: 20px;
+    display: inline-block;
+    color: #666;
+}
+
+.checkbox-group .checkbox [type="checkbox"]:checked + label:before,
+.checkbox-group .checkbox [type="checkbox"]:not(:checked) + label:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #3cd17f;
+    background: #fff;
+    border-radius: 50%;
+}
+
+.checkbox-group .checkbox [type="checkbox"]:checked + label:after,
+.checkbox-group .checkbox [type="checkbox"]:not(:checked) + label:after {
+    content: '\2713\0020';
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #fff;
+    transition: all .2s;
+    background-color: #3cd17f;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #3cd17f;
+    border-radius: 50%;
+    text-align: center;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.checkbox-group .checkbox [type="checkbox"]:not(:checked) + label:after {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+}
+
+.checkbox-group .checkbox [type="checkbox"]:checked + label:after {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+}
+
+.checkbox-group .checkbox [type="radio"]:checked, .checkbox-group .checkbox [type="radio"]:not(:checked) {
+    position: absolute;
+    left: -9999px;
+}
+
+.checkbox-group .checkbox [type="radio"]:checked + label,
+.checkbox-group .checkbox [type="radio"]:not(:checked) + label {
+    position: absolute;
+    top: 7px;
+    right: 0;
+    padding-left: 32px;
+    cursor: pointer;
+    line-height: 20px;
+    display: inline-block;
+    color: #666;
+}
+
+.checkbox-group .checkbox [type="radio"]:checked + label:before,
+.checkbox-group .checkbox [type="radio"]:not(:checked) + label:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #3cd17f;
+    background: #fff;
+    border-radius: 50%;
+}
+
+.checkbox-group .checkbox [type="radio"]:checked + label:after,
+.checkbox-group .checkbox [type="radio"]:not(:checked) + label:after {
+    content: '\2713\0020';
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #fff;
+    transition: all .2s;
+    background-color: #3cd17f;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #3cd17f;
+    border-radius: 50%;
+    text-align: center;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.checkbox-group .checkbox [type="radio"]:not(:checked) + label:after {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+}
+
+.checkbox-group .checkbox [type="radio"]:checked + label:after {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+}
+
+.page-wrapper .body-content section .modules {
+    float: left;
+    width: 100%;
+    padding: 0 18%
+}
+
+.page-wrapper .body-content section .modules h2 {
+    float: left;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 56px;
+    color: #333;
+    text-align: center;
+    font-weight: 600
+}
+
+.page-wrapper .body-content section .modules p {
+    float: left;
+    width: 100%;
+    margin: 15px 0 40px 0;
+    padding: 0;
+    font-size: 20px;
+    color: #acacac;
+    text-align: center;
+    font-weight: 200
+}
+
+.page-wrapper .body-content section .modules .select-modules {
+    float: left;
+    width: 100%;
+    margin: 50px 0 0 0;
+    padding: 0
+}
+
+.page-wrapper .body-content section .modules .select-modules .row {
+    display: inline-flex;
+    margin: 0 0 80px 0;
+    width: 100%;
+}
+
+.page-wrapper .body-content section .modules .select-modules .row:last-child {
+    width: 100%;
+    padding: 0 10%;
+    margin: 0
+}
+
+.page-wrapper .body-content section .modules .select-modules .row .col {
+    width: 150px;
+    padding: 0 20px;
+}
+
+.page-wrapper .body-content section .modules .select-modules .row .col figure {
+    float: none;
+    width: 70px;
+    height: 70px;
+    position: relative;
+    background-color: #eaeaea;
+    text-align: center;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin: 0 auto 10px auto !important;
+    padding: 0 !important;
+}
+
+.page-wrapper .body-content section .modules .select-modules .row .col figure.active {
+}
+
+.page-wrapper .body-content section .modules .select-modules .row .col figure.active::after {
+    content: "";
+    width: 27px;
+    height: 27px;
+    /*background-image: url(../images/modules/slected-modules.png);*/
+    background-repeat: no-repeat;
+    background-position: center left;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+}
+
+.page-wrapper .body-content section .modules .select-modules .row .col font {
+    float: left;
+    width: 100%;
+    font-size: 14px;
+    color: #333;
+    text-align: center;
+}
+
+.page-wrapper .body-content section .modules .select-modules .btnWrapper {
+    float: left;
+    width: 100%;
+    text-align: center
+}
+
+.page-wrapper .body-content section .modules .select-modules .btnWrapper .joinBtn {
+    font-size: 15px;
+    color: #edfbf3;
+    border-radius: 15px;
+    background-color: #3cd17f;
+    border: none;
+    margin: 0;
+    padding: 8px 25px;
+    cursor: pointer;
+}
+
+.page-wrapper .body-content section .modules .select-modules .btnWrapper .joinBtn:hover {
+    background-color: #1ea65b;
+}
+
+.page-wrapper .body-content section .signed-copy {
+    float: left;
+    width: 100%;
+    padding: 0 34%
+}
+
+.page-wrapper .body-content section .signed-copy h3 {
+    float: left;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 40px;
+    color: #333;
+    text-align: left;
+    font-weight: 600
+}
+
+.page-wrapper .body-content section .signed-copy p {
+    float: left;
+    width: 100%;
+    margin: 35px 0 20px 0;
+    padding: 0;
+    font-size: 13px;
+    color: #333;
+    text-align: left;
+    font-weight: 200
+}
+
+.page-wrapper .body-content section .signed-copy .row {
+    float: left;
+    width: 100%;
+    margin: 0 0 15px 0;
+    padding: 0;
+    position: relative;
+}
+
+.page-wrapper .body-content section .signed-copy .row font {
+    float: left;
+    width: 100%;
+    margin: 0;
+    padding: 6px 10px;
+    background-color: #fff;
+    border: 1px solid #dcdcdc;
+    border-radius: 5px;
+    font-size: 15px;
+    color: #333;
+    text-align: left;
+}
+
+.page-wrapper .body-content section .signed-copy .row label.file-drag-drop {
+    float: left;
+    width: 100%;
+    padding: 6px 10px;
+    background-color: #fff;
+    border: 1px dashed #d5d5d5;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #333;
+    text-align: left;
+}
+
+.page-wrapper .body-content section .signed-copy .row input {
+    float: left;
+    width: 100%;
+    padding: 6px 10px;
+    background-color: #fff;
+    border: 1px dashed #d5d5d5;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #333;
+}
+
+.page-wrapper .body-content section .signed-copy .row .suggestions {
+    float: left;
+    width: 100%;
+    margin: 10px 0 0 0;
+    font-size: 13px;
+    color: #acacac;
+    line-height: 22px;
+    text-align: left;
+}
+
+.page-wrapper .body-content section .signed-copy .row .joinBtn {
+    float: left;
+    font-size: 15px;
+    color: #edfbf3;
+    border-radius: 15px;
+    background-color: #3cd17f;
+    border: none;
+    margin: 0;
+    padding: 8px 25px;
+    cursor: pointer;
+}
+
+.page-wrapper .body-content section .signed-copy .row .joinBtn:hover {
+    background-color: #1ea65b;
+}
+
+.page-wrapper .body-content section .signed-copy .row .joinBtn.mauto {
+    margin: 0 auto !important;
+}
+
+.page-wrapper .status_row {
+    width: 100%;
+    position: fixed;
+    background-color: #fff;
+    display: flex;
+    flex-wrap: wrap;
+    bottom: 0;
+    left: 0;
+    border-top: 1px solid #dfdfdf;
+    border-bottom: 1px solid #dfdfdf
+}
+
+.page-wrapper .status_row .col {
+    width: 25%;
+    flex-grow: 1;
+    border-right: 1px solid #dfdfdf;
+    margin: 0;
+    padding: 10px
+}
+
+.page-wrapper .status_row .col font {
+    float: left;
+    width: 100%;
+    font-size: 16px;
+    color: #333;
+    font-weight: 600;
+}
+
+.page-wrapper .status_row .col span {
+    float: left;
+    width: 100%;
+    font-size: 12px;
+    color: #bababa;
+}
+
+.page-wrapper .status_row .col.active {
+    background-color: #3cd17f;
+}
+
+.page-wrapper .status_row .col.active font, .page-wrapper .status_row .col.active span {
+    color: #fff
+}

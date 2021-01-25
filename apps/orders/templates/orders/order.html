@@ -1,0 +1,324 @@
+{% extends 'comman/layout.html' %}
+{% load static %}
+{% block headertext %}
+    Order / Dispatch
+{% endblock %}
+{% block customcss %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/ram.css' %}" xmlns="http://www.w3.org/1999/html">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-table.min.css' %}">
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+{% endblock %}
+{% block headbutton %}
+    <!-- <button class="createBtn" data-toggle="modal" data-target="#document">Add Order</button>-->
+    <a href="{% url 'orders:bundles' %}">
+        <button class="createBtn">View Order Bundles</button>
+    </a>
+{% endblock %}
+{% block maincontent %}
+
+    <div class="pageNav">
+        <ul>
+            <li><a href="{% url 'orders:order' %}?geo_radius={{ geo_radius }}">All{{ all_count }}</a></li>
+            {% if geo_radius %}
+                <li>
+                    <a href="{% url 'orders:order' %}?order_status={{ unfulfilled }}&geo_radius={{ geo_radius }}">Uncheck{{ uncheck_count }}</a>
+                </li>
+                <li>
+                    <a href="{% url 'orders:order' %}?order_status={{ active }}&geo_radius={{ geo_radius }}">Active{{ active_count }}</a>
+                </li>
+                <li>
+                    <a href="{% url 'orders:order' %}?order_status={{ delivered }}&geo_radius={{ geo_radius }}">Delivered{{ delivered_count }}</a>
+                </li>
+                <li>
+                    <a href="{% url 'orders:order' %}?order_status={{ return }}&geo_radius={{ geo_radius }}">Returns{{ return_count }}</a>
+                </li>
+                <li>
+                    <a href="{% url 'orders:order' %}?order_status={{ cancel }}&geo_radius={{ geo_radius }}">Cancelled{{ cancelled_count }}</a>
+                </li>
+            {% else %}
+                <li>
+                    <a href="{% url 'orders:order' %}?order_status={{ unfulfilled }}">Uncheck{{ uncheck_count }}</a>
+                </li>
+                <li>
+                    <a href="{% url 'orders:order' %}?order_status={{ active }}">Active{{ active_count }}</a>
+                </li>
+                <li>
+                    <a href="{% url 'orders:order' %}?order_status={{ delivered }}">Delivered{{ delivered_count }}</a>
+                </li>
+                <li>
+                    <a href="{% url 'orders:order' %}?order_status={{ return }}">Returns{{ return_count }}</a>
+                </li>
+                <li>
+                    <a href="{% url 'orders:order' %}?order_status={{ cancel }}">Cancelled{{ cancelled_count }}</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+    <div class="content-wrapper">
+    <div class="grid_row">
+        <div class="wh_fltr_row">
+            <div class="selectBox">
+                <select class="dd" name="service_type" onChange="window.location.href=this.value">
+                    <option value="{% url 'orders:order' %}">All</option>
+                    {% if qs == high %}
+                        <option value="{% url 'orders:order' %}?search={{ high }}" selected="selected">High Priority
+                        </option>
+                    {% else %}
+                        <option value="{% url 'orders:order' %}?search={{ high }}">High Priority</option>
+                    {% endif %}
+                    {% if qs == medium %}
+                        <option value="{% url 'orders:order' %}?search={{ medium }}" selected="selected">Medium
+                            Priority
+                        </option>
+                    {% else %}
+                        <option value="{% url 'orders:order' %}?search={{ medium }}">Medium Priority</option>
+                    {% endif %}
+                    {% if qs == low %}
+                        <option value="{% url 'orders:order' %}?search={{ low }}" selected="selected">Low Priority
+                        </option>
+                    {% else %}
+                        <option value="{% url 'orders:order' %}?search={{ low }}">Low Priority</option>
+                    {% endif %}
+                </select>
+            </div>
+            <form name="myform" method="GET">
+                <input type="text" class="search_pro" name="search" placeholder="Search an order here..."
+                       style="width:79%">
+            </form>
+            <button class="actionBtn" onclick="openDD()">Action</button>
+            <div class="action-dd" id="action-dd">
+                <div class="head">
+                    <font>Action</font>
+                    <button class="close_btn" onclick="closeDD()"><i class="fa fa-times" aria-hidden="true"></i>
+                    </button>
+                </div>
+
+                <div class="body">
+
+                    <form action="{% url 'orders:process_order' %}" method="POST"/>
+                    {% csrf_token %}
+                    <div class="tr">
+                        <input class="bbtn" type="submit" value="Process" disabled style="background-color: white;">
+                        <input type="text" name="attendence" id="attendenceallvalues" hidden>
+                        <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+                    </div>
+                    </form>
+
+
+                    <form action="{% url 'orders:assign_priority' %}" method="POST"/>
+                    {% csrf_token %}
+                    <div class="tr">
+                        <div class="selectBox">
+                            <input type="text" name="attendence" id="attendenceallvalues3" hidden>
+                            <select class='corpusname' id='corpusname' name='priority' required
+                                    onchange="enableButton()">
+                                <option value="" hidden>Priority</option>
+                                <option value={{ high }}>High</option>
+                                <option value={{ medium }}>Medium</option>
+                                <option value={{ low }}>Low</option>
+                            </select>
+                        </div>
+
+                        <input type="submit" class="priority-btn" id="seedoc" style="background-color: white;" hidden
+                               value="Set Priority">
+                    </div>
+                    </form>
+
+                    <form action="{% url 'orders:cancel_order' %}" method="POST"/>
+                    {% csrf_token %}
+                    <div class="tr">
+                        <input type="submit" class="cancel-btn" value="Cancel" name="attendence"
+                               style="background-color: white;" disabled>
+                        <input type="text" value="Process" name="attendence" id="attendenceallvalues2" hidden>
+                        <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+                    </div>
+                    </form>
+                </div>
+            </div>
+            <div class="tableWrapper">
+                <table class="data-table" id="tab1">
+                    <tbody>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th>ORDER ID:</th>
+                        <th>ORDER DATE AND TIME:</th>
+                        <th>CUSTOMER NAME:</th>
+                        <th>PAYMENT:</th>
+                        <th>&nbsp;</th>
+                        <th>ADDRESS:</th>
+                        <th>DUE DATE:</th>
+                        <th>PRIORITY:</th>
+                    </tr>
+                    {% for info in object_list %}
+                        <tr>
+                            {% if info.order_status == unfulfilled %}
+                                <td><input type="checkbox" name="orders" class="attendencecheckvalue"
+                                           value="{{ info.id }}">
+                                </td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
+                            <td><a href="{% url 'orders:order-detail' pk=info.id %}"># {{ info.uuid }}</a></td>
+                            <td>{{ info.order_date }}</td>
+                                <td>{{ info.customer.get_full_name }}</td>
+                            <td>${{ info.amount }}</td>
+                            <td>
+                                {% if not info.get_distance %}
+                                    <div class="order_action">
+                                        <button class="map_btn"><i class="fa fa-map" aria-hidden="true"></i></button>
+                                    </div>
+                                {% endif %}
+                            </td>
+                            <td><a href=""><i style='font-size:15px'
+                                              class='fas'>&#xf3c5;</i>&nbsp;&nbsp;{{ info.address }}</a></td>
+                            <td>{{ info.due_date }}</td>
+
+                            {% if info.priority == high %}
+                                <td><i class="fas fa-flag" style="color: red;"></i></td>
+                            {% elif info.priority == low %}
+                                <td><i class="fas fa-flag" style="color: green;"></i></td>
+                            {% else %}
+                                <td><i class="fas fa-flag" style="color: yellow;"></i></td>
+                            {% endif %}
+
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="9">
+                                <div class="text text-center">No data found.</div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="pagination">
+<span class="step-links">
+{% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}">❮</a>
+{% endif %}
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">❯</a>
+    {% endif %}
+</span>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="document" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+         aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content document">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Add Order</h5>
+    </div>
+    <div class="modal-body">
+
+
+        <form action="" method="POST">
+            {% csrf_token %}
+
+            <div class="input_group">
+                <div class="prepend"><i class="fa fa-first-order" aria-hidden="true"></i></div>
+                <select class="input" name="user_id">
+                    <option class="input" name="user_id" value="" hidden>User</option>
+                    {% for info in user %}
+
+                        <option class="input" name="user_id"
+                                value="{{ info.username }}">{{ info.username }}</option>
+                    {% endfor %}
+
+                </select>
+            </div>
+
+            <div class="input_group">
+                <div class="prepend"><i class="icon-user icons" aria-hidden="true"></i></div>
+                <input class="input" name="customer_name" type="text" placeholder="Customer name">
+            </div>
+            <div class="input_group">
+                <div class="prepend"><i class="fa fa-phone" aria-hidden="true"></i></div>
+                <input class="input" name="payment" type="text" placeholder="Payment">
+            </div>
+            <div class="input_group">
+                <div class="prepend"><i class="fa fa-envelope-o" aria-hidden="true"></i></div>
+                <input class="input" name="due_date" type="date" placeholder="Due Date">
+            </div>
+            <div class="input_group">
+                <div class="prepend"><i class="icon-cursor icons"></i></div>
+                <input class="input" name="address" type="text" placeholder="Address">
+            </div>
+            <div class="input_group">
+                <div class="prepend"><i class="fa fa-id-card-o" aria-hidden="true"></i></div>
+                <input class="input" name="notes" type="text" placeholder="Notes">
+            </div>
+
+            <div class="modal-footer">
+                <div class="btnWrapper">
+                    <button type="button" class="btn gray" data-dismiss="modal">Cancel</button>&nbsp;&nbsp;&nbsp;
+                    <input type="submit" class="btn green">
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+{% block customscript %}
+    {# <script src="{% static 'vendor/js/jquery.min.js' %}"></script>#}
+    {# <script src="{% static 'vendor/js/bootstrap.min.js' %}"></script>#}
+    <script>
+        function openDD() {
+            var element = document.getElementById("action-dd");
+            element.classList.add("open");
+        }
+
+        function closeDD() {
+            var element = document.getElementById("action-dd");
+            element.classList.remove("open");
+        }
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.attendencecheckvalue').click(function () {
+                $('.bbtn').removeAttr('disabled');
+                var txt = [];
+                $('.attendencecheckvalue:checked').each(function () {
+                    txt.push($(this).val())
+                });
+                $('#attendenceallvalues').val(txt);
+
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('.attendencecheckvalue').click(function () {
+                $('.cancel-btn').removeAttr('disabled');
+                var txt = [];
+                $('.attendencecheckvalue:checked').each(function () {
+                    txt.push($(this).val())
+                });
+                $('#attendenceallvalues2').val(txt);
+
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('.attendencecheckvalue').click(function () {
+                $('.priority-btn').removeAttr('disabled');
+                var txt = [];
+                $('.attendencecheckvalue:checked').each(function () {
+                    txt.push($(this).val())
+                });
+                $('#attendenceallvalues3').val(txt);
+
+            });
+        });
+    </script>
+    <script>
+        function enableButton() {
+            var selectelem = document.getElementById('corpusname');
+            var btnelem = document.getElementById('seedoc');
+            btnelem.hidden = !selectelem.value;
+        }
+    </script>
+{% endblock %}

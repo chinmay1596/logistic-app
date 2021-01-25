@@ -1,0 +1,150 @@
+{% extends 'comman/layout.html' %}
+{% load static %}
+{% block customcss %}
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no'/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/ram.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}"/>
+{% endblock %}
+{% block pagehead %}
+{% endblock %}
+{% block maincontent %}
+    <div class="main-content-wrapper">
+        <div class="page-header">
+            <h2 class="page-header-text">Order Bundle ID : {{ object.bundle_id }}</h2>
+            <div class="order_action">
+                <a href="{% url 'employee:employee-shift' 'driver' 'shift' %}?bundleid={{ object.id }}">
+                    <button class="assign_btn" type="submit">Assign Driver</button>
+                </a>
+                <a href="{% url 'employee:employee-shift' 'storekeeper' 'shift' %}?bundleid={{ object.id }}">
+                    <button class="assign_btn">Assign Store-Keeper</button>
+                </a>
+                <button class="createBtn">Generate Picking Lisr</button>
+            </div>
+            <div class="ob-status">
+                <div class="head">Order Bundle Status</div>
+                <div class="body">
+                    <div class="ststus-col">
+                        <div class="ststus-br">
+                            {% if object.status in status %}
+                                <div class="status active">
+                                    <div class="sep"></div>
+                                    <div class="icon"><i class="fa fa-file-o" aria-hidden="true"></i></div>
+                                </div>
+                            {% else %}
+                                <div class="status">
+                                    <div class="sep"></div>
+                                    <div class="icon"><i class="fa fa-file-o" aria-hidden="true"></i></div>
+                                </div>
+                            {% endif %}
+                            {% if object.status == 'Store Keeper Assigned' or objects.status == 'Driver Assigned' or object.status == 'Driver Out' or object.status == 'Delivered' %}
+                                <div class="status active">
+                                    <div class="sep"></div>
+                                    <div class="icon"><i class="fa fa-file-o" aria-hidden="true"></i></div>
+                                </div>
+                            {% else %}
+                                <div class="status">
+                                    <div class="sep"></div>
+                                    <div class="icon"><i class="fa fa-file-o" aria-hidden="true"></i></div>
+                                </div>
+                            {% endif %}
+                            {% if objects.status == 'Driver Assigned' or object.status == 'Driver Out' or object.status == 'Delivered' %}
+                                <div class="status active">
+                                    <div class="sep"></div>
+                                    <div class="icon"><i class="fa fa-file-o" aria-hidden="true"></i></div>
+                                </div>
+                            {% else %}
+                                <div class="status">
+                                    <div class="sep"></div>
+                                    <div class="icon"><i class="fa fa-file-o" aria-hidden="true"></i></div>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="ststus-info">
+                            <ul>
+                                {% if object.status in status %}
+                                    <li class="active">Processing</li>
+                                {% else %}
+                                    <li>Processing</li>
+                                {% endif %}
+                                {% if object.status == 'Store Keeper Assigned' or objects.status == 'Driver Assigned' or object.status == 'Driver Out' or object.status == 'Delivered' %}
+                                    <li class="active">Store-Keeper Assigned</li>
+                                {% else %}
+                                    <li>Store-Keeper Assigned</li>
+                                {% endif %}
+                                {% if object.status == 'Driver Out' or object.status == 'Delivered' %}
+                                    <li class="active">Driver is Out for Delivery</li>
+                                {% else %}
+                                    <li>Driver is Out for Delivery</li>
+                                {% endif %}
+                                {% if object.status == 'Pick Up List Generation' or object.status == 'Store Keeper Assigned' or objects.status == 'Driver Assigned' or object.status == 'Driver Out' or object.status == 'Delivered' %}
+                                    <li class="active">Pick Up List Generated</li>
+                                {% else %}
+                                    <li>Pick Up List Generated</li>
+                                {% endif %}
+
+                                {% if objects.status == 'Driver Assigned' or object.status == 'Driver Out' or object.status == 'Delivered' %}
+                                    <li class="active">Driver Assigned</li>
+                                {% else %}
+                                    <li>Driver Assigned</li>
+                                {% endif %}
+                                {% if object.status == 'Delivered' %}
+                                    <li class="active">All Order Delivered</li>
+                                {% else %}
+                                    <li>All Order Delivered</li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="total-col">
+                        <font>Total Orders</font>
+                        <font class="bold">{{ order_count }}</font>
+                        <span>{{ deliveries_count }} deliveries and {{ pickup_count }} pickups</span><br><br><br><br>
+                        <font>Estimated Time {{ distance }}</font>
+                        <font class="bold">{{ ETA }}</font>
+                        <a href="/analytics/times_per_waypoints">
+                            <button class="view-report-btn">View Report and Analytics details</button></a>
+                    </div>
+                </div>
+            </div>
+            <div class="map-wrapper">
+                {% include 'orders/bundle_map.html' %}
+            </div>
+            <div class="content-wrapper">
+                <div class="grid_row">
+                    {#                <div class="filterRow">#}
+                    {#                    <input type="txt" class="search_input obi" name="search" placeholder="Search anything">#}
+                    {#                    <button class="exportBtn">Export<i class="fa fa-download" aria-hidden="true"></i></button>#}
+                    {#                </div>#}
+                    <div class="tableWrapper">
+                        <table class="data-table">
+                            <tbody>
+                            <tr>
+                                <th>Order Id</th>
+                                <th>Order Date</th>
+                                <th>Customer Name</th>
+                                <th>Payment</th>
+                                <th>Address</th>
+                                <th>Due Date</th>
+                                <th>Status</th>
+                            </tr>
+                            {% for order in orders %}
+                                <tr>
+                                    <td><a href="{%  url 'orders:order-detail' order.id %}">{{ order.uuid }}</a></td>
+                                    <td>{{ order.order_date }}</td>
+                                    <td>{{ order.customer.get_full_name }}</td>
+                                    <td>{{ order.amount }}</td>
+                                    <td>{{ order.address }}</td>
+                                    <td>{{ order.due_date }}</td>
+                                    <td>{{ order.order_status }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {#                <div class="pagination"><a href="#">❮</a><a href="#">❯</a></div>#}
+                </div>
+{#                <div class="pagination"><a href="#">❮</a><a href="#">❯</a></div>#}
+            </div>
+        </div>
+    </div>
+{% endblock %}

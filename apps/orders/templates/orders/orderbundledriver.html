@@ -1,0 +1,171 @@
+{% extends 'comman/layout.html' %}
+{% load static %}
+{% block headertext %}
+
+  Order Bundle ID : {{bundle_id}}
+
+
+{% endblock %}
+{% block customcss %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/ram.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-table.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/css/bootstrap.min.css' %}" >
+    <link rel="stylesheet" href="{% static 'css/common.css' %}" >
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+{% endblock %}
+{% block headbutton %}
+
+            <div class="order_action">
+<!--              <button class="createBtn" data-toggle="modal" data-target="#document">Assing Driver</button>-->
+
+              <button class="assign_btn">Assign Store-Keeper</button>
+              <button class="createBtn">Generate Picking Lisr</button>
+            </div>
+{% endblock %}
+
+{% block maincontent %}
+    <div class="screen-wrapper">
+      <div class="main-content-wrapper">
+        <div class="ob-status">
+          <div class="head">Order Bundel Status</div>
+          <div class="body">
+            <div class="ststus-col">
+              <div class="ststus-br">
+                <div class="status active">
+                  <div class="sep"></div>
+                  <div class="icon"><i class="fa fa-file-o" aria-hidden="true"></i></div>
+                </div>
+                <div class="status">
+                  <div class="sep"></div>
+                  <div class="icon"><i class="fa fa-file-o" aria-hidden="true"></i></div>
+                </div>
+                <div class="status">
+                  <div class="sep"></div>
+                  <div class="icon"><i class="fa fa-file-o" aria-hidden="true"></i></div>
+                </div>
+              </div>
+              <div class="ststus-info">
+                <ul>
+                  <li class="active">Pick Up List Generated</li>
+                  <li class="active">Driver Assigned</li>
+                  <li>All Order Delivered</li>
+                  <li class="active">Store-Keeper Assigned</li>
+                  <li class="active">Driver Recived Order Bundle</li>
+                  <li>Pick-ups Handed Over</li>
+                  <li>Picked and Packed</li>
+                  <li>Driver is Out for Delivery</li>
+                </ul>
+              </div>
+            </div>
+            <div class="total-col">
+              <font>Total Orders</font>
+              <font class="bold">14</font>
+              <span>10 deliveries and 4 pickups</span><br><br><br><br>
+              <font>Estimated Time</font>
+              <font class="bold">6 hrs 30 mints</font>
+              <button class="view-report-btn">View Report and Analytics details</button>
+            </div>
+          </div>
+        </div>
+        <div class="map-wrapper"><iframe src="https://www.google.com/maps/embed?pb=!1m22!1m8!1m3!1d3506.0656882133844!2d77.24862146468581!3d28.507671332467222!3m2!1i1024!2i768!4f13.1!4m11!3e0!4m3!3m2!1d28.5071975!2d77.2520837!4m5!1s0x390ce10dae65e38b%3A0xdd958c79d1809753!2sG10%2C%2068%2C%20Ratiya%20Marg%2C%20Block%20D%2C%20Sangam%20Vihar%2C%20New%20Delhi%2C%20Delhi%20110044!3m2!1d28.508218!2d77.24954029999999!5e0!3m2!1sen!2sin!4v1597552660956!5m2!1sen!2sin" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe></div>
+        <div class="content-wrapper">
+          <div class="grid_row">
+            <div class="filterRow">
+              <input type="txt" class="search_input obi" name="search" placeholder="Search anything">
+              <button class="exportBtn">Export<i class="fa fa-download" aria-hidden="true"></i></button>
+            </div>
+            <div class="tableWrapper">
+              <table class="data-table">
+                <tbody>
+                  <tr>
+                    <th>&nbsp;</th>
+                    <th>SL No</th>
+                    <th>Product Code</th>
+                    <th>Item Name</th>
+                    <th>Quantity</th>
+                    <th>Item Description / DImension</th>
+                    <th>Location in Aisia Map</th>
+                    <th>Packaging Instruction</th>
+                  </tr>
+                  {% for info in object_list %}
+                  <tr>
+                    <td>
+                      <div class="product_radio"><input type="radio" name="radio-group" id="test1" value=""><label for="test1"></label><img src="../../../../static/images/product-1.png" alt=""></div>
+                    </td>
+                    <td class="personid"></td>
+                    <td>{{info.product_code}}</td>
+                    <td>{{info.item_name}}</td>
+                    <td>{{info.quantity}}</td>
+                    <td>{{info.item_discription}}</td>
+                    <td>{{info.location}}</td>
+                    <td>{{info.packing_instruction}}</td>
+                  </tr>
+                  {% endfor %}
+
+                </tbody>
+              </table>
+            </div>
+            <div class="pagination"><a href="#">❮</a><a href="#">❯</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!-- model pop up start -->
+
+  <div class="modal fade" id="document" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content document">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Assign Driver</h5>
+          </div>
+          <div class="modal-body">
+
+            <div class="tableWrapper">
+              <table class="data-table">
+                <tbody>
+                  <tr>
+                    <th>&nbsp;</th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                  </tr>
+
+                  {%for info in driver_info%}
+                  <tr>
+
+                    <td><input type="checkbox" class="attendencecheckvalue" value="mohit"></td>
+                    <td>{{info.name}}</td>
+                    <td>{{info.phone}}</td>
+                  </tr>
+                  {%endfor%}
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+
+          <div class="modal-footer">
+            <div class="btnWrapper">
+              <button type="button" class="btn gray" data-dismiss="modal">Cancel</button>&nbsp;&nbsp;&nbsp;
+              <input type="submit" value="assign" class="btn green">
+            </div>
+          </div>
+
+  </div>
+<!--   model pop up ends -->
+    {% endblock %}
+
+    {% block customscript %}
+    <script src="{% static 'vendor/js/jquery.min.js' %}"></script>
+    <script>
+    var list = document.getElementsByClassName("personid");
+    for (var i = 1; i <= list.length; i++) {
+        list[i].innerHTML = i;
+    }
+    </script>
+
+    <script>
+
+
+    </script>
+     {% endblock %}

@@ -1,0 +1,177 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'vendor/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/common.css' %}" />
+
+    <!--<link rel="stylesheet" href="{% static 'vendor/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/common.css' %}" />-->
+    {% block customcss %} {% endblock %}
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <title>Halo | Dashboard</title>
+  </head>
+
+  <body>
+    <div class="screen-wrapper">
+      <div class="sidebar-wrapper" id="sidebar-panel">
+        <div
+          class="collapsible"
+          id="collapse-btn"
+          onclick="toogleSidebar('hide')"
+        >
+          <i class="fa fa-angle-left icon"></i>
+        </div>
+        <div class="brand">
+          <div class="logo">
+            <img src="{% static 'assets/logo.svg' %}" alt="logo" />
+          </div>
+        </div>
+        <p class="sidebar-head divider">Main</p>
+        <ul>
+          <a href="">
+            <li class="sidebar-item">
+              <i class="fa fa-list-alt icon"></i>Dashboard
+            </li>
+          </a>
+          <a href="/merchant/feed">
+            <li class="sidebar-item">
+              <img
+                class="icon"
+                src="{% static 'assets/icons/gift.svg' %}"
+                alt=""
+              />
+              Orders
+            </li>
+          </a>
+          <a href="/merchant/list">
+            <li class="sidebar-item">
+              <img
+                class="icon"
+                src="{% static 'assets/icons/trending.svg' %}"
+                alt=""
+              />Analytics
+            </li>
+          </a>
+          <a href="/merchant/modules">
+            <li class="sidebar-item">
+              <i class="fa fa-puzzle-piece icon"></i>Catalogue
+            </li>
+          </a>
+          <a href="">
+            <li class="sidebar-item">
+              <i class="fa fa-sitemap icon"></i>Payment
+            </li>
+          </a>
+          <a href="{% url 'warehouse:list' %}">
+            <li class="sidebar-item">
+              <i class="fa fa-users icon"></i>Warehouses
+            </li>
+          </a>
+          <a href="/merchant/support">
+            <li class="sidebar-item">
+              <i class="fa fa-question-circle icon"></i>Employees
+            </li>
+          </a>
+          <a href="">
+            <li class="sidebar-item">
+              <i class="fa fa-tags icon"></i>Customers
+            </li>
+          </a>
+        </ul>
+        <p class="sidebar-head divider">Sales Channels</p>
+        <ul>
+          <a href="">
+            <li class="sidebar-item">
+              <i class="fa fa-percent icon"></i>Online Store
+            </li>
+          </a>
+          <a href="/merchant/activity">
+            <li class="sidebar-item">
+              <img
+                class="icon"
+                src="{% static 'assets/icons/mail.svg' %}"
+                alt=""
+              />Marketing
+            </li>
+          </a>
+          <a href="/merchant/setting">
+            <li class="sidebar-item">
+              <i class="fa fa-cog icon"></i>Configuration
+            </li>
+          </a>
+        </ul>
+        <p class="sidebar-head divider">Configuration</p>
+        <ul>
+          <a href="">
+            <li class="sidebar-item">
+              <i class="fa fa-percent icon"></i>Project Deatils
+            </li>
+          </a>
+          <a href="/merchant/activity">
+            <li class="sidebar-item">
+              <i class="fa fa-list-alt icon"></i>Team
+            </li>
+          </a>
+          <a href="/merchant/setting">
+            <li class="sidebar-item">
+              <img
+                class="icon"
+                src="{% static 'assets/icons/support.svg' %}"
+                alt=""
+              />Support
+            </li>
+          </a>
+        </ul>
+      </div>
+      <div id="sidebar-overlay" onclick="toogleSidebar('hide')"></div>
+      <div class="main-content-wrapper">
+        <nav class="justify-content-md-between">
+          <div class="expanded" id="" onclick="toogleSidebar('show')">
+            <i class="fa fa-bars"></i>
+          </div>
+          <div class="d-none d-sm-block float-left back-btn" id="">
+            &larr;
+            <!--Catalogue-->
+          </div>
+          <ul class="nav-items">
+            <li class="nav-item">
+              <i class="fa fa-bell icon"></i>
+              <i class="fa fa-circle dot"></i>
+            </li>
+            <li class="nav-item">
+              <p class="user-name">
+                Michael McClellan {{request.user.first_name}}
+                <i class="fa fa-angle-down"></i>
+              </p>
+              <div class="user-icon">
+                <img
+                  src="{% static 'assets/user.png' %}"
+                  alt="user profile image"
+                />
+              </div>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="page-header action">
+          <p class="page-header-text">{% block headertext %}{% endblock %}</p>
+          {% block headbutton %}{% endblock %}
+        </div>
+
+        <div class="content-wrapper">{% block maincontent%} {% endblock %}</div>
+      </div>
+    </div>
+
+    <script src="{% static 'vendor/js/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/js/popper.min.js' %}"></script>
+    <script src="{% static 'vendor/js/bootstrap.min.js' %}"></script>
+    {% block customscript%} {% endblock %}
+  </body>
+</html>

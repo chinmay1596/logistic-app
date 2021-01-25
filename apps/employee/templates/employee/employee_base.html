@@ -1,0 +1,84 @@
+{% extends 'comman/layout.html' %}
+{% load static %}
+{% load sorl_thumbnail %}
+
+{% block customcss %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/email.multiple.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/ram.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-table.min.css' %}">
+{% endblock %}
+
+{% block headertext %}
+    {{ employee_type_text }}
+{% endblock %}
+
+{% block headbutton %}
+    <div class="float-right">
+        {% if employee_type != 'driver' %}
+            <a href="{% url 'employee:list-employee' employee_type='driver' %}">(Switch to Driver)</a>
+        {% else %}
+            <a href="{% url 'employee:list-employee' employee_type='storekeeper' %}">(Switch to Store Keeper)</a>
+        {% endif %}
+    </div>
+{% endblock %}
+{% block maincontent %}
+
+    <div class="pageNav">
+        <ul>
+            <li>
+                <a href="{% url 'employee:list-employee' employee_type=employee_type %}"
+                        {% if display_type != 'shift' %} class="active"{% endif %}>
+                    List
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'employee:employee-shift' employee_type=employee_type display_type='shift' %}"
+                        {% if display_type == 'shift' %} class="active"{% endif %}>
+                    Shifts
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    {% if display_type == 'shift' %}
+        {% include 'employee/snippets/_employee_shift.html' %}
+    {% else %}
+        {% include 'employee/snippets/_employee_list.html' %}
+    {% endif %}
+
+{% endblock %}
+
+{% block customscript %}
+    <script src="{% static 'js/jquery.email.multiple.js' %}"></script>
+    <script>
+        $(document).ready(function ($) {
+            let data = []
+            $('#id_email').email_multiple({
+                data: data
+            })
+        })
+
+        $('.skform').on('keypress keyup', function (e) {
+            let keyCode = e.keyCode || e.which;
+            if (keyCode === 13) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        $('#editdriverbtn').on('click', function (e){
+            let btn = $(this);
+           let url = btn.val();
+           $.ajax({
+               type: "GET",
+               url: url,
+               success: function (data){
+                   btn.html(data.shift_status_text);
+                   btn.prop('value', data.shift_status_url);
+                   $('#shift-status').text(data.shift_status);
+                   $('#shift-status').attr('class', data.shift_status_text_color)
+               }
+           })
+        });
+    </script>
+{% endblock %}
